@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Deco Preda — Architectural surface atelier. Microcement, resin and decorative plaster for spaces of permanence." />
+  <title>Deco Preda — Atelier</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Formspree — no SDK needed, uses plain fetch() in script.js -->
+</head>
+<body>
+
+  <!-- Scroll progress -->
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor" aria-hidden="true">
+    <div class="cursor__ring"></div>
+    <div class="cursor__dot"></div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       LOADER
+  ══════════════════════════════════════════ -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader__body">
+      <span class="loader__mark">DP</span>
+      <div class="loader__line">
+        <div class="loader__fill"></div>
+      </div>
+      <span class="loader__sub">Atelier</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       NAVIGATION
+  ══════════════════════════════════════════ -->
+  <nav class="nav" id="nav" aria-label="Primary">
+    <a href="#intro" class="nav__wordmark" aria-label="Deco Preda home">
+      DECO<span class="nav__wordmark-thin">PREDA</span>
+    </a>
+
+    <button class="nav__burger" id="navBurger"
+      aria-label="Open menu" aria-expanded="false" aria-controls="navPanel">
+      <span></span><span></span>
+    </button>
+
+    <div class="nav__panel" id="navPanel" aria-hidden="true">
+      <a href="#atelier"       class="nav__item" data-cursor="link">Atelier</a>
+      <a href="#matter"        class="nav__item" data-cursor="link">Matter</a>
+      <a href="#space"         class="nav__item" data-cursor="link">Space</a>
+      <a href="#craft"         class="nav__item" data-cursor="link">Craft</a>
+      <a href="#commission"    class="nav__item nav__item--cta" data-cursor="link">Commission</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ══════════════════════════════════════════
+         I. INTRO — Dark cinematic
+    ══════════════════════════════════════════ -->
+    <section class="intro" id="intro" aria-label="Introduction">
+
+      <!-- Deep architectural background -->
+      <div class="intro__scene" id="introScene" aria-hidden="true">
+        <!-- Dark mineral texture layers -->
+        <div class="intro__layer intro__layer--base"></div>
+        <div class="intro__layer intro__layer--mid"></div>
+        <div class="intro__layer intro__layer--grain"></div>
+        <!-- Soft raking light ray -->
+        <div class="intro__light"></div>
+        <!-- Horizontal rule — materiality marker -->
+        <div class="intro__rule-v intro__rule-v--left" aria-hidden="true"></div>
+        <div class="intro__rule-v intro__rule-v--right" aria-hidden="true"></div>
+      </div>
+
+      <div class="intro__content">
+        <!-- Small overline -->
+        <p class="intro__overline reveal-hero" aria-label="Studio location">
+          <span>Milano</span>
+          <span class="sep" aria-hidden="true">—</span>
+          <span>Wien</span>
+        </p>
+
+        <!-- Main headline — split for stagger -->
+        <h1 class="intro__title" aria-label="Where light meets surface.">
+          <span class="intro__title-row reveal-hero">Where light</span>
+          <span class="intro__title-row intro__title-row--italic reveal-hero">meets surface.</span>
+        </h1>
+
+        <p class="intro__body reveal-hero">
+          An atelier of architectural surfaces.<br>
+          Craft applied with the patience of centuries.
+        </p>
+
+        <div class="intro__actions reveal-hero">
+          <a href="#atelier" class="btn-ghost" data-cursor="link" data-magnetic>
+            <span class="btn-ghost__label">Enter the Studio</span>
+            <span class="btn-ghost__icon" aria-hidden="true">↓</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Scroll cue -->
+      <div class="intro__scroll" aria-hidden="true">
+        <div class="intro__scroll-line"></div>
+      </div>
+
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         TRANSITION BAND — dark → warm
+    ══════════════════════════════════════════ -->
+    <div class="transition-band" aria-hidden="true"></div>
+
+    <!-- ══════════════════════════════════════════
+         II. ATELIER — Philosophy
+    ══════════════════════════════════════════ -->
+    <section class="atelier" id="atelier" aria-label="Atelier philosophy">
+      <div class="wrap">
+
+        <header class="section-head reveal">
+          <span class="section-idx">01</span>
+          <span class="section-rule" aria-hidden="true"></span>
+          <span class="section-label">Atelier</span>
+        </header>
+
+        <div class="atelier__grid">
+          <div class="atelier__statement reveal">
+            <h2 class="atelier__h">
+              A surface is not<br>
+              decoration.<br>
+              <em>It is architecture.</em>
+            </h2>
+          </div>
+
+          <div class="atelier__aside">
+            <p class="atelier__p reveal">
+              Deco Preda was conceived in the margins of a European architectural practice — in the moment when a rendered drawing meets the reality of mineral, of texture, of light falling across a plane at noon.
+            </p>
+            <p class="atelier__p reveal">
+              We exist for architects and interior designers who understand that a floor is a horizon. A wall is a sky. A surface is the first and last argument a space makes.
+            </p>
+            <p class="atelier__p reveal">
+              Our practice is material research made physical. Each commission begins with silence — with listening before proposing, with understanding before applying.
+            </p>
+
+            <!-- Pull metric -->
+            <div class="atelier__metric reveal">
+              <span class="atelier__metric-n" data-count="14">0</span>
+              <span class="atelier__metric-unit">years</span>
+              <p class="atelier__metric-label">of architectural surface research</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Horizontal rule -->
+        <div class="divider reveal" aria-hidden="true"></div>
+
+        <!-- Stat row -->
+        <div class="stats reveal">
+          <div class="stat">
+            <span class="stat__n" data-count="340">0</span>
+            <p class="stat__l">Commissions</p>
+          </div>
+          <div class="stat__sep" aria-hidden="true"></div>
+          <div class="stat">
+            <span class="stat__n" data-count="87">0</span>
+            <p class="stat__l">Architects Served</p>
+          </div>
+          <div class="stat__sep" aria-hidden="true"></div>
+          <div class="stat">
+            <span class="stat__n" data-count="12">0</span>
+            <p class="stat__l">Countries</p>
+          </div>
+          <div class="stat__sep" aria-hidden="true"></div>
+          <div class="stat">
+            <span class="stat__n" data-count="60">0</span>
+            <span class="stat__denom">+</span>
+            <p class="stat__l">Mineral Tones</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         III. MATTER — Materials
+    ══════════════════════════════════════════ -->
+    <section class="matter" id="matter" aria-label="Materials">
+      <div class="wrap">
+
+        <header class="section-head reveal">
+          <span class="section-idx">02</span>
+          <span class="section-rule" aria-hidden="true"></span>
+          <span class="section-label">Matter</span>
+        </header>
+
+        <h2 class="matter__h reveal">
+          Three materials.<br><em>Infinite character.</em>
+        </h2>
+
+      </div>
+
+      <!-- Full-bleed material panels -->
+      <div class="matter__panels">
+
+        <article class="panel reveal" aria-label="Microcement">
+          <div class="panel__surface panel__surface--cement" aria-hidden="true">
+            <div class="panel__grain"></div>
+          </div>
+          <div class="panel__body">
+            <span class="panel__idx" aria-hidden="true">I</span>
+            <h3 class="panel__name">Microcement</h3>
+            <p class="panel__desc">
+              A mineral membrane of 2–3 mm. Continuous, seamless, absolute. Applied across walls, floors, and furniture with no interruption of form.
+            </p>
+            <ul class="panel__props" aria-label="Properties">
+              <li>Seamless &amp; monolithic</li>
+              <li>Waterproof &amp; durable</li>
+              <li>60+ mineral pigments</li>
+            </ul>
+
+            <!-- Estimate trigger -->
+            <button class="panel__estimate-btn" data-material="microcement" data-cursor="link"
+              aria-expanded="false" aria-controls="calc-microcement"
+              type="button">
+              <span class="panel__estimate-label">Estimate cost</span>
+              <span class="panel__estimate-icon" aria-hidden="true">+</span>
+            </button>
+          </div>
+
+          <!-- Inline calculator drawer -->
+          <div class="panel__calc" id="calc-microcement" aria-hidden="true" data-material="microcement">
+            <div class="pcalc">
+              <p class="pcalc__head">
+                Microcement — <em>cost estimate</em>
+              </p>
+              <div class="pcalc__inputs">
+                <div class="pcalc__field">
+                  <label class="pcalc__label" for="pmp-microcement">Surface area</label>
+                  <div class="pcalc__input-wrap">
+                    <input class="pcalc__input" id="pmp-microcement" type="number"
+                      placeholder="80" min="1" max="9999" inputmode="numeric" />
+                    <span class="pcalc__unit">m²</span>
+                  </div>
+                </div>
+                <div class="pcalc__field">
+                  <label class="pcalc__label" for="psys-microcement">System</label>
+                  <div class="pcalc__select-wrap">
+                    <select class="pcalc__select" id="psys-microcement">
+                      <option value="basic">Basic coat</option>
+                      <option value="medium" selected>Medium</option>
+                      <option value="premium">Premium</option>
+                    </select>
+                    <span class="pcalc__caret" aria-hidden="true">↓</span>
+                  </div>
+                </div>
+              </div>
+              <div class="pcalc__result" id="pres-microcement" aria-live="polite"></div>
+              <p class="pcalc__disclaimer">
+                Estimate covers labour. Final cost varies by substrate condition and site access.
+                Materials not included.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel reveal" aria-label="Resin floors">
+          <div class="panel__surface panel__surface--resin" aria-hidden="true">
+            <div class="panel__grain"></div>
+          </div>
+          <div class="panel__body">
+            <span class="panel__idx" aria-hidden="true">II</span>
+            <h3 class="panel__name">Resin</h3>
+            <p class="panel__desc">
+              Epoxy and polyurethane systems with depth, luminosity, and a reflective presence that stone cannot replicate. Floor as mirror. Mirror as sky.
+            </p>
+            <ul class="panel__props" aria-label="Properties">
+              <li>Self-levelling</li>
+              <li>Gloss, satin or matte</li>
+              <li>Chemical resistant</li>
+            </ul>
+
+            <!-- Estimate trigger -->
+            <button class="panel__estimate-btn" data-material="resin" data-cursor="link"
+              aria-expanded="false" aria-controls="calc-resin"
+              type="button">
+              <span class="panel__estimate-label">Estimate cost</span>
+              <span class="panel__estimate-icon" aria-hidden="true">+</span>
+            </button>
+          </div>
+
+          <!-- Inline calculator drawer -->
+          <div class="panel__calc" id="calc-resin" aria-hidden="true" data-material="resin">
+            <div class="pcalc">
+              <p class="pcalc__head">
+                Resin — <em>cost estimate</em>
+              </p>
+              <div class="pcalc__inputs">
+                <div class="pcalc__field">
+                  <label class="pcalc__label" for="pmp-resin">Surface area</label>
+                  <div class="pcalc__input-wrap">
+                    <input class="pcalc__input" id="pmp-resin" type="number"
+                      placeholder="80" min="1" max="9999" inputmode="numeric" />
+                    <span class="pcalc__unit">m²</span>
+                  </div>
+                </div>
+                <div class="pcalc__field">
+                  <label class="pcalc__label" for="psys-resin">System</label>
+                  <div class="pcalc__select-wrap">
+                    <select class="pcalc__select" id="psys-resin">
+                      <option value="basic">Basic coat</option>
+                      <option value="medium" selected>Medium</option>
+                      <option value="premium">Premium</option>
+                    </select>
+                    <span class="pcalc__caret" aria-hidden="true">↓</span>
+                  </div>
+                </div>
+              </div>
+              <div class="pcalc__result" id="pres-resin" aria-live="polite"></div>
+              <p class="pcalc__disclaimer">
+                Estimate covers labour. Final cost varies by substrate condition and site access.
+                Materials not included.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel reveal" aria-label="Stone carpet">
+          <div class="panel__surface panel__surface--stone" aria-hidden="true">
+            <div class="panel__grain"></div>
+            <div class="panel__aggregate"></div>
+          </div>
+          <div class="panel__body">
+            <span class="panel__idx" aria-hidden="true">III</span>
+            <h3 class="panel__name">Stone Carpet</h3>
+            <p class="panel__desc">
+              Quartz aggregate bound in clear resin — fine to coarse grain, applied as a continuous tactile surface. Exterior and interior terraces, pool surrounds, ramps.
+            </p>
+            <ul class="panel__props" aria-label="Properties">
+              <li>Quartz &amp; marble aggregate</li>
+              <li>Slip-resistant &amp; draining</li>
+              <li>Indoor &amp; outdoor use</li>
+            </ul>
+
+            <!-- Estimate trigger -->
+            <button class="panel__estimate-btn" data-material="stone" data-cursor="link"
+              aria-expanded="false" aria-controls="calc-stone"
+              type="button">
+              <span class="panel__estimate-label">Estimate cost</span>
+              <span class="panel__estimate-icon" aria-hidden="true">+</span>
+            </button>
+          </div>
+
+          <!-- Inline calculator drawer -->
+          <div class="panel__calc" id="calc-stone" aria-hidden="true" data-material="stone">
+            <div class="pcalc">
+              <p class="pcalc__head">
+                Stone Carpet — <em>cost estimate</em>
+              </p>
+              <div class="pcalc__inputs">
+                <div class="pcalc__field">
+                  <label class="pcalc__label" for="pmp-stone">Surface area</label>
+                  <div class="pcalc__input-wrap">
+                    <input class="pcalc__input" id="pmp-stone" type="number"
+                      placeholder="80" min="1" max="9999" inputmode="numeric" />
+                    <span class="pcalc__unit">m²</span>
+                  </div>
+                </div>
+                <div class="pcalc__field">
+                  <label class="pcalc__label" for="psys-stone">System</label>
+                  <div class="pcalc__select-wrap">
+                    <select class="pcalc__select" id="psys-stone">
+                      <option value="basic">Basic coat</option>
+                      <option value="medium" selected>Medium</option>
+                      <option value="premium">Premium</option>
+                    </select>
+                    <span class="pcalc__caret" aria-hidden="true">↓</span>
+                  </div>
+                </div>
+              </div>
+              <div class="pcalc__result" id="pres-stone" aria-live="polite"></div>
+              <p class="pcalc__disclaimer">
+                Estimate covers labour. Final cost varies by substrate condition and site access.
+                Materials not included.
+              </p>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         IV. SPACE — Applications
+    ══════════════════════════════════════════ -->
+    <section class="space" id="space" aria-label="Spaces">
+      <div class="wrap">
+
+        <header class="section-head reveal">
+          <span class="section-idx">03</span>
+          <span class="section-rule" aria-hidden="true"></span>
+          <span class="section-label">Space</span>
+        </header>
+
+        <h2 class="space__h reveal">
+          Spaces of<br><em>permanence.</em>
+        </h2>
+
+      </div>
+
+      <!-- Alternating spatial narratives -->
+      <div class="spaces">
+
+        <div class="space-row reveal">
+          <div class="space-row__img space-row__img--res" aria-hidden="true">
+            <div class="space-row__caption">Private Residence</div>
+          </div>
+          <div class="space-row__text">
+            <span class="space-row__num">01</span>
+            <h3 class="space-row__title">The Private House</h3>
+            <p class="space-row__body">
+              From entry threshold to the bathroom as sanctuary — surfaces that make no claim until they are inhabited. Then they become everything. Calibrated to the life lived within.
+            </p>
+            <a href="#commission" class="link-arrow" data-cursor="link">
+              Commission a residence
+            </a>
+          </div>
+        </div>
+
+        <div class="space-row space-row--inv reveal">
+          <div class="space-row__img space-row__img--spa" aria-hidden="true">
+            <div class="space-row__caption">Wellness</div>
+          </div>
+          <div class="space-row__text">
+            <span class="space-row__num">02</span>
+            <h3 class="space-row__title">Spas &amp; Wellness</h3>
+            <p class="space-row__body">
+              Seamless surfaces are the grammar of wellness architecture. Waterproof, mineral, serene — our finishes compose silence the way an architect composes light.
+            </p>
+            <a href="#commission" class="link-arrow" data-cursor="link">
+              Commission a project
+            </a>
+          </div>
+        </div>
+
+        <div class="space-row reveal">
+          <div class="space-row__img space-row__img--hosp" aria-hidden="true">
+            <div class="space-row__caption">Hospitality</div>
+          </div>
+          <div class="space-row__text">
+            <span class="space-row__num">03</span>
+            <h3 class="space-row__title">Hotels &amp; Boutiques</h3>
+            <p class="space-row__body">
+              Surfaces that endure millions of encounters and emerge from each one unchanged. Hospitality demands beauty that does not age. We build for decades, not seasons.
+            </p>
+            <a href="#commission" class="link-arrow" data-cursor="link">
+              Commission a venue
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         V. CRAFT — About / Studio
+    ══════════════════════════════════════════ -->
+    <section class="craft" id="craft" aria-label="Craft and studio">
+      <div class="wrap">
+
+        <header class="section-head reveal">
+          <span class="section-idx">04</span>
+          <span class="section-rule" aria-hidden="true"></span>
+          <span class="section-label">Craft</span>
+        </header>
+
+        <div class="craft__grid">
+
+          <div class="craft__visual reveal" aria-hidden="true">
+            <div class="craft__img craft__img--a"></div>
+            <div class="craft__img craft__img--b"></div>
+            <div class="craft__plaque">
+              <span class="craft__plaque-n">14</span>
+              <span class="craft__plaque-l">years<br>of practice</span>
+            </div>
+          </div>
+
+          <div class="craft__words">
+            <h2 class="craft__h reveal">
+              The patience<br>
+              of mineral.<br>
+              <em>The precision<br>of architecture.</em>
+            </h2>
+            <p class="craft__p reveal">
+              Our studio was founded in the belief that craftsmanship is not a feature — it is the practice itself. We employ master applicators trained in European mineral traditions, working alongside architects from first sketch to final burnish.
+            </p>
+            <p class="craft__p reveal">
+              Every commission receives one project director, one lead craftsman. No hand-offs. No compromises in translation. The person who understands your vision applies your surface.
+            </p>
+            <a href="#commission" class="btn-line reveal" data-cursor="link" data-magnetic>
+              <span class="btn-line__label">Begin a Conversation</span>
+              <span class="btn-line__line" aria-hidden="true"></span>
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         VI. COMMISSION — Contact
+    ══════════════════════════════════════════ -->
+    <section class="commission" id="commission" aria-label="Commission inquiry">
+      <div class="wrap">
+
+        <header class="section-head reveal">
+          <span class="section-idx">05</span>
+          <span class="section-rule" aria-hidden="true"></span>
+          <span class="section-label">Commission</span>
+        </header>
+
+        <div class="commission__grid">
+
+          <div class="commission__intro">
+            <h2 class="commission__h reveal">
+              Every lasting space<br>
+              <em>begins with a single<br>conversation.</em>
+            </h2>
+            <p class="commission__body reveal">
+              We accept a limited number of commissions each year. A member of the studio will respond within 24 hours. We work across Europe and internationally with architects, designers, and private clients.
+            </p>
+            <address class="commission__contact reveal">
+              <div class="commission__contact-row">
+                <span>Studio</span>
+                <a href="/cdn-cgi/l/email-protection#a5d6d1d0c1cccae5c1c0c6cad5d7c0c1c48bc6cac8"><span class="__cf_email__" data-cfemail="a5d6d1d0c1cccae5c1c0c6cad5d7c0c1c48bc6cac8">[email&#160;protected]</span></a>
+              </div>
+              <div class="commission__contact-row">
+                <span>Atelier</span>
+                <a href="tel:+441234567890">+44 1234 567 890</a>
+              </div>
+              <div class="commission__contact-row">
+                <span>Locations</span>
+                <span>Milano — Wien — London</span>
+              </div>
+            </address>
+          </div>
+
+          <form class="form reveal" id="commissionForm"
+            action="https://formspree.io/f/mkoqvqbw"
+            method="POST"
+            novalidate
+            aria-label="Commission inquiry">
+
+            <div class="f">
+              <input type="text" id="f-name" name="name" required placeholder=" " autocomplete="name" />
+              <label for="f-name">Name</label>
+              <span class="f__bar" aria-hidden="true"></span>
+            </div>
+
+            <div class="f">
+              <input type="email" id="f-email" name="email" required placeholder=" " autocomplete="email" />
+              <label for="f-email">Email</label>
+              <span class="f__bar" aria-hidden="true"></span>
+            </div>
+
+            <div class="f">
+              <input type="text" id="f-studio" name="studio" placeholder=" " autocomplete="organization" />
+              <label for="f-studio">Studio / Firm <span class="f__opt">(optional)</span></label>
+              <span class="f__bar" aria-hidden="true"></span>
+            </div>
+
+            <div class="f f--sel">
+              <select id="f-type" name="type" required>
+                <option value="" disabled selected></option>
+                <option value="private">Private Residence</option>
+                <option value="commercial">Commercial</option>
+                <option value="hospitality">Hospitality</option>
+                <option value="developer">Developer</option>
+                <option value="other">Other</option>
+              </select>
+              <label for="f-type">Project Type</label>
+              <span class="f__bar" aria-hidden="true"></span>
+              <span class="f__caret" aria-hidden="true">↓</span>
+            </div>
+
+            <div class="f f--area">
+              <textarea id="f-brief" name="brief" rows="4" required placeholder=" "></textarea>
+              <label for="f-brief">Project brief</label>
+              <span class="f__bar" aria-hidden="true"></span>
+            </div>
+
+            <button type="submit" class="btn-submit" data-cursor="link" data-magnetic>
+              <span class="btn-submit__label">Submit Commission</span>
+              <span class="btn-submit__arrow" aria-hidden="true">→</span>
+            </button>
+
+            <p class="form-ok" id="formOk" role="status" aria-live="polite"></p>
+            <p class="form-err" id="formErr" role="alert" aria-live="assertive"></p>
+
+          </form>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════ -->
+  <footer class="foot" role="contentinfo">
+    <div class="wrap">
+      <div class="foot__inner">
+        <div class="foot__brand">
+          <p class="foot__wordmark">DECO PREDA</p>
+          <p class="foot__descriptor">Architectural Surface Atelier</p>
+        </div>
+        <nav class="foot__nav" aria-label="Footer navigation">
+          <a href="#atelier">Atelier</a>
+          <a href="#matter">Matter</a>
+          <a href="#space">Space</a>
+          <a href="#craft">Craft</a>
+          <a href="#commission">Commission</a>
+        </nav>
+        <p class="foot__copy">
+          &copy; <span id="yr"></span> Deco Preda. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
