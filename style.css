@@ -409,24 +409,25 @@ button {
   50%       { transform: scale(1.04); }
 }
 
-/* Base layers hidden — image replaces gradients */
+/* Base layers hidden — hero image replaces all gradients */
 .intro__layer--base,
 .intro__layer--mid {
   display: none;
 }
 
-/* Dark overlay left side — preserves text readability */
-.intro__layer--base {
-  display: block;
+/* Text readability overlay — sits above hero image, below content */
+.intro__scene::after {
+  content: '';
   position: absolute;
   inset: 0;
   background: linear-gradient(
     to right,
-    rgba(10, 9, 8, 0.72) 0%,
-    rgba(10, 9, 8, 0.45) 35%,
-    rgba(10, 9, 8, 0.10) 60%,
+    rgba(10, 9, 8, 0.65) 0%,
+    rgba(10, 9, 8, 0.35) 40%,
+    rgba(10, 9, 8, 0.08) 65%,
     transparent 100%
   );
+  pointer-events: none;
 }
 
 /* SVG noise grain — preserves mineral texture feel */
