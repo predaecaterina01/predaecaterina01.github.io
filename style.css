@@ -392,55 +392,54 @@ button {
   background: var(--dark-bg);
 }
 
-/* Architectural scene layers */
+/* ── Hero background image ── */
 .intro__scene {
   position: absolute;
   inset: 0;
+  background-image: url('hero.webp');
+  background-size: cover;
+  background-position: center right;
+  background-repeat: no-repeat;
   animation: breathe 12s ease-in-out infinite;
   transform-origin: center center;
 }
 
 @keyframes breathe {
   0%, 100% { transform: scale(1); }
-  50%       { transform: scale(1.05); }
+  50%       { transform: scale(1.04); }
 }
 
-/* Deep mineral base */
-.intro__layer--base {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 100% 80% at 70% 50%,
-      #1e1b16 0%,
-      #141210 40%,
-      #0a0908 100%);
-}
-
-/* Mid-tone architectural texture — warm charcoal concrete */
+/* Base layers hidden — image replaces gradients */
+.intro__layer--base,
 .intro__layer--mid {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 50% 70% at 65% 35%,
-      rgba(52, 44, 34, 0.9) 0%,
-      rgba(28, 23, 18, 0.6) 50%,
-      transparent 100%),
-    radial-gradient(ellipse 40% 50% at 30% 70%,
-      rgba(35, 30, 22, 0.5) 0%,
-      transparent 70%);
+  display: none;
 }
 
-/* SVG noise grain — simulates mineral / plaster texture */
+/* Dark overlay left side — preserves text readability */
+.intro__layer--base {
+  display: block;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(10, 9, 8, 0.72) 0%,
+    rgba(10, 9, 8, 0.45) 35%,
+    rgba(10, 9, 8, 0.10) 60%,
+    transparent 100%
+  );
+}
+
+/* SVG noise grain — preserves mineral texture feel */
 .intro__layer--grain {
   position: absolute;
   inset: 0;
   background-image:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.68' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
-  opacity: 0.8;
+  opacity: 0.5;
   mix-blend-mode: screen;
 }
 
-/* Soft raking light — single directional ray */
+/* Light ray — subtle veil over image */
 .intro__light {
   position: absolute;
   top: -20%;
@@ -450,9 +449,9 @@ button {
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    rgba(214, 196, 170, 0.06) 25%,
-    rgba(214, 196, 170, 0.12) 50%,
-    rgba(214, 196, 170, 0.06) 75%,
+    rgba(214, 196, 170, 0.04) 25%,
+    rgba(214, 196, 170, 0.08) 50%,
+    rgba(214, 196, 170, 0.04) 75%,
     transparent 100%
   );
   transform: rotate(-8deg);
@@ -468,7 +467,7 @@ button {
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    rgba(214, 196, 170, 0.04) 50%,
+    rgba(214, 196, 170, 0.03) 50%,
     transparent 100%
   );
 }
@@ -1353,21 +1352,21 @@ button {
 
 
 /* ──────────────────────────────────────────
-   17. contact SECTION — Contact
+   17. COMMISSION SECTION — Contact
 ────────────────────────────────────────── */
-.contact {
+.commission {
   background: var(--ivory);
   padding-block: var(--s-2xl);
 }
 
-.contact__grid {
+.commission__grid {
   display: grid;
   grid-template-columns: 1fr 1.2fr;
   gap: clamp(48px, 7vw, 100px);
   align-items: start;
 }
 
-.contact__h {
+.commission__h {
   font-family: var(--serif);
   font-weight: 300;
   font-size: var(--t-h2);
@@ -1376,12 +1375,12 @@ button {
   margin-bottom: var(--s-md);
 }
 
-.contact__h em {
+.commission__h em {
   font-style: italic;
   color: var(--stone);
 }
 
-.contact__body {
+.commission__body {
   font-size: var(--t-base);
   color: var(--stone);
   line-height: 1.9;
@@ -1389,20 +1388,20 @@ button {
   margin-bottom: var(--s-lg);
 }
 
-.contact__contact {
+.commission__contact {
   display: flex;
   flex-direction: column;
   gap: var(--s-md);
 }
 
-.contact__contact-row {
+.commission__contact-row {
   display: grid;
   grid-template-columns: 80px 1fr;
   gap: var(--s-sm);
   align-items: baseline;
 }
 
-.contact__contact-row span:first-child {
+.commission__contact-row span:first-child {
   font-family: var(--sans);
   font-size: 10px;
   font-weight: 300;
@@ -1411,8 +1410,8 @@ button {
   color: var(--taupe-d);
 }
 
-.contact__contact-row a,
-.contact__contact-row span:last-child {
+.commission__contact-row a,
+.commission__contact-row span:last-child {
   font-family: var(--sans);
   font-size: var(--t-base);
   font-weight: 300;
@@ -1420,7 +1419,7 @@ button {
   transition: color var(--dur-fast);
 }
 
-.contact__contact-row a:hover {
+.commission__contact-row a:hover {
   color: var(--taupe-d);
 }
 
@@ -1649,7 +1648,7 @@ button {
   .stat__sep { display: none; }
 
   .craft__grid,
-  .contact__grid {
+  .commission__grid {
     grid-template-columns: 1fr;
     gap: var(--s-lg);
   }
