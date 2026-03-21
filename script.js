@@ -943,8 +943,89 @@ document.querySelectorAll('.pcarousel').forEach(carousel => {
     surface.addEventListener('mouseenter', stopAuto);
     surface.addEventListener('mouseleave', startAuto);
 
+    /* ── Reload handler — triggered by JSON manifest loader ── */
+    surface.addEventListener('carousel:reload', () => {
+      stopAuto();
+      // Re-collect slides after DOM update
+      const newSlides = Array.from(surface.querySelectorAll('.pcs__slide'));
+      if (!newSlides.length) return;
+      newSlides.forEach((s, i) => {
+        s.classList.toggle('pcs__slide--active', i === 0);
+      });
+      // Rebuild dots
+      dotsWrap && (dotsWrap.innerHTML = '');
+      newSlides.forEach((_, i) => {
+        const d = document.createElement('button');
+        d.className = 'pcs__dot' + (i === 0 ? ' pcs__dot--active' : '');
+        d.setAttribute('aria-label', `Slide ${i + 1}`);
+        d.setAttribute('type', 'button');
+        d.addEventListener('click', () => goTo(i));
+        dotsWrap && dotsWrap.appendChild(d);
+        dots.push(d);
+      });
+      current = 0;
+      startAuto();
+    });
+
     /* ── Start ── */
     startAuto();
   });
 
+})();
+
+
+/* ══════════════════════════════════════════════════════════
+   JSON MANIFEST IMAGE LOADER
+   Loads images.json and replaces fallback gradient slides
+   with real WebP images when they exist
+   ══════════════════════════════════════════════════════════ */
+
+(async function loadImagesFromManifest() {
+  try {
+    const res = await fetch('images.json');
+    if (!res.ok) return; // No manifest — fallback gradients remain
+
+    const manifest = await res.json();
+
+    // For each carousel on the page
+    document.querySelectorAll('.panel__surface[data-carousel]').forEach(surface => {
+      const key   = surface.dataset.carousel;
+      const imgs  = manifest[key];
+      if (!imgs || !imgs.length) return;
+
+      const track = surface.querySelector('.pcs__track');
+      if (!track) return;
+
+      // Remove fallback slides
+      track.querySelectorAll('.pcs__slide--fallback').forEach(s => s.remove());
+
+      // Build real slides
+      imgs.forEach((item, i) => {
+        const slide = document.createElement('div');
+        slide.className = 'pcs__slide' + (i === 0 ? ' pcs__slide--active' : '');
+
+        const img = document.createElement('img');
+        img.src     = item.file;
+        img.alt     = item.label;
+        img.loading = 'lazy';
+        img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
+
+        const tag = document.createElement('span');
+        tag.className   = 'pcs__tag';
+        tag.textContent = item.label;
+
+        slide.appendChild(img);
+        slide.appendChild(tag);
+        track.appendChild(slide);
+      });
+
+      // Re-init this carousel (restart dots and auto-advance)
+      // The initSurfaceCarousels already ran — trigger a custom event
+      surface.dispatchEvent(new CustomEvent('carousel:reload'));
+    });
+
+  } catch (e) {
+    // Manifest missing or malformed — fallback gradients remain visible
+    console.info('[Deco Preda] images.json not found — using fallback gradients.');
+  }
 })();
