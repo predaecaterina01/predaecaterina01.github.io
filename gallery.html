@@ -1,1 +1,680 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Deco Preda — Full portfolio gallery. Microcement, resin systems, stone carpet across residential, commercial and industrial applications." />
+  <title>Gallery — Deco Preda</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+  <style>
+
+    /* ── Gallery page specific ── */
+    body { cursor: auto; }
+    a, button { cursor: auto; }
+
+    .gal-page {
+      background: var(--ivory);
+      min-height: 100vh;
+      padding-top: calc(var(--nav-h) + clamp(40px, 5vw, 64px));
+      padding-bottom: var(--s-2xl);
+    }
+
+    /* Header */
+    .gal-head {
+      max-width: var(--max);
+      margin-inline: auto;
+      padding-inline: var(--gut);
+      margin-bottom: clamp(40px, 5vw, 64px);
+    }
+
+    .gal-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--sans);
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--stone-l);
+      margin-bottom: clamp(24px, 3vw, 40px);
+      transition: color var(--dur-fast), gap var(--dur-mid) var(--ease);
+    }
+
+    .gal-back:hover { color: var(--ink); gap: 12px; }
+
+    .gal-head__title {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: var(--t-h2);
+      line-height: 1.05;
+      color: var(--ink);
+      margin-bottom: clamp(24px, 3vw, 36px);
+    }
+
+    .gal-head__title em {
+      font-style: italic;
+      color: var(--stone);
+    }
+
+    /* Filter bar */
+    .gal-filters {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--sand);
+      padding-bottom: 0;
+    }
+
+    .gal-filter {
+      position: relative;
+      padding: 12px 22px;
+      font-family: var(--sans);
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--stone-l);
+      background: transparent;
+      border: none;
+      transition: color var(--dur-fast);
+      cursor: pointer;
+    }
+
+    .gal-filter::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--ink);
+      transition: width var(--dur-mid) var(--ease);
+    }
+
+    .gal-filter:hover { color: var(--ink); }
+
+    .gal-filter.active {
+      color: var(--ink);
+    }
+
+    .gal-filter.active::after {
+      width: 100%;
+    }
+
+    .gal-count {
+      margin-left: auto;
+      font-family: var(--sans);
+      font-weight: 200;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      color: var(--stone-l);
+      padding: 12px 0;
+    }
+
+    /* Grid */
+    .gal-grid {
+      max-width: var(--max);
+      margin-inline: auto;
+      padding-inline: var(--gut);
+      padding-top: clamp(24px, 3vw, 40px);
+      columns: 3;
+      column-gap: 3px;
+    }
+
+    .gal-item {
+      break-inside: avoid;
+      margin-bottom: 3px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .gal-item[data-hidden="true"] {
+      display: none;
+    }
+
+    .gal-swatch {
+      display: block;
+      width: 100%;
+      transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .gal-item:hover .gal-swatch {
+      transform: scale(1.04);
+    }
+
+    /* Overlay on hover */
+    .gal-item__over {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 14, 12, 0);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 20px;
+      transition: background var(--dur-mid) var(--ease);
+    }
+
+    .gal-item:hover .gal-item__over {
+      background: rgba(15, 14, 12, 0.42);
+    }
+
+    .gal-item__name {
+      font-family: var(--sans);
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(246, 243, 238, 0);
+      transform: translateY(8px);
+      transition: color var(--dur-mid) var(--ease),
+                  transform var(--dur-mid) var(--ease);
+    }
+
+    .gal-item__mat {
+      font-family: var(--sans);
+      font-weight: 200;
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(183, 174, 163, 0);
+      transform: translateY(8px);
+      transition: color var(--dur-mid) var(--ease) 0.05s,
+                  transform var(--dur-mid) var(--ease) 0.05s;
+      margin-top: 4px;
+    }
+
+    .gal-item:hover .gal-item__name {
+      color: rgba(246, 243, 238, 0.95);
+      transform: translateY(0);
+    }
+
+    .gal-item:hover .gal-item__mat {
+      color: rgba(183, 174, 163, 0.75);
+      transform: translateY(0);
+    }
+
+    /* Expand icon */
+    .gal-item__expand {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 28px;
+      height: 28px;
+      border: 1px solid rgba(246, 243, 238, 0);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(246, 243, 238, 0);
+      transition: all var(--dur-mid) var(--ease);
+    }
+
+    .gal-item:hover .gal-item__expand {
+      border-color: rgba(246, 243, 238, 0.5);
+      color: rgba(246, 243, 238, 0.9);
+    }
+
+    /* Responsive grid */
+    @media (max-width: 900px) {
+      .gal-grid { columns: 2; }
+    }
+
+    @media (max-width: 500px) {
+      .gal-grid { columns: 1; }
+    }
+
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      background: rgba(10, 9, 8, 0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--s-lg);
+      pointer-events: none;
+      transition: background 0.4s var(--ease);
+    }
+
+    .lightbox.open {
+      background: rgba(10, 9, 8, 0.92);
+      pointer-events: all;
+    }
+
+    .lb-inner {
+      position: relative;
+      max-width: 900px;
+      width: 100%;
+      opacity: 0;
+      transform: scale(0.96);
+      transition: opacity 0.4s var(--ease),
+                  transform 0.4s var(--ease);
+    }
+
+    .lightbox.open .lb-inner {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .lb-surface {
+      display: block;
+      width: 100%;
+      border: none;
+    }
+
+    .lb-meta {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 16px 0 0;
+    }
+
+    .lb-name {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(20px, 2.5vw, 28px);
+      color: var(--dark-text);
+    }
+
+    .lb-mat {
+      font-family: var(--sans);
+      font-weight: 200;
+      font-size: 10px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--dark-muted);
+    }
+
+    .lb-close {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(183, 174, 163, 0.2);
+      border-radius: 50%;
+      color: var(--dark-muted);
+      background: transparent;
+      transition: border-color var(--dur-fast), color var(--dur-fast);
+      cursor: pointer;
+    }
+
+    .lb-close:hover {
+      border-color: rgba(183, 174, 163, 0.6);
+      color: var(--dark-text);
+    }
+
+    .lb-nav {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(183, 174, 163, 0.2);
+      border-radius: 50%;
+      color: var(--dark-muted);
+      background: transparent;
+      transition: border-color var(--dur-fast), color var(--dur-fast);
+      cursor: pointer;
+    }
+
+    .lb-nav:hover {
+      border-color: rgba(183, 174, 163, 0.6);
+      color: var(--dark-text);
+    }
+
+    .lb-prev { left: 24px; }
+    .lb-next { right: 24px; }
+
+    .lb-counter {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--sans);
+      font-weight: 200;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      color: var(--dark-muted);
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav on-light" id="nav" aria-label="Primary">
+    <a href="index.html" class="nav__wordmark" aria-label="Deco Preda home">
+      DECO<span class="nav__wordmark-thin">PREDA</span>
+    </a>
+    <div class="nav__panel">
+      <a href="index.html#atelier"    class="nav__item">Atelier</a>
+      <a href="index.html#matter"     class="nav__item">Matter</a>
+      <a href="index.html#space"      class="nav__item">Space</a>
+      <a href="index.html#craft"      class="nav__item">Craft</a>
+      <a href="index.html#about"      class="nav__item">About Us</a>
+      <a href="surface-lab.html"      class="nav__item">Surface Lab</a>
+      <a href="index.html#commission" class="nav__item nav__item--cta">Contact</a>
+    </div>
+  </nav>
+
+  <!-- Gallery page -->
+  <main class="gal-page">
+
+    <div class="gal-head">
+      <a href="index.html" class="gal-back">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M8 2L4 6L8 10" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Back to studio
+      </a>
+
+      <h1 class="gal-head__title">
+        The complete work.<br>
+        <em>Every surface. Every scale.</em>
+      </h1>
+
+      <!-- Filters -->
+      <div class="gal-filters" role="tablist" aria-label="Filter by material">
+        <button class="gal-filter active" data-filter="all" role="tab" aria-selected="true" type="button">All</button>
+        <button class="gal-filter" data-filter="microcement" role="tab" aria-selected="false" type="button">Microcement</button>
+        <button class="gal-filter" data-filter="resin" role="tab" aria-selected="false" type="button">Resin Systems</button>
+        <button class="gal-filter" data-filter="stone" role="tab" aria-selected="false" type="button">Stone Carpet</button>
+        <button class="gal-filter" data-filter="industrial" role="tab" aria-selected="false" type="button">Industrial</button>
+        <span class="gal-count" id="galCount">0 projects</span>
+      </div>
+    </div>
+
+    <!-- Masonry grid -->
+    <div class="gal-grid" id="galGrid" role="list">
+
+      <!-- MICROCEMENT -->
+      <div class="gal-item" data-mat="microcement" data-name="Bathroom Sanctuary" data-location="London" role="listitem" tabindex="0">
+        <div class="gal-swatch" style="height:280px;background:linear-gradient(158deg,#cdc4b5 0%,#b5aa9a 60%,#c4bba8 100%)">
+          <div style="position:absolute;inset:0;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.11'/%3E%3C/svg%3E\");mix-blend-mode:multiply;opacity:0.8;pointer-events:none;"></div>
+        </div>
+        <div class="gal-item__over">
+          <div class="gal-item__expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 2h3M2 2v3M10 2H7M10 2v3M2 10h3M2 10V7M10 10H7M10 10V7" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></div>
+          <span class="gal-item__name">Bathroom Sanctuary</span>
+          <span class="gal-item__mat">Microcement · Ivory</span>
+        </div>
+      </div>
+
+      <div class="gal-item" data-mat="microcement" data-name="Hotel Corridor" data-location="Dublin" role="listitem" tabindex="0">
+        <div class="gal-swatch" style="height:360px;background:linear-gradient(158deg,#6e6860 0%,#54504a 60%,#636059 100%)">
+          <div style="position:absolute;inset:0;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.11'/%3E%3C/svg%3E\");mix-blend-mode:multiply;opacity:0.8;pointer-events:none;"></div>
+        </div>
+        <div class="gal-item__over">
+          <div class="gal-item__expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 2h3M2 2v3M10 2H7M10 2v3M2 10h3M2 10V7M10 10H7M10 10V7" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></div>
+          <span class="gal-item__name">Hotel Corridor</span>
+          <span class="gal-item__mat">Microcement · Slate</span>
+        </div>
+      </div>
+
+      <div class="gal-item" data-mat="resin" data-name="Logistics Hub" data-location="Manchester" role="listitem" tabindex="0">
+        <div class="gal-swatch" style="height:240px;background:linear-gradient(158deg,#8a8a8a 0%,#666666 60%,#808080 100%)">
+          <div style="position:absolute;inset:0;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.11'/%3E%3C/svg%3E\");mix-blend-mode:multiply;opacity:0.8;pointer-events:none;"></div>
+        </div>
+        <div class="gal-item__over">
+          <div class="gal-item__expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 2h3M2 2v3M10 2H7M10 2v3M2 10h3M2 10V7M10 10H7M10 10V7" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></div>
+          <span class="gal-item__name">Logistics Hub</span>
+          <span class="gal-item__mat">Epoxy Resin · Mid Grey</span>
+        </div>
+      </div>
+
+      <div class="gal-item" data-mat="stone" data-name="Pool Terrace" data-location="Kent" role="listitem" tabindex="0">
+        <div class="gal-swatch" style="height:320px;background:radial-gradient(ellipse 120% 100% at 40% 60%,#d8d0c4 0%,#c4bcb0 60%,#d0c8bc 100%)">
+          <div style="position:absolute;inset:0;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.11'/%3E%3C/svg%3E\");mix-blend-mode:multiply;opacity:0.8;pointer-events:none;"></div>
+        </div>
+        <div class="gal-item__over">
+          <div class="gal-item__expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 2h3M2 2v3M10 2H7M10 2v3M2 10h3M2 10V7M10 10H7M10 10V7" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></div>
+          <span class="gal-item__name">Pool Terrace</span>
+          <span class="gal-item__mat">Stone Carpet · Pearl</span>
+        </div>
+      </div>
+
+      <div class="gal-item" data-mat="resin industrial" data-name="Distribution Centre" data-location="Birmingham" role="listitem" tabindex="0">
+        <div class="gal-swatch" style="height:280px;background:linear-gradient(158deg,#3a3a3a 0%,#222222 60%,#333333 100%)">
+          <div style="position:absolute;inset:0;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.11'/%3E%3C/svg%3E\");mix-blend-mode:multiply;opacity:0.8;pointer-events:none;"></div>
+        </div>
+        <div class="gal-item__over">
+          <div class="gal-item__expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 2h3M2 2v3M10 2H7M10 2v3M2 10h3M2 10V7M10 10H7M10 10V7" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></div>
+          <span class="gal-item__name">Distribution Centre</span>
+          <span class="gal-item__mat">MMA Resin · Anthracite</span>
+        </div>
+      </div>
+
+      <div class="gal-item" data-mat="microcement" data-name="Spa Retreat" data-location="Edinburgh" role="listitem" tabindex="0">
+        <div class="gal-swatch" style="height:380px;background:linear-gradient(158deg,#b8b0a8 0%,#9e9890 60%,#b0a8a0 100%)">
+          <div style="position:absolute;inset:0;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.11'/%3E%3C/svg%3E\");mix-blend-mode:multiply;opacity:0.8;pointer-events:none;"></div>
+        </div>
+        <div class="gal-item__over">
+          <div class="gal-item__expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 2h3M2 2v3M10 2H7M10 2v3M2 10h3M2 10V7M10 10H7M10 10V7" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></div>
+          <span class="gal-item__name">Spa Retreat</span>
+          <span class="gal-item__mat">Microcement · Greige</span>
+        </div>
+      </div>
+
+      <div class="gal-item" data-mat="resin industrial" data-name="Public Car Park" data-location="Dublin" role="listitem" tabindex="0">
+        <div class="gal-swatch" style="height:260px;background:linear-gradient(158deg,#646464 0%,#484848 60%,#5a5a5a 100%)">
+          <div style="position:absolute;inset:0;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.11'/%3E%3C/svg%3E\");mix-blend-mode:multiply;opacity:0.8;pointer-events:none;"></div>
+        </div>
+        <div class="gal-item__over">
+          <div class="gal-item__expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 2h3M2 2v3M10 2H7M10 2v3M2 10h3M2 10V7M10 10H7M10 10V7" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></div>
+          <span class="gal-item__name">Public Car Park</span>
+          <span class="gal-item__mat">Polyester Resin · Dark Grey</span>
+        </div>
+      </div>
+
+      <div class="gal-item" data-mat="stone" data-name="Garden Pathway" data-location="Surrey" role="listitem" tabindex="0">
+        <div class="gal-swatch" style="height:300px;background:radial-gradient(ellipse 120% 100% at 40% 60%,#e0d8cc 0%,#ccc4b8 60%,#d8d0c4 100%)">
+          <div style="position:absolute;inset:0;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.11'/%3E%3C/svg%3E\");mix-blend-mode:multiply;opacity:0.8;pointer-events:none;"></div>
+        </div>
+        <div class="gal-item__over">
+          <div class="gal-item__expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 2h3M2 2v3M10 2H7M10 2v3M2 10h3M2 10V7M10 10H7M10 10V7" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></div>
+          <span class="gal-item__name">Garden Pathway</span>
+          <span class="gal-item__mat">Stone Carpet · Ivory</span>
+        </div>
+      </div>
+
+      <div class="gal-item" data-mat="microcement" data-name="Office Reception" data-location="London" role="listitem" tabindex="0">
+        <div class="gal-swatch" style="height:260px;background:linear-gradient(158deg,#d6cfc5 0%,#c0b8ae 60%,#cec6bc 100%)">
+          <div style="position:absolute;inset:0;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.11'/%3E%3C/svg%3E\");mix-blend-mode:multiply;opacity:0.8;pointer-events:none;"></div>
+        </div>
+        <div class="gal-item__over">
+          <div class="gal-item__expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 2h3M2 2v3M10 2H7M10 2v3M2 10h3M2 10V7M10 10H7M10 10V7" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></div>
+          <span class="gal-item__name">Office Reception</span>
+          <span class="gal-item__mat">Microcement · Sand</span>
+        </div>
+      </div>
+
+      <div class="gal-item" data-mat="resin industrial" data-name="Manufacturing Floor" data-location="Leeds" role="listitem" tabindex="0">
+        <div class="gal-swatch" style="height:340px;background:linear-gradient(158deg,#b0b8b0 0%,#909890 60%,#a8b0a8 100%)">
+          <div style="position:absolute;inset:0;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.11'/%3E%3C/svg%3E\");mix-blend-mode:multiply;opacity:0.8;pointer-events:none;"></div>
+        </div>
+        <div class="gal-item__over">
+          <div class="gal-item__expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 2h3M2 2v3M10 2H7M10 2v3M2 10h3M2 10V7M10 10H7M10 10V7" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></div>
+          <span class="gal-item__name">Manufacturing Floor</span>
+          <span class="gal-item__mat">PU Resin · Sage Grey</span>
+        </div>
+      </div>
+
+      <div class="gal-item" data-mat="resin" data-name="Boutique Showroom" data-location="Dublin" role="listitem" tabindex="0">
+        <div class="gal-swatch" style="height:280px;background:linear-gradient(158deg,#e2dcd2 0%,#cdc4ba 60%,#dbd3c9 100%)">
+          <div style="position:absolute;inset:0;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.11'/%3E%3C/svg%3E\");mix-blend-mode:multiply;opacity:0.8;pointer-events:none;"></div>
+        </div>
+        <div class="gal-item__over">
+          <div class="gal-item__expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 2h3M2 2v3M10 2H7M10 2v3M2 10h3M2 10V7M10 10H7M10 10V7" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></div>
+          <span class="gal-item__name">Boutique Showroom</span>
+          <span class="gal-item__mat">Epoxy Resin · Ivory</span>
+        </div>
+      </div>
+
+      <div class="gal-item" data-mat="microcement" data-name="Private Kitchen" data-location="London" role="listitem" tabindex="0">
+        <div class="gal-swatch" style="height:300px;background:linear-gradient(158deg,#e2dcd2 0%,#cdc4ba 60%,#dbd3c9 100%)">
+          <div style="position:absolute;inset:0;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.11'/%3E%3C/svg%3E\");mix-blend-mode:multiply;opacity:0.8;pointer-events:none;"></div>
+        </div>
+        <div class="gal-item__over">
+          <div class="gal-item__expand"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 2h3M2 2v3M10 2H7M10 2v3M2 10h3M2 10V7M10 10H7M10 10V7" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></div>
+          <span class="gal-item__name">Private Kitchen</span>
+          <span class="gal-item__mat">Microcement · Pearl</span>
+        </div>
+      </div>
+
+    </div><!-- /gal-grid -->
+
+  </main>
+
+  <!-- ── LIGHTBOX ── -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image detail view">
+    <div class="lb-inner" id="lbInner">
+      <div class="lb-surface" id="lbSurface" style="height:520px;"></div>
+      <div class="lb-meta">
+        <span class="lb-name" id="lbName"></span>
+        <span class="lb-mat" id="lbMat"></span>
+      </div>
+    </div>
+    <button class="lb-close" id="lbClose" aria-label="Close">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+    </button>
+    <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="lb-nav lb-next" id="lbNext" aria-label="Next">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 2L10 7L5 12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <span class="lb-counter" id="lbCounter"></span>
+  </div>
+
+  <script>
+    'use strict';
+
+    /* ── Filter logic ── */
+    const filterBtns = document.querySelectorAll('.gal-filter');
+    const items      = Array.from(document.querySelectorAll('.gal-item'));
+    const countEl    = document.getElementById('galCount');
+
+    function updateCount() {
+      const visible = items.filter(i => i.dataset.hidden !== 'true').length;
+      countEl.textContent = visible + ' project' + (visible !== 1 ? 's' : '');
+    }
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+
+        const f = btn.dataset.filter;
+        items.forEach(item => {
+          const mats = item.dataset.mat || '';
+          const show = f === 'all' || mats.includes(f);
+          item.dataset.hidden = show ? 'false' : 'true';
+        });
+        updateCount();
+      });
+    });
+
+    updateCount();
+
+    /* ── Lightbox ── */
+    const lb       = document.getElementById('lightbox');
+    const lbSurf   = document.getElementById('lbSurface');
+    const lbName   = document.getElementById('lbName');
+    const lbMat    = document.getElementById('lbMat');
+    const lbClose  = document.getElementById('lbClose');
+    const lbPrev   = document.getElementById('lbPrev');
+    const lbNext   = document.getElementById('lbNext');
+    const lbCnt    = document.getElementById('lbCounter');
+
+    let visibleItems = [];
+    let lbCurrent    = 0;
+
+    function getVisible() {
+      return items.filter(i => i.dataset.hidden !== 'true');
+    }
+
+    function openLightbox(item) {
+      visibleItems = getVisible();
+      lbCurrent    = visibleItems.indexOf(item);
+      renderLb();
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function renderLb() {
+      const item   = visibleItems[lbCurrent];
+      const swatch = item.querySelector('.gal-swatch');
+      lbSurf.style.cssText = swatch.style.cssText + ';border-radius:0;';
+      lbSurf.style.height  = 'clamp(300px, 55vh, 580px)';
+      lbName.textContent   = item.dataset.name;
+      lbMat.textContent    = item.dataset.mat.split(' ')[0].charAt(0).toUpperCase() +
+                             item.dataset.mat.split(' ')[0].slice(1) +
+                             ' · ' + item.dataset.location;
+      lbCnt.textContent    = (lbCurrent + 1) + ' / ' + visibleItems.length;
+    }
+
+    items.forEach(item => {
+      item.addEventListener('click', () => openLightbox(item));
+      item.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openLightbox(item); });
+    });
+
+    lbClose.addEventListener('click', closeLightbox);
+
+    lbPrev.addEventListener('click', () => {
+      lbCurrent = (lbCurrent - 1 + visibleItems.length) % visibleItems.length;
+      renderLb();
+    });
+
+    lbNext.addEventListener('click', () => {
+      lbCurrent = (lbCurrent + 1) % visibleItems.length;
+      renderLb();
+    });
+
+    lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+
+    document.addEventListener('keydown', e => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft')  { lbCurrent = (lbCurrent - 1 + visibleItems.length) % visibleItems.length; renderLb(); }
+      if (e.key === 'ArrowRight') { lbCurrent = (lbCurrent + 1) % visibleItems.length; renderLb(); }
+    });
+
+    /* Touch swipe in lightbox */
+    let tsX = 0;
+    lb.addEventListener('touchstart', e => { tsX = e.changedTouches[0].clientX; }, { passive: true });
+    lb.addEventListener('touchend',   e => {
+      const dx = e.changedTouches[0].clientX - tsX;
+      if (Math.abs(dx) > 50) {
+        lbCurrent = dx < 0
+          ? (lbCurrent + 1) % visibleItems.length
+          : (lbCurrent - 1 + visibleItems.length) % visibleItems.length;
+        renderLb();
+      }
+    }, { passive: true });
+  </script>
+
+</body>
+</html>
