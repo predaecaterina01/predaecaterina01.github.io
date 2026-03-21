@@ -3,175 +3,156 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Deco Preda — Architectural Surface Atelier. Microcement, resin and decorative plaster for spaces of permanence." />
-  <title>Deco Preda — Atelier</title>
-
+  <meta name="description" content="Deco Preda — Specialist architectural surface contractor. Microcement, performance resin, design resin, stone carpet and hybrid surface systems. London · Dublin." />
+  <title>Deco Preda — Architectural Surface Contractor</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
-
   <link rel="stylesheet" href="style.css" />
-
-  <!-- Formspree — no SDK needed, uses plain fetch() in script.js -->
 </head>
 <body>
 
-  <!-- Scroll progress -->
   <div class="progress" id="progress" aria-hidden="true"></div>
-
-  <!-- Custom cursor -->
   <div class="cursor" id="cursor" aria-hidden="true">
     <div class="cursor__ring"></div>
     <div class="cursor__dot"></div>
   </div>
 
-  <!-- ══════════════════════════════════════════
-       LOADER
-  ══════════════════════════════════════════ -->
+  <!-- LOADER -->
   <div class="loader" id="loader" aria-hidden="true">
     <div class="loader__body">
       <span class="loader__mark">DP</span>
-      <div class="loader__line">
-        <div class="loader__fill"></div>
-      </div>
-      <span class="loader__sub">Atelier</span>
+      <div class="loader__line"><div class="loader__fill"></div></div>
+      <span class="loader__sub">Architectural Surfaces</span>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════
-       NAVIGATION
-  ══════════════════════════════════════════ -->
+  <!-- NAVIGATION -->
   <nav class="nav" id="nav" aria-label="Primary">
     <a href="#intro" class="nav__wordmark" aria-label="Deco Preda home">
       DECO<span class="nav__wordmark-thin">PREDA</span>
     </a>
-
-    <button class="nav__burger" id="navBurger"
-      aria-label="Open menu" aria-expanded="false" aria-controls="navPanel">
+    <button class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="navPanel">
       <span></span><span></span>
     </button>
-
     <div class="nav__panel" id="navPanel" aria-hidden="true">
-      <a href="#atelier"       class="nav__item" data-cursor="link">Atelier</a>
-      <a href="#matter"        class="nav__item" data-cursor="link">Matter</a>
-      <a href="#space"         class="nav__item" data-cursor="link">Space</a>
-      <a href="#craft"         class="nav__item" data-cursor="link">Craft</a>
-      <a href="#about"         class="nav__item" data-cursor="link">About Us</a>
-      <a href="#commission"    class="nav__item nav__item--cta" data-cursor="link">Contact</a>
+      <a href="#who-we-are"           class="nav__item" data-cursor="link">Who We Are</a>
+      <a href="#systems"              class="nav__item" data-cursor="link">Systems</a>
+      <a href="#projects"             class="nav__item" data-cursor="link">Projects</a>
+      <a href="#craft"                class="nav__item" data-cursor="link">Craft</a>
+      <a href="signature-series.html" class="nav__item" data-cursor="link">Signature Series</a>
+      <a href="#contact"              class="nav__item nav__item--cta" data-cursor="link">Contact</a>
     </div>
   </nav>
 
   <main>
 
-    <!-- ══════════════════════════════════════════
-         I. INTRO — Dark cinematic
-    ══════════════════════════════════════════ -->
+    <!-- ══ I. HERO ══ -->
     <section class="intro" id="intro" aria-label="Introduction">
-
-      <!-- Deep architectural background -->
       <div class="intro__scene" id="introScene" aria-hidden="true">
-        <!-- Dark mineral texture layers -->
         <div class="intro__layer intro__layer--base"></div>
         <div class="intro__layer intro__layer--mid"></div>
         <div class="intro__layer intro__layer--grain"></div>
-        <!-- Soft raking light ray -->
         <div class="intro__light"></div>
-        <!-- Horizontal rule — materiality marker -->
         <div class="intro__rule-v intro__rule-v--left" aria-hidden="true"></div>
         <div class="intro__rule-v intro__rule-v--right" aria-hidden="true"></div>
       </div>
-
       <div class="intro__content">
-        <!-- Small overline -->
-        <p class="intro__overline reveal-hero" aria-label="Studio location">
-          <span>London</span>
-          <span class="sep" aria-hidden="true">—</span>
-          <span>Dublin</span>
+        <p class="intro__overline reveal-hero">
+          <span>London</span><span class="sep" aria-hidden="true">—</span><span>Dublin</span>
         </p>
-
-        <!-- Main headline — split for stagger -->
-        <h1 class="intro__title" aria-label="Where light meets surface.">
+        <h1 class="intro__title">
           <span class="intro__title-row reveal-hero">Where light</span>
           <span class="intro__title-row intro__title-row--italic reveal-hero">meets surface.</span>
         </h1>
-
         <p class="intro__body reveal-hero">
-          An atelier of architectural surfaces.<br>
-          Craft applied with the patience of centuries.
+          An architectural surface contractor.<br>
+          Precision applied at every scale.
         </p>
-        <p class="intro__subtitle reveal-hero">
-          Microcement · Resin · Stone Aggregate · Industrial Flooring
+        <p class="intro__domains reveal-hero">
+          Residential &nbsp;·&nbsp; Commercial &nbsp;·&nbsp; Industrial
         </p>
-
         <div class="intro__actions reveal-hero">
-          <a href="#atelier" class="btn-ghost" data-cursor="link" data-magnetic>
-            <span class="btn-ghost__label">Enter the Studio</span>
+          <a href="#systems" class="btn-ghost" data-cursor="link" data-magnetic>
+            <span class="btn-ghost__label">Discover the Work</span>
             <span class="btn-ghost__icon" aria-hidden="true">↓</span>
           </a>
         </div>
       </div>
-
-      <!-- Scroll cue -->
       <div class="intro__scroll" aria-hidden="true">
         <div class="intro__scroll-line"></div>
       </div>
-
     </section>
 
-    <!-- ══════════════════════════════════════════
-         TRANSITION BAND — dark → warm
-    ══════════════════════════════════════════ -->
     <div class="transition-band" aria-hidden="true"></div>
 
-    <!-- ══════════════════════════════════════════
-         II. ATELIER — Philosophy
-    ══════════════════════════════════════════ -->
-    <section class="atelier" id="atelier" aria-label="Atelier philosophy">
+    <!-- ══ II. WHO WE ARE ══ -->
+    <section class="who" id="who-we-are" aria-label="Who We Are">
       <div class="wrap">
 
         <header class="section-head reveal">
           <span class="section-idx">01</span>
           <span class="section-rule" aria-hidden="true"></span>
-          <span class="section-label">Atelier</span>
+          <span class="section-label">Who We Are</span>
         </header>
 
-        <div class="atelier__grid">
-          <div class="atelier__statement reveal">
-            <h2 class="atelier__h">
+        <div class="who__grid">
+          <div class="who__statement reveal">
+            <h2 class="who__h">
               A surface is not<br>
               decoration.<br>
-              <em>It is architecture.</em>
+              <em>It is specification.</em>
             </h2>
           </div>
+          <div class="who__aside">
+            <p class="who__p reveal">
+              Deco Preda is a specialist architectural surface contractor operating across the United Kingdom and Ireland. We deliver engineered surface systems — from precision mineral applications in private residences to high-performance resin flooring across logistics infrastructure at industrial scale.
+            </p>
+            <p class="who__p reveal">
+              Our work spans two distinct verticals. In residential, commercial and hospitality environments, we apply microcement, decorative resin, stone carpet and hybrid surface compositions that combine technical performance with uncompromising aesthetic intent. In infrastructure and logistics, our high-performance resin systems are specified for extreme compressive loads, chemical resistance and continuous heavy-traffic use — from 50m² private commissions to facilities exceeding 10,000m².
+            </p>
+            <p class="who__p reveal">
+              Every project — regardless of scale — is governed by identical standards: certified European material systems, EN-protocol application procedures, full technical documentation and post-installation support.
+            </p>
 
-          <div class="atelier__aside">
-            <p class="atelier__p reveal">
-              Deco Preda was conceived at the intersection of architectural practice and material craft — in the moment when a drawn surface specification meets the reality of mineral, texture, and light falling across a plane at noon.
-            </p>
-            <p class="atelier__p reveal">
-              We exist for architects and interior designers who understand that a floor is a horizon. A wall is a sky. A surface is the first and last argument a space makes.
-            </p>
-            <p class="atelier__p reveal">
-              Our practice is material research made physical. Each commission begins with silence — with listening before proposing, with understanding before applying.
-            </p>
+            <div class="who__values reveal">
+              <div class="who__val">
+                <span class="who__val-title">Execution Quality</span>
+                <span class="who__val-desc">EN-standard application protocols. Multi-coat systems. Full substrate preparation documentation at every stage.</span>
+              </div>
+              <div class="who__val">
+                <span class="who__val-title">Material Integrity</span>
+                <span class="who__val-desc">Certified European mineral and resin systems — selected for long-term performance, durability and regulatory compliance.</span>
+              </div>
+              <div class="who__val">
+                <span class="who__val-title">Industrial Scale</span>
+                <span class="who__val-desc">Capacity, logistics and technical management from 50m² residential commissions to 10,000m²+ infrastructure projects.</span>
+              </div>
+              <div class="who__val">
+                <span class="who__val-title">Design Versatility</span>
+                <span class="who__val-desc">Custom resin patterns, hybrid compositions, bespoke mineral tones and graphic wayfinding systems — no two projects identical.</span>
+              </div>
+            </div>
 
-            <!-- Pull metric -->
-            <div class="atelier__metric reveal">
-              <span class="atelier__metric-n" data-count="14">0</span>
-              <span class="atelier__metric-unit">years</span>
-              <p class="atelier__metric-label">of architectural surface research</p>
+            <div class="who__locations reveal">
+              <div class="who__loc">
+                <span class="who__loc-label">London</span>
+                <span class="who__loc-desc">Primary operations &amp; UK projects</span>
+              </div>
+              <div class="who__loc">
+                <span class="who__loc-label">Dublin</span>
+                <span class="who__loc-desc">Ireland &amp; European operations</span>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Horizontal rule -->
         <div class="divider reveal" aria-hidden="true"></div>
 
-        <!-- Stat row -->
         <div class="stats reveal">
           <div class="stat">
             <span class="stat__n" data-count="340">0</span>
-            <p class="stat__l">Commissions</p>
+            <p class="stat__l">Projects</p>
           </div>
           <div class="stat__sep" aria-hidden="true"></div>
           <div class="stat">
@@ -185,656 +166,397 @@
           </div>
           <div class="stat__sep" aria-hidden="true"></div>
           <div class="stat">
-            <span class="stat__n" data-count="60">0</span>
-            <span class="stat__denom">+</span>
-            <p class="stat__l">Mineral Tones</p>
+            <span class="stat__n" data-count="10">0</span>
+            <span class="stat__denom">k+</span>
+            <p class="stat__l">m² Industrial</p>
           </div>
         </div>
 
       </div>
     </section>
 
-    <!-- ══════════════════════════════════════════
-         III. MATTER — Materials
-    ══════════════════════════════════════════ -->
-    <section class="matter" id="matter" aria-label="Materials">
+    <!-- ══ III. SYSTEMS ══ -->
+    <section class="systems" id="systems" aria-label="Surface Systems">
       <div class="wrap">
-
         <header class="section-head reveal">
           <span class="section-idx">02</span>
           <span class="section-rule" aria-hidden="true"></span>
-          <span class="section-label">Matter</span>
+          <span class="section-label">Systems</span>
         </header>
-
-        <h2 class="matter__h reveal">
-          Three materials.<br><em>Infinite character.</em>
+        <h2 class="systems__h reveal">
+          Four engineered systems.<br><em>Infinite application.</em>
         </h2>
-
       </div>
 
-      <!-- Full-bleed material panels -->
-      <div class="matter__panels">
+      <div class="systems__panels">
 
+        <!-- SYSTEM I — Microcement -->
         <article class="panel reveal" aria-label="Microcement">
-
-          <!-- ── Surface carousel ── -->
-          <div class="panel__surface panel__surface--cement" role="region" aria-label="Microcement gallery" data-carousel="microcement">
-
-            <!-- Slides -->
+          <div class="panel__surface" role="region" aria-label="Microcement gallery" data-carousel="microcement">
             <div class="pcs__track">
-              <div class="pcs__slide pcs__slide--active" style="background:linear-gradient(158deg,#cdc4b5 0%,#b5aa9a 60%,#c4bba8 100%)">
-                <div class="pcs__grain"></div>
-                <span class="pcs__tag">Bathroom · Ivory</span>
-              </div>
-              <div class="pcs__slide" style="background:linear-gradient(158deg,#6e6860 0%,#54504a 60%,#636059 100%)">
-                <div class="pcs__grain"></div>
-                <span class="pcs__tag">Hotel · Slate</span>
-              </div>
-              <div class="pcs__slide" style="background:linear-gradient(158deg,#d6cfc5 0%,#c0b8ae 60%,#cec6bc 100%)">
-                <div class="pcs__grain"></div>
-                <span class="pcs__tag">Office · Sand</span>
-              </div>
-              <div class="pcs__slide" style="background:linear-gradient(158deg,#a8a09a 0%,#8c857f 60%,#9e9790 100%)">
-                <div class="pcs__grain"></div>
-                <span class="pcs__tag">Living · Charcoal</span>
-              </div>
-              <div class="pcs__slide" style="background:linear-gradient(158deg,#b8b0a8 0%,#9e9890 60%,#b0a8a0 100%)">
-                <div class="pcs__grain"></div>
-                <span class="pcs__tag">Spa · Greige</span>
-              </div>
-              <div class="pcs__slide" style="background:linear-gradient(158deg,#e2dcd2 0%,#cdc4ba 60%,#dbd3c9 100%)">
-                <div class="pcs__grain"></div>
-                <span class="pcs__tag">Kitchen · Pearl</span>
-              </div>
+              <div class="pcs__slide pcs__slide--active" style="background:linear-gradient(158deg,#cdc4b5 0%,#b5aa9a 60%,#c4bba8 100%)"><div class="pcs__grain"></div><span class="pcs__tag">Bathroom · Ivory</span></div>
+              <div class="pcs__slide" style="background:linear-gradient(158deg,#6e6860 0%,#54504a 60%,#636059 100%)"><div class="pcs__grain"></div><span class="pcs__tag">Hotel · Slate</span></div>
+              <div class="pcs__slide" style="background:linear-gradient(158deg,#d6cfc5 0%,#c0b8ae 60%,#cec6bc 100%)"><div class="pcs__grain"></div><span class="pcs__tag">Office · Sand</span></div>
+              <div class="pcs__slide" style="background:linear-gradient(158deg,#b8b0a8 0%,#9e9890 60%,#b0a8a0 100%)"><div class="pcs__grain"></div><span class="pcs__tag">Spa · Greige</span></div>
+              <div class="pcs__slide" style="background:linear-gradient(158deg,#e2dcd2 0%,#cdc4ba 60%,#dbd3c9 100%)"><div class="pcs__grain"></div><span class="pcs__tag">Kitchen · Pearl</span></div>
             </div>
-
-            <!-- Navigation arrows -->
-            <button class="pcs__arrow pcs__arrow--prev" aria-label="Previous image" type="button">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <button class="pcs__arrow pcs__arrow--next" aria-label="Next image" type="button">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-
-            <!-- Bottom bar: dots + view more -->
+            <button class="pcs__arrow pcs__arrow--prev" aria-label="Previous" type="button"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button class="pcs__arrow pcs__arrow--next" aria-label="Next" type="button"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
             <div class="pcs__foot">
-              <div class="pcs__dots" aria-hidden="true"></div>
-              <a href="gallery-microcement.html" class="pcs__more" data-cursor="link">
-                <span>View gallery</span>
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </a>
+              <div class="pcs__dots"></div>
+              <a href="gallery.html?filter=microcement" class="pcs__more" data-cursor="link"><span>View gallery</span><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
             </div>
-
           </div>
-
           <div class="panel__body">
             <span class="panel__idx" aria-hidden="true">I</span>
             <h3 class="panel__name">Microcement</h3>
-            <p class="panel__desc">
-              A mineral membrane of 2–3 mm. Continuous, seamless, absolute. Applied across walls, floors, and furniture with no interruption of form.
-            </p>
-            <ul class="panel__props" aria-label="Properties">
-              <li>Seamless &amp; monolithic</li>
+            <p class="panel__desc">A mineral membrane of 2–3mm. Continuous, seamless, monolithic. Applied across walls, floors, stairs and furniture without interruption of form or material.</p>
+            <ul class="panel__props">
+              <li>Seamless — zero joints, zero grout</li>
               <li>Waterproof &amp; durable</li>
-              <li>60+ mineral pigments</li>
+              <li>60+ certified mineral pigments</li>
             </ul>
-
-            <!-- Estimate trigger -->
-            <button class="panel__estimate-btn" data-material="microcement" data-cursor="link"
-              aria-expanded="false" aria-controls="calc-microcement"
-              type="button">
+            <div class="panel__domain"><span class="panel__domain-tag">Architectural &amp; Living</span></div>
+            <button class="panel__estimate-btn" data-material="microcement" aria-expanded="false" aria-controls="calc-microcement" type="button">
               <span class="panel__estimate-label">Estimate cost</span>
               <span class="panel__estimate-icon" aria-hidden="true">+</span>
             </button>
           </div>
-
-          <!-- Inline calculator drawer -->
           <div class="panel__calc" id="calc-microcement" aria-hidden="true" data-material="microcement">
             <div class="pcalc">
-              <p class="pcalc__head">
-                Microcement — <em>cost estimate</em>
-              </p>
+              <p class="pcalc__head">Microcement — <em>cost estimate</em></p>
               <div class="pcalc__inputs">
                 <div class="pcalc__field">
                   <label class="pcalc__label" for="pmp-microcement">Surface area</label>
-                  <div class="pcalc__input-wrap">
-                    <input class="pcalc__input" id="pmp-microcement" type="number"
-                      placeholder="80" min="1" max="9999" inputmode="numeric" />
-                    <span class="pcalc__unit">m²</span>
-                  </div>
+                  <div class="pcalc__input-wrap"><input class="pcalc__input" id="pmp-microcement" type="number" placeholder="80" min="1" max="9999" inputmode="numeric" /><span class="pcalc__unit">m²</span></div>
                 </div>
                 <div class="pcalc__field">
                   <label class="pcalc__label" for="psys-microcement">System</label>
-                  <div class="pcalc__select-wrap">
-                    <select class="pcalc__select" id="psys-microcement">
-                      <option value="basic">Basic coat</option>
-                      <option value="medium" selected>Medium</option>
-                      <option value="premium">Premium</option>
-                    </select>
-                    <span class="pcalc__caret" aria-hidden="true">↓</span>
-                  </div>
+                  <div class="pcalc__select-wrap"><select class="pcalc__select" id="psys-microcement"><option value="basic">Basic coat</option><option value="medium" selected>Medium</option><option value="premium">Premium</option></select><span class="pcalc__caret" aria-hidden="true">↓</span></div>
                 </div>
               </div>
               <div class="pcalc__result" id="pres-microcement" aria-live="polite"></div>
-              <p class="pcalc__disclaimer">
-                Estimate covers labour. Final cost varies by substrate condition and site access.
-                Materials not included.
-              </p>
+              <p class="pcalc__disclaimer">Estimate covers labour. Final cost varies by substrate condition and site access. Materials not included.</p>
             </div>
           </div>
-
         </article>
 
-        <article class="panel reveal" aria-label="Resin floors">
-
-          <!-- ── Surface carousel ── -->
-          <div class="panel__surface panel__surface--resin" role="region" aria-label="Resin gallery" data-carousel="resin">
-
+        <!-- SYSTEM II — Stone Carpet -->
+        <article class="panel reveal" aria-label="Stone Carpet">
+          <div class="panel__surface" role="region" aria-label="Stone Carpet gallery" data-carousel="stone">
             <div class="pcs__track">
-              <div class="pcs__slide pcs__slide--active" style="background:linear-gradient(158deg,#e2dcd2 0%,#cdc4ba 60%,#dbd3c8 100%)">
-                <div class="pcs__grain"></div>
-                <span class="pcs__tag">Showroom · Ivory</span>
-              </div>
-              <div class="pcs__slide" style="background:linear-gradient(158deg,#3a3a3a 0%,#222222 60%,#333333 100%)">
-                <div class="pcs__grain"></div>
-                <span class="pcs__tag">Car Park · Anthracite</span>
-              </div>
-              <div class="pcs__slide" style="background:linear-gradient(158deg,#8a8a8a 0%,#666666 60%,#808080 100%)">
-                <div class="pcs__grain"></div>
-                <span class="pcs__tag">Warehouse · Mid Grey</span>
-              </div>
-              <div class="pcs__slide" style="background:linear-gradient(158deg,#c8c0b8 0%,#b0aaa4 60%,#c0b8b0 100%)">
-                <div class="pcs__grain"></div>
-                <span class="pcs__tag">Office · Satin</span>
-              </div>
-              <div class="pcs__slide" style="background:linear-gradient(158deg,#b8c4c8 0%,#9aacb2 60%,#b0bcc0 100%)">
-                <div class="pcs__grain"></div>
-                <span class="pcs__tag">Hospital · Slate Blue</span>
-              </div>
-              <div class="pcs__slide" style="background:linear-gradient(158deg,#d6cfc5 0%,#c0b8ae 60%,#cec6bc 100%)">
-                <div class="pcs__grain"></div>
-                <span class="pcs__tag">Logistics · Light Grey</span>
-              </div>
+              <div class="pcs__slide pcs__slide--active" style="background:radial-gradient(ellipse 120% 100% at 40% 60%,#c8c0b0 0%,#a89e90 60%,#bdb3a5 100%)"><div class="pcs__grain"></div><div class="pcs__aggregate"></div><span class="pcs__tag">Terrace · Sand</span></div>
+              <div class="pcs__slide" style="background:radial-gradient(ellipse 120% 100% at 40% 60%,#d8d0c4 0%,#c4bcb0 60%,#d0c8bc 100%)"><div class="pcs__grain"></div><div class="pcs__aggregate"></div><span class="pcs__tag">Pool Surround · Pearl</span></div>
+              <div class="pcs__slide" style="background:radial-gradient(ellipse 120% 100% at 40% 60%,#a8a098 0%,#908880 60%,#a09890 100%)"><div class="pcs__grain"></div><div class="pcs__aggregate"></div><span class="pcs__tag">Parking Ramp · Taupe</span></div>
+              <div class="pcs__slide" style="background:radial-gradient(ellipse 120% 100% at 40% 60%,#e0d8cc 0%,#ccc4b8 60%,#d8d0c4 100%)"><div class="pcs__grain"></div><div class="pcs__aggregate"></div><span class="pcs__tag">Garden Path · Ivory</span></div>
             </div>
-
-            <button class="pcs__arrow pcs__arrow--prev" aria-label="Previous image" type="button">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <button class="pcs__arrow pcs__arrow--next" aria-label="Next image" type="button">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-
+            <button class="pcs__arrow pcs__arrow--prev" aria-label="Previous" type="button"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button class="pcs__arrow pcs__arrow--next" aria-label="Next" type="button"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
             <div class="pcs__foot">
-              <div class="pcs__dots" aria-hidden="true"></div>
-              <a href="gallery-resin.html" class="pcs__more" data-cursor="link">
-                <span>View gallery</span>
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </a>
+              <div class="pcs__dots"></div>
+              <a href="gallery.html?filter=stone" class="pcs__more" data-cursor="link"><span>View gallery</span><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
             </div>
-
           </div>
-
           <div class="panel__body">
             <span class="panel__idx" aria-hidden="true">II</span>
-            <h3 class="panel__name">Resin Systems</h3>
-            <p class="panel__desc">
-              Epoxy, MMA, polyester and polyurethane systems — engineered for performance, designed for permanence. From residential satin finishes to industrial floors exceeding 10,000 m².
-            </p>
-            <ul class="panel__props" aria-label="Properties">
-              <li>Epoxy · MMA · Polyester · PU</li>
-              <li>Chemical &amp; impact resistant</li>
-              <li>Gloss, satin or matte finish</li>
-            </ul>
-
-            <button class="panel__estimate-btn" data-material="resin" data-cursor="link"
-              aria-expanded="false" aria-controls="calc-resin"
-              type="button">
-              <span class="panel__estimate-label">Estimate cost</span>
-              <span class="panel__estimate-icon" aria-hidden="true">+</span>
-            </button>
-          </div>
-
-          <div class="panel__calc" id="calc-resin" aria-hidden="true" data-material="resin">
-            <div class="pcalc">
-              <p class="pcalc__head">
-                Resin — <em>cost estimate</em>
-              </p>
-              <div class="pcalc__inputs">
-                <div class="pcalc__field">
-                  <label class="pcalc__label" for="pmp-resin">Surface area</label>
-                  <div class="pcalc__input-wrap">
-                    <input class="pcalc__input" id="pmp-resin" type="number"
-                      placeholder="80" min="1" max="9999" inputmode="numeric" />
-                    <span class="pcalc__unit">m²</span>
-                  </div>
-                </div>
-                <div class="pcalc__field">
-                  <label class="pcalc__label" for="psys-resin">System</label>
-                  <div class="pcalc__select-wrap">
-                    <select class="pcalc__select" id="psys-resin">
-                      <option value="basic">Basic coat</option>
-                      <option value="medium" selected>Medium</option>
-                      <option value="premium">Premium</option>
-                    </select>
-                    <span class="pcalc__caret" aria-hidden="true">↓</span>
-                  </div>
-                </div>
-              </div>
-              <div class="pcalc__result" id="pres-resin" aria-live="polite"></div>
-              <p class="pcalc__disclaimer">
-                Estimate covers labour. Final cost varies by substrate condition and site access.
-                Materials not included.
-              </p>
-            </div>
-          </div>
-
-        </article>
-
-        <article class="panel reveal" aria-label="Stone carpet">
-
-          <!-- ── Surface carousel ── -->
-          <div class="panel__surface panel__surface--stone" role="region" aria-label="Stone Carpet gallery" data-carousel="stone">
-
-            <div class="pcs__track">
-              <div class="pcs__slide pcs__slide--active" style="background:radial-gradient(ellipse 120% 100% at 40% 60%,#c8c0b0 0%,#a89e90 60%,#bdb3a5 100%)">
-                <div class="pcs__grain"></div>
-                <div class="pcs__aggregate"></div>
-                <span class="pcs__tag">Terrace · Sand</span>
-              </div>
-              <div class="pcs__slide" style="background:radial-gradient(ellipse 120% 100% at 40% 60%,#d8d0c4 0%,#c4bcb0 60%,#d0c8bc 100%)">
-                <div class="pcs__grain"></div>
-                <div class="pcs__aggregate"></div>
-                <span class="pcs__tag">Pool Surround · Pearl</span>
-              </div>
-              <div class="pcs__slide" style="background:radial-gradient(ellipse 120% 100% at 40% 60%,#a8a098 0%,#908880 60%,#a09890 100%)">
-                <div class="pcs__grain"></div>
-                <div class="pcs__aggregate"></div>
-                <span class="pcs__tag">Ramp · Taupe</span>
-              </div>
-              <div class="pcs__slide" style="background:radial-gradient(ellipse 120% 100% at 40% 60%,#e0d8cc 0%,#ccc4b8 60%,#d8d0c4 100%)">
-                <div class="pcs__grain"></div>
-                <div class="pcs__aggregate"></div>
-                <span class="pcs__tag">Garden Path · Ivory</span>
-              </div>
-              <div class="pcs__slide" style="background:radial-gradient(ellipse 120% 100% at 40% 60%,#909088 0%,#787870 60%,#888880 100%)">
-                <div class="pcs__grain"></div>
-                <div class="pcs__aggregate"></div>
-                <span class="pcs__tag">Parking · Grey</span>
-              </div>
-            </div>
-
-            <button class="pcs__arrow pcs__arrow--prev" aria-label="Previous image" type="button">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <button class="pcs__arrow pcs__arrow--next" aria-label="Next image" type="button">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-
-            <div class="pcs__foot">
-              <div class="pcs__dots" aria-hidden="true"></div>
-              <a href="gallery-stone.html" class="pcs__more" data-cursor="link">
-                <span>View gallery</span>
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </a>
-            </div>
-
-          </div>
-
-          <div class="panel__body">
-            <span class="panel__idx" aria-hidden="true">III</span>
             <h3 class="panel__name">Stone Carpet</h3>
-            <p class="panel__desc">
-              Quartz aggregate bound in clear resin — fine to coarse grain, applied as a continuous tactile surface. Exterior and interior terraces, pool surrounds, ramps.
-            </p>
-            <ul class="panel__props" aria-label="Properties">
-              <li>Quartz &amp; marble aggregate</li>
-              <li>Slip-resistant &amp; draining</li>
-              <li>Indoor &amp; outdoor use</li>
+            <p class="panel__desc">Quartz or marble aggregate bound in clear resin. Fine to coarse grain, applied as a continuous tactile surface. Interior and exterior: terraces, pool surrounds, ramps, public walkways.</p>
+            <ul class="panel__props">
+              <li>Slip-resistant &amp; naturally draining</li>
+              <li>UV-stable for exterior applications</li>
+              <li>Quartz &amp; marble aggregate options</li>
             </ul>
-
-            <button class="panel__estimate-btn" data-material="stone" data-cursor="link"
-              aria-expanded="false" aria-controls="calc-stone"
-              type="button">
+            <div class="panel__domain"><span class="panel__domain-tag">Architectural &amp; Living</span><span class="panel__domain-tag panel__domain-tag--infra">Infrastructure &amp; Logistics</span></div>
+            <button class="panel__estimate-btn" data-material="stone" aria-expanded="false" aria-controls="calc-stone" type="button">
               <span class="panel__estimate-label">Estimate cost</span>
               <span class="panel__estimate-icon" aria-hidden="true">+</span>
             </button>
           </div>
-
           <div class="panel__calc" id="calc-stone" aria-hidden="true" data-material="stone">
             <div class="pcalc">
-              <p class="pcalc__head">
-                Stone Carpet — <em>cost estimate</em>
-              </p>
+              <p class="pcalc__head">Stone Carpet — <em>cost estimate</em></p>
               <div class="pcalc__inputs">
                 <div class="pcalc__field">
                   <label class="pcalc__label" for="pmp-stone">Surface area</label>
-                  <div class="pcalc__input-wrap">
-                    <input class="pcalc__input" id="pmp-stone" type="number"
-                      placeholder="80" min="1" max="9999" inputmode="numeric" />
-                    <span class="pcalc__unit">m²</span>
-                  </div>
+                  <div class="pcalc__input-wrap"><input class="pcalc__input" id="pmp-stone" type="number" placeholder="80" min="1" max="9999" inputmode="numeric" /><span class="pcalc__unit">m²</span></div>
                 </div>
                 <div class="pcalc__field">
                   <label class="pcalc__label" for="psys-stone">System</label>
-                  <div class="pcalc__select-wrap">
-                    <select class="pcalc__select" id="psys-stone">
-                      <option value="basic">Basic coat</option>
-                      <option value="medium" selected>Medium</option>
-                      <option value="premium">Premium</option>
-                    </select>
-                    <span class="pcalc__caret" aria-hidden="true">↓</span>
-                  </div>
+                  <div class="pcalc__select-wrap"><select class="pcalc__select" id="psys-stone"><option value="basic">Basic coat</option><option value="medium" selected>Medium</option><option value="premium">Premium</option></select><span class="pcalc__caret" aria-hidden="true">↓</span></div>
                 </div>
               </div>
               <div class="pcalc__result" id="pres-stone" aria-live="polite"></div>
-              <p class="pcalc__disclaimer">
-                Estimate covers labour. Final cost varies by substrate condition and site access.
-                Materials not included.
-              </p>
+              <p class="pcalc__disclaimer">Estimate covers labour. Final cost varies by substrate condition and site access. Materials not included.</p>
             </div>
           </div>
+        </article>
 
+        <!-- SYSTEM III — Performance Resin -->
+        <article class="panel reveal" aria-label="Performance Resin">
+          <div class="panel__surface" role="region" aria-label="Performance Resin gallery" data-carousel="resin-performance">
+            <div class="pcs__track">
+              <div class="pcs__slide pcs__slide--active" style="background:linear-gradient(158deg,#8a8a8a 0%,#666666 60%,#808080 100%)"><div class="pcs__grain"></div><span class="pcs__tag">Warehouse · Mid Grey</span></div>
+              <div class="pcs__slide" style="background:linear-gradient(158deg,#3a3a3a 0%,#222222 60%,#333333 100%)"><div class="pcs__grain"></div><span class="pcs__tag">Car Park · Anthracite</span></div>
+              <div class="pcs__slide" style="background:linear-gradient(158deg,#b0b8b0 0%,#909890 60%,#a8b0a8 100%)"><div class="pcs__grain"></div><span class="pcs__tag">Manufacturing · Sage</span></div>
+              <div class="pcs__slide" style="background:linear-gradient(158deg,#c8c0b8 0%,#b0aaa4 60%,#c0b8b0 100%)"><div class="pcs__grain"></div><span class="pcs__tag">Hospital · Light</span></div>
+              <div class="pcs__slide" style="background:linear-gradient(158deg,#646464 0%,#484848 60%,#5a5a5a 100%)"><div class="pcs__grain"></div><span class="pcs__tag">Logistics Hub · Dark</span></div>
+            </div>
+            <button class="pcs__arrow pcs__arrow--prev" aria-label="Previous" type="button"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button class="pcs__arrow pcs__arrow--next" aria-label="Next" type="button"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <div class="pcs__foot">
+              <div class="pcs__dots"></div>
+              <a href="gallery.html?filter=resin-performance" class="pcs__more" data-cursor="link"><span>View gallery</span><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+          </div>
+          <div class="panel__body">
+            <span class="panel__idx" aria-hidden="true">III</span>
+            <h3 class="panel__name">Performance Resin</h3>
+            <p class="panel__desc">Epoxy, MMA, polyester and polyurethane systems engineered for extreme conditions. Warehouses, logistics infrastructure, manufacturing facilities, public car parks and hospitals — at project scales exceeding 10,000m².</p>
+            <ul class="panel__props">
+              <li>Epoxy · MMA · Polyester · PU systems</li>
+              <li>Chemical-resistant, heavy-load rated</li>
+              <li>MMA cure time: 2–4 hours at −20°C</li>
+            </ul>
+            <div class="panel__domain"><span class="panel__domain-tag panel__domain-tag--infra">Infrastructure &amp; Logistics</span></div>
+            <button class="panel__estimate-btn" data-material="resin" aria-expanded="false" aria-controls="calc-resin" type="button">
+              <span class="panel__estimate-label">Estimate cost</span>
+              <span class="panel__estimate-icon" aria-hidden="true">+</span>
+            </button>
+          </div>
+          <div class="panel__calc" id="calc-resin" aria-hidden="true" data-material="resin">
+            <div class="pcalc">
+              <p class="pcalc__head">Performance Resin — <em>cost estimate</em></p>
+              <div class="pcalc__inputs">
+                <div class="pcalc__field">
+                  <label class="pcalc__label" for="pmp-resin">Surface area</label>
+                  <div class="pcalc__input-wrap"><input class="pcalc__input" id="pmp-resin" type="number" placeholder="500" min="1" max="99999" inputmode="numeric" /><span class="pcalc__unit">m²</span></div>
+                </div>
+                <div class="pcalc__field">
+                  <label class="pcalc__label" for="psys-resin">System</label>
+                  <div class="pcalc__select-wrap"><select class="pcalc__select" id="psys-resin"><option value="basic">Basic coat</option><option value="medium" selected>Medium</option><option value="premium">Premium</option></select><span class="pcalc__caret" aria-hidden="true">↓</span></div>
+                </div>
+              </div>
+              <div class="pcalc__result" id="pres-resin" aria-live="polite"></div>
+              <p class="pcalc__disclaimer">Estimate covers labour. Final cost varies by substrate condition and site access. Materials not included.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- SYSTEM IV — Design Resin -->
+        <article class="panel reveal" aria-label="Design Resin">
+          <div class="panel__surface" role="region" aria-label="Design Resin gallery" data-carousel="resin-design">
+            <div class="pcs__track">
+              <div class="pcs__slide pcs__slide--active" style="background:linear-gradient(158deg,#e2dcd2 0%,#cdc4ba 60%,#dbd3c9 100%)"><div class="pcs__grain"></div><span class="pcs__tag">Showroom · Ivory Gloss</span></div>
+              <div class="pcs__slide" style="background:linear-gradient(158deg,#2a2a2a 0%,#1a1a1a 40%,#c8a060 70%,#2a2a2a 100%)"><div class="pcs__grain"></div><span class="pcs__tag">Retail Identity · Black &amp; Gold</span></div>
+              <div class="pcs__slide" style="background:linear-gradient(158deg,#d4ccc0 0%,#b8b0a8 40%,#e8e0d4 70%,#c0b8b0 100%)"><div class="pcs__grain"></div><span class="pcs__tag">Restaurant · Terrazzo</span></div>
+              <div class="pcs__slide" style="background:linear-gradient(158deg,#b8c4c8 0%,#9aacb2 60%,#b0bcc0 100%)"><div class="pcs__grain"></div><span class="pcs__tag">Wayfinding · Colour Zones</span></div>
+            </div>
+            <button class="pcs__arrow pcs__arrow--prev" aria-label="Previous" type="button"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button class="pcs__arrow pcs__arrow--next" aria-label="Next" type="button"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <div class="pcs__foot">
+              <div class="pcs__dots"></div>
+              <a href="gallery.html?filter=resin-design" class="pcs__more" data-cursor="link"><span>View gallery</span><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+          </div>
+          <div class="panel__body">
+            <span class="panel__idx" aria-hidden="true">IV</span>
+            <h3 class="panel__name">Design Resin</h3>
+            <p class="panel__desc">The same resin chemistry as performance systems — applied with entirely different intent. Custom patterns, multicolour compositions, 3D metallic effects, logo integration, wayfinding graphics. No two commissions identical.</p>
+            <ul class="panel__props">
+              <li>Bespoke pattern &amp; colour compositions</li>
+              <li>Metallic pigments, glitter, translucent layers</li>
+              <li>Logo integration &amp; wayfinding systems</li>
+            </ul>
+            <div class="panel__domain"><span class="panel__domain-tag">Architectural &amp; Living</span><span class="panel__domain-tag panel__domain-tag--infra">Infrastructure &amp; Logistics</span></div>
+            <button class="panel__estimate-btn" data-material="resin" aria-expanded="false" aria-controls="calc-resin-design" type="button">
+              <span class="panel__estimate-label">Estimate cost</span>
+              <span class="panel__estimate-icon" aria-hidden="true">+</span>
+            </button>
+          </div>
+          <div class="panel__calc" id="calc-resin-design" aria-hidden="true" data-material="resin">
+            <div class="pcalc">
+              <p class="pcalc__head">Design Resin — <em>cost estimate</em></p>
+              <div class="pcalc__inputs">
+                <div class="pcalc__field">
+                  <label class="pcalc__label" for="pmp-resin-design">Surface area</label>
+                  <div class="pcalc__input-wrap"><input class="pcalc__input" id="pmp-resin-design" type="number" placeholder="80" min="1" max="9999" inputmode="numeric" /><span class="pcalc__unit">m²</span></div>
+                </div>
+                <div class="pcalc__field">
+                  <label class="pcalc__label" for="psys-resin-design">System</label>
+                  <div class="pcalc__select-wrap"><select class="pcalc__select" id="psys-resin-design"><option value="basic">Basic coat</option><option value="medium" selected>Medium</option><option value="premium">Premium</option></select><span class="pcalc__caret" aria-hidden="true">↓</span></div>
+                </div>
+              </div>
+              <div class="pcalc__result" id="pres-resin-design" aria-live="polite"></div>
+              <p class="pcalc__disclaimer">Design Resin pricing varies by pattern complexity. This estimate provides indicative labour costs only.</p>
+            </div>
+          </div>
         </article>
 
       </div>
 
-      <!-- ── Gallery access band ── -->
-      <div class="gallery-band reveal" aria-label="Portfolio gallery">
+      <!-- Gallery access band -->
+      <div class="gallery-band reveal">
         <div class="gallery-band__inner">
           <div class="gallery-band__left">
             <span class="gallery-band__label">Portfolio</span>
-            <h3 class="gallery-band__h">
-              The complete work.<br>
-              <em>Every surface. Every scale.</em>
-            </h3>
+            <h3 class="gallery-band__h">The complete work.<br><em>Every system. Every scale.</em></h3>
           </div>
           <div class="gallery-band__center">
             <a href="gallery.html" class="gallery-band__cta" data-cursor="link" data-magnetic>
               <span class="gallery-band__cta-ring"></span>
               <span class="gallery-band__cta-text">
                 <span class="gallery-band__cta-main">Explore Gallery</span>
-                <span class="gallery-band__cta-sub">All materials &amp; applications</span>
+                <span class="gallery-band__cta-sub">All systems &amp; applications</span>
               </span>
-              <svg class="gallery-band__cta-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <svg class="gallery-band__cta-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
           </div>
           <div class="gallery-band__right">
-            <div class="gallery-band__stat">
-              <span class="gallery-band__stat-n">340</span>
-              <span class="gallery-band__stat-l">Projects</span>
-            </div>
-            <div class="gallery-band__stat">
-              <span class="gallery-band__stat-n">3</span>
-              <span class="gallery-band__stat-l">Materials</span>
-            </div>
-            <div class="gallery-band__stat">
-              <span class="gallery-band__stat-n">12</span>
-              <span class="gallery-band__stat-l">Countries</span>
-            </div>
+            <div class="gallery-band__stat"><span class="gallery-band__stat-n">4</span><span class="gallery-band__stat-l">Systems</span></div>
+            <div class="gallery-band__stat"><span class="gallery-band__stat-n">340</span><span class="gallery-band__stat-l">Projects</span></div>
+            <div class="gallery-band__stat"><span class="gallery-band__stat-n">12</span><span class="gallery-band__stat-l">Countries</span></div>
           </div>
         </div>
       </div>
 
     </section>
 
-    <!-- ══════════════════════════════════════════
-         IV. SPACE — Applications
-    ══════════════════════════════════════════ -->
-    <section class="space" id="space" aria-label="Spaces">
+    <!-- ══ IV. PROJECTS ══ -->
+    <section class="projects" id="projects" aria-label="Projects">
       <div class="wrap">
-
         <header class="section-head reveal">
           <span class="section-idx">03</span>
           <span class="section-rule" aria-hidden="true"></span>
-          <span class="section-label">Space</span>
+          <span class="section-label">Projects</span>
         </header>
-
-        <h2 class="space__h reveal">
-          Spaces of<br><em>permanence.</em>
+        <h2 class="projects__h reveal">
+          Two verticals.<br><em>One standard.</em>
         </h2>
-
       </div>
 
-      <!-- Alternating spatial narratives -->
-      <div class="spaces">
-
-        <div class="space-row reveal">
-          <div class="space-row__img space-row__img--res" aria-hidden="true">
-            <div class="space-row__caption">Private Residence</div>
+      <div class="project-rows">
+        <div class="project-row reveal">
+          <div class="project-row__img project-row__img--arch" aria-hidden="true">
+            <div class="project-row__caption">Architectural &amp; Living</div>
           </div>
-          <div class="space-row__text">
-            <span class="space-row__num">01</span>
-            <h3 class="space-row__title">The Private House</h3>
-            <p class="space-row__body">
-              From entry threshold to the bathroom as sanctuary — surfaces that make no claim until they are inhabited. Then they become everything. Calibrated to the life lived within.
-            </p>
-            <a href="#commission" class="link-arrow" data-cursor="link">
-              Commission a residence
-            </a>
+          <div class="project-row__text">
+            <span class="project-row__num">01</span>
+            <h3 class="project-row__title">Architectural &amp; Living</h3>
+            <p class="project-row__body">Private residences, wellness destinations, hotels and commercial interiors. Surfaces applied with precision to bathrooms, kitchens, spas, restaurant floors and boutique retail — where aesthetic and technical performance are equally demanded.</p>
+            <p class="project-row__systems">Microcement · Design Resin · Stone Carpet · Hybrid Surfaces</p>
+            <a href="gallery.html?domain=architectural" class="link-arrow" data-cursor="link">View Architectural Projects</a>
           </div>
         </div>
 
-        <div class="space-row space-row--inv reveal">
-          <div class="space-row__img space-row__img--spa" aria-hidden="true">
-            <div class="space-row__caption">Wellness</div>
+        <div class="project-row project-row--inv reveal">
+          <div class="project-row__img project-row__img--infra" aria-hidden="true">
+            <div class="project-row__caption">Infrastructure &amp; Logistics</div>
           </div>
-          <div class="space-row__text">
-            <span class="space-row__num">02</span>
-            <h3 class="space-row__title">Spas &amp; Wellness</h3>
-            <p class="space-row__body">
-              Seamless surfaces are the grammar of wellness architecture. Waterproof, mineral, serene — our finishes compose silence the way an architect composes light.
-            </p>
-            <a href="#commission" class="link-arrow" data-cursor="link">
-              Commission a project
-            </a>
+          <div class="project-row__text">
+            <span class="project-row__num">02</span>
+            <h3 class="project-row__title">Infrastructure &amp; Logistics</h3>
+            <p class="project-row__body">Warehouses, distribution centres, manufacturing facilities, public car parks and hospitals. Performance resin systems specified for extreme compressive loads, chemical resistance and continuous heavy-traffic environments — at project scales exceeding 10,000m².</p>
+            <p class="project-row__systems">Performance Resin · Stone Carpet · Design Resin (wayfinding)</p>
+            <a href="gallery.html?domain=infrastructure" class="link-arrow" data-cursor="link">View Infrastructure Projects</a>
           </div>
         </div>
-
-        <div class="space-row reveal">
-          <div class="space-row__img space-row__img--hosp" aria-hidden="true">
-            <div class="space-row__caption">Hospitality</div>
-          </div>
-          <div class="space-row__text">
-            <span class="space-row__num">03</span>
-            <h3 class="space-row__title">Hotels &amp; Boutiques</h3>
-            <p class="space-row__body">
-              Surfaces that endure millions of encounters and emerge from each one unchanged. Hospitality demands beauty that does not age. We build for decades, not seasons.
-            </p>
-            <a href="#commission" class="link-arrow" data-cursor="link">
-              Commission a venue
-            </a>
-          </div>
-        </div>
-
       </div>
     </section>
 
-    <!-- ══════════════════════════════════════════
-         V. CRAFT — About / Studio
-    ══════════════════════════════════════════ -->
-    <section class="craft" id="craft" aria-label="Craft and studio">
+    <!-- ══ V. CRAFT ══ -->
+    <section class="craft" id="craft" aria-label="Craft and methodology">
       <div class="wrap">
-
         <header class="section-head reveal">
           <span class="section-idx">04</span>
           <span class="section-rule" aria-hidden="true"></span>
           <span class="section-label">Craft</span>
         </header>
-
         <div class="craft__grid">
-
           <div class="craft__visual reveal" aria-hidden="true">
             <div class="craft__img craft__img--a"></div>
             <div class="craft__img craft__img--b"></div>
             <div class="craft__plaque">
-              <span class="craft__plaque-n">14</span>
-              <span class="craft__plaque-l">years<br>of practice</span>
+              <span class="craft__plaque-n">EN</span>
+              <span class="craft__plaque-l">Standard<br>Protocol</span>
             </div>
           </div>
-
           <div class="craft__words">
             <h2 class="craft__h reveal">
-              The patience<br>
-              of mineral.<br>
-              <em>The precision<br>of architecture.</em>
+              The precision<br>of specification.<br>
+              <em>Applied by hand.</em>
             </h2>
-            <p class="craft__p reveal">
-              Our studio was founded in the belief that craftsmanship is not a feature — it is the practice itself. We employ master applicators trained in European mineral traditions, working alongside architects from first sketch to final burnish.
-            </p>
-            <p class="craft__p reveal">
-              Every commission receives one project director, one lead craftsman. No hand-offs. No compromises in translation. The person who understands your vision applies your surface.
-            </p>
-            <a href="#commission" class="btn-line reveal" data-cursor="link" data-magnetic>
-              <span class="btn-line__label">Begin a Conversation</span>
+            <p class="craft__p reveal">Every surface system follows a strict multi-stage application protocol: substrate assessment and preparation, primer application, base coat, surface coat, and final protective layer. Each stage is documented, inspected and signed off before the next begins.</p>
+            <p class="craft__p reveal">Our specialist application teams operate to EN-standard protocols with full technical documentation, system warranties and post-installation support. The same team that assesses your specification applies your surface — no hand-offs, no subcontracted application.</p>
+            <a href="#contact" class="btn-line reveal" data-cursor="link" data-magnetic>
+              <span class="btn-line__label">Begin a Specification</span>
               <span class="btn-line__line" aria-hidden="true"></span>
             </a>
           </div>
-
         </div>
-
       </div>
     </section>
 
-    <!-- ══════════════════════════════════════════
-         V. ABOUT — Mission & Values
-    ══════════════════════════════════════════ -->
-    <section class="about" id="about" aria-label="About Deco Preda">
-      <div class="wrap">
-
-        <header class="section-head reveal">
-          <span class="section-idx">05</span>
-          <span class="section-rule" aria-hidden="true"></span>
-          <span class="section-label">About Us</span>
-        </header>
-
-        <div class="about__grid">
-
-          <div class="about__statement reveal">
-            <h2 class="about__h">
-              Precision at every<br>
-              scale. Quality<br>
-              <em>without compromise.</em>
-            </h2>
-          </div>
-
-          <div class="about__aside">
-            <p class="about__p reveal">
-              Deco Preda was established with a single conviction: that architectural surfaces — whether in a private residence or a multi-thousand-square-metre industrial facility — deserve the same rigour of material selection, technical execution and aesthetic intent. We do not separate decorative work from functional work. We apply the same standard to both.
-            </p>
-            <p class="about__p reveal">
-              Our specialist teams are trained in microcement, decorative mineral plaster, cast resin flooring systems and stone aggregate — materials chosen for their resilience, versatility and capacity for custom design. For industrial and commercial environments, our high-performance epoxy resin systems are engineered for extreme compressive loads, chemical resistance and continuous heavy-traffic use, while offering complete creative freedom in pattern, colour and finish — including bespoke geometric and graphic designs unique to each client.
-            </p>
-            <p class="about__p reveal">
-              Industrial logistics hubs, distribution warehouses, multi-level public car parks and large-format commercial floors represent a core pillar of our activity — environments where surface performance directly affects operational efficiency and where scale demands a contractor capable of delivering consistent quality across thousands of square metres without interruption or compromise.
-            </p>
-
-            <!-- Values grid -->
-            <div class="about__values reveal">
-              <div class="about__val">
-                <span class="about__val-title">Execution Quality</span>
-                <span class="about__val-desc">Every surface is applied by trained specialist teams operating to strict technical protocols. The client brief drives every decision, from substrate preparation to final protection.</span>
-              </div>
-              <div class="about__val">
-                <span class="about__val-title">Material Integrity</span>
-                <span class="about__val-desc">We work exclusively with certified European mineral and resin systems — selected for long-term performance, verified durability and compliance with commercial and industrial standards.</span>
-              </div>
-              <div class="about__val">
-                <span class="about__val-title">Design Versatility</span>
-                <span class="about__val-desc">Seamless surfaces across floors, walls, stairs and furniture. Custom epoxy patterns, unique graphic compositions and bespoke mineral tones — no two projects identical.</span>
-              </div>
-              <div class="about__val">
-                <span class="about__val-title">Industrial Scale</span>
-                <span class="about__val-desc">From 50m² residential commissions to 5,000m² warehouse and parking infrastructure. Capacity, logistics and technical management at every scale.</span>
-              </div>
+    <!-- ══ VI. SIGNATURE SERIES BAND ══ -->
+    <section class="sig-band" id="signature-series" aria-label="Signature Series">
+      <div class="sig-band__bg" aria-hidden="true"></div>
+      <div class="sig-band__content">
+        <div class="wrap">
+          <div class="sig-band__inner reveal">
+            <div class="sig-band__left">
+              <span class="sig-band__eyebrow">05 — Premium Tier</span>
+              <h2 class="sig-band__h">Signature<br><em>Series</em></h2>
+              <p class="sig-band__p">Hybrid compositions at the intersection of material science and design intent. Microcement combined with resin topcoats. Acrylic composites. Mineral layers paired with metallic pigments. Matte and gloss within a single seamless surface. Textures that cannot be replicated — only commissioned.</p>
+              <a href="signature-series.html" class="btn-ghost sig-band__cta" data-cursor="link" data-magnetic>
+                <span class="btn-ghost__label">Explore Signature Series</span>
+                <span class="btn-ghost__icon" aria-hidden="true">→</span>
+              </a>
             </div>
-
-            <div class="about__locations reveal">
-              <div class="about__loc-item">
-                <span class="about__loc-label">London</span>
-                <span class="about__loc-desc">UK &amp; international operations</span>
+            <div class="sig-band__right">
+              <div class="sig-band__swatches">
+                <div class="sig-band__swatch sig-band__swatch--1"></div>
+                <div class="sig-band__swatch sig-band__swatch--2"></div>
+                <div class="sig-band__swatch sig-band__swatch--3"></div>
+                <div class="sig-band__swatch sig-band__swatch--4"></div>
               </div>
-              <div class="about__loc-item">
-                <span class="about__loc-label">Dublin</span>
-                <span class="about__loc-desc">Ireland &amp; European projects</span>
-              </div>
+              <p class="sig-band__note">Available on commission only</p>
             </div>
           </div>
-
         </div>
-
       </div>
     </section>
 
-    <!-- ══════════════════════════════════════════
-         VI. COMMISSION — Contact
-    ══════════════════════════════════════════ -->
-    <section class="commission" id="commission" aria-label="Contact inquiry">
+    <!-- ══ VII. CONTACT ══ -->
+    <section class="commission" id="contact" aria-label="Contact">
       <div class="wrap">
-
         <header class="section-head reveal">
           <span class="section-idx">06</span>
           <span class="section-rule" aria-hidden="true"></span>
           <span class="section-label">Contact</span>
         </header>
-
         <div class="commission__grid">
-
           <div class="commission__intro">
             <h2 class="commission__h reveal">
-              Every lasting space<br>
-              <em>begins with a single<br>conversation.</em>
+              Every project begins<br>
+              <em>with a single<br>conversation.</em>
             </h2>
-            <p class="commission__body reveal">
-              We accept a limited number of commissions each year. A member of the studio will respond within 24 hours. We work across the UK, Ireland and Europe with architects, designers, and private clients.
-            </p>
+            <p class="commission__body reveal">We respond within 24 hours. UK, Ireland and European projects considered. Architects, developers, main contractors and private clients welcome.</p>
             <address class="commission__contact reveal">
-              <div class="commission__contact-row">
-                <span>Studio</span>
-                <a href="/cdn-cgi/l/email-protection#32414647565b5d725657515d42405756531c515d5f"><span class="__cf_email__" data-cfemail="2a595e5f4e43456a4e4f49455a584f4e4b04494547">[email&#160;protected]</span></a>
-              </div>
-              <div class="commission__contact-row">
-                <span>Atelier</span>
-                <a href="tel:+441234567890">+44 1234 567 890</a>
-              </div>
-              <div class="commission__contact-row">
-                <span>Locations</span>
-                <span>London — Dublin</span>
-              </div>
+              <div class="commission__contact-row"><span>Studio</span><a href="mailto:studio@decopreda.com">studio@decopreda.com</a></div>
+              <div class="commission__contact-row"><span>Phone</span><a href="tel:+441234567890">+44 1234 567 890</a></div>
+              <div class="commission__contact-row"><span>Locations</span><span>London — Dublin</span></div>
             </address>
           </div>
-
-          <form class="form reveal" id="commissionForm"
-            action="https://formspree.io/f/mkoqvqbw"
-            method="POST"
-            novalidate
-            aria-label="Commission inquiry">
-
-            <div class="f">
-              <input type="text" id="f-name" name="name" required placeholder=" " autocomplete="name" />
-              <label for="f-name">Name</label>
-              <span class="f__bar" aria-hidden="true"></span>
-            </div>
-
-            <div class="f">
-              <input type="email" id="f-email" name="email" required placeholder=" " autocomplete="email" />
-              <label for="f-email">Email</label>
-              <span class="f__bar" aria-hidden="true"></span>
-            </div>
-
-            <div class="f">
-              <input type="text" id="f-studio" name="studio" placeholder=" " autocomplete="organization" />
-              <label for="f-studio">Studio / Firm <span class="f__opt">(optional)</span></label>
-              <span class="f__bar" aria-hidden="true"></span>
-            </div>
-
+          <form class="form reveal" id="commissionForm" action="https://formspree.io/f/mkoqvqbw" method="POST" novalidate aria-label="Project inquiry">
+            <div class="f"><input type="text" id="f-name" name="name" required placeholder=" " autocomplete="name" /><label for="f-name">Name</label><span class="f__bar" aria-hidden="true"></span></div>
+            <div class="f"><input type="email" id="f-email" name="email" required placeholder=" " autocomplete="email" /><label for="f-email">Email</label><span class="f__bar" aria-hidden="true"></span></div>
+            <div class="f"><input type="text" id="f-studio" name="studio" placeholder=" " autocomplete="organization" /><label for="f-studio">Studio / Firm <span class="f__opt">(optional)</span></label><span class="f__bar" aria-hidden="true"></span></div>
             <div class="f f--sel">
               <select id="f-type" name="type" required>
                 <option value="" disabled selected></option>
-                <option value="private">Private Residence</option>
+                <option value="residential">Private Residence</option>
                 <option value="commercial">Commercial</option>
                 <option value="hospitality">Hospitality</option>
+                <option value="industrial">Industrial / Logistics</option>
                 <option value="developer">Developer</option>
                 <option value="other">Other</option>
               </select>
@@ -842,54 +564,40 @@
               <span class="f__bar" aria-hidden="true"></span>
               <span class="f__caret" aria-hidden="true">↓</span>
             </div>
-
-            <div class="f f--area">
-              <textarea id="f-brief" name="brief" rows="4" required placeholder=" "></textarea>
-              <label for="f-brief">Project brief</label>
-              <span class="f__bar" aria-hidden="true"></span>
-            </div>
-
+            <div class="f f--area"><textarea id="f-brief" name="brief" rows="4" required placeholder=" "></textarea><label for="f-brief">Project brief</label><span class="f__bar" aria-hidden="true"></span></div>
             <button type="submit" class="btn-submit" data-cursor="link" data-magnetic>
-              <span class="btn-submit__label">Submit Commission</span>
+              <span class="btn-submit__label">Submit Enquiry</span>
               <span class="btn-submit__arrow" aria-hidden="true">→</span>
             </button>
-
             <p class="form-ok" id="formOk" role="status" aria-live="polite"></p>
             <p class="form-err" id="formErr" role="alert" aria-live="assertive"></p>
-
           </form>
-
         </div>
       </div>
     </section>
 
   </main>
 
-  <!-- ══════════════════════════════════════════
-       FOOTER
-  ══════════════════════════════════════════ -->
   <footer class="foot" role="contentinfo">
     <div class="wrap">
       <div class="foot__inner">
         <div class="foot__brand">
           <p class="foot__wordmark">DECO PREDA</p>
-          <p class="foot__descriptor">Architectural Surface Atelier</p>
+          <p class="foot__descriptor">Architectural Surface Contractor</p>
         </div>
         <nav class="foot__nav" aria-label="Footer navigation">
-          <a href="#atelier">Atelier</a>
-          <a href="#matter">Matter</a>
-          <a href="#space">Space</a>
+          <a href="#who-we-are">Who We Are</a>
+          <a href="#systems">Systems</a>
+          <a href="#projects">Projects</a>
           <a href="#craft">Craft</a>
-          <a href="#commission">Contact</a>
+          <a href="signature-series.html">Signature Series</a>
+          <a href="#contact">Contact</a>
         </nav>
-        <p class="foot__copy">
-          &copy; <span id="yr"></span>
-        </p>
+        <p class="foot__copy">&copy; <span id="yr"></span> Deco Preda Ltd. London &amp; Dublin.</p>
       </div>
     </div>
   </footer>
 
   <script src="script.js"></script>
-
 </body>
 </html>
