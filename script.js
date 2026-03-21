@@ -1,6 +1,7 @@
+// @ts-nocheck
 /* ════════════════════════════════════════════════════════════
    DECO PREDA — script.js
-   Architectural Surface Atelier
+   Architectural Surface Contractor
    ES6+ | Vanilla JS | No libraries | Performance-first
    ════════════════════════════════════════════════════════════ */
 
