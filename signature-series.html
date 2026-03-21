@@ -1,1 +1,875 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Deco Preda Signature Series — Hybrid surface compositions at the intersection of material science and design intent. Available on commission." />
+  <title>Signature Series — Deco Preda</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ── Signature Series page — dark throughout ── */
+
+    body {
+      background: var(--dark-bg);
+      color: var(--dark-text);
+      cursor: none;
+    }
+
+    a, button { cursor: none; }
+
+    /* ── Hero ── */
+    .ss-hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      background: var(--dark-bg);
+      padding-bottom: clamp(60px, 8vw, 100px);
+    }
+
+    .ss-hero__bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(125deg, #1a1612 0%, #0f0e0c 30%, #1e1a14 60%, #261f14 100%);
+      z-index: 0;
+    }
+
+    /* Animated grain */
+    .ss-hero__grain {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.68' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+      opacity: 0.7;
+      mix-blend-mode: screen;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Abstract light ray */
+    .ss-hero__ray {
+      position: absolute;
+      top: -10%;
+      left: 55%;
+      width: 1px;
+      height: 130%;
+      background: linear-gradient(to bottom, transparent, rgba(214,196,170,0.06) 40%, rgba(214,196,170,0.12) 60%, transparent);
+      transform: rotate(-12deg);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .ss-hero__ray::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 60px;
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, rgba(214,196,170,0.04) 50%, transparent);
+    }
+
+    .ss-hero__content {
+      position: relative;
+      z-index: 2;
+      padding-inline: var(--gut);
+      max-width: var(--max);
+      margin-inline: auto;
+      width: 100%;
+    }
+
+    .ss-hero__eyebrow {
+      display: block;
+      font-family: var(--sans);
+      font-weight: 200;
+      font-size: var(--t-xs);
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: rgba(183, 174, 163, 0.45);
+      margin-bottom: clamp(20px, 3vw, 32px);
+    }
+
+    .ss-hero__title {
+      font-family: var(--serif);
+      font-weight: 200;
+      font-size: clamp(56px, 10vw, 140px);
+      line-height: 0.92;
+      color: var(--dark-text);
+      letter-spacing: -0.02em;
+      margin-bottom: clamp(28px, 4vw, 48px);
+    }
+
+    .ss-hero__title em {
+      font-style: italic;
+      font-weight: 200;
+      color: rgba(214, 196, 170, 0.55);
+      display: block;
+    }
+
+    .ss-hero__sub {
+      font-family: var(--sans);
+      font-weight: 300;
+      font-size: var(--t-lg);
+      line-height: 1.8;
+      color: rgba(183, 174, 163, 0.65);
+      max-width: 560px;
+      margin-bottom: clamp(40px, 5vw, 64px);
+    }
+
+    .ss-hero__note {
+      font-family: var(--sans);
+      font-weight: 200;
+      font-size: 9px;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: rgba(183, 174, 163, 0.3);
+      margin-top: var(--s-md);
+    }
+
+    /* Scroll cue */
+    .ss-hero__scroll {
+      position: absolute;
+      bottom: var(--s-lg);
+      right: var(--gut);
+      z-index: 2;
+    }
+
+    .ss-hero__scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, rgba(183,174,163,0.4), transparent);
+      margin-inline: auto;
+      animation: scrollBob 2.5s ease-in-out infinite;
+    }
+
+    /* ── Introduction band ── */
+    .ss-intro {
+      background: var(--dark-bg);
+      padding-block: var(--s-2xl);
+      border-top: 1px solid rgba(183, 174, 163, 0.06);
+    }
+
+    .ss-intro__grid {
+      max-width: var(--max);
+      margin-inline: auto;
+      padding-inline: var(--gut);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(48px, 7vw, 100px);
+      align-items: start;
+    }
+
+    .ss-intro__h {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: var(--t-h2);
+      line-height: 1.08;
+      color: var(--dark-text);
+      position: sticky;
+      top: calc(var(--nav-h) + 32px);
+    }
+
+    .ss-intro__h em {
+      font-style: italic;
+      color: rgba(214, 196, 170, 0.55);
+    }
+
+    .ss-intro__p {
+      font-size: var(--t-base);
+      color: rgba(183, 174, 163, 0.7);
+      line-height: 1.9;
+      margin-bottom: var(--s-md);
+    }
+
+    .ss-intro__rule {
+      width: 100%;
+      height: 1px;
+      background: rgba(183, 174, 163, 0.08);
+      margin-block: var(--s-xl);
+    }
+
+    /* Texture spectrum */
+    .ss-textures {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: var(--s-lg);
+    }
+
+    .ss-texture-tag {
+      font-family: var(--sans);
+      font-weight: 200;
+      font-size: 9px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: rgba(183, 174, 163, 0.45);
+      padding: 5px 12px;
+      border: 0.5px solid rgba(183, 174, 163, 0.12);
+      border-radius: 20px;
+      transition: color 0.25s, border-color 0.25s;
+    }
+
+    .ss-texture-tag:hover {
+      color: rgba(214, 196, 170, 0.8);
+      border-color: rgba(183, 174, 163, 0.3);
+    }
+
+    @media (max-width: 1024px) {
+      .ss-intro__grid { grid-template-columns: 1fr; }
+      .ss-intro__h { position: static; }
+    }
+
+    /* ── Compositions grid ── */
+    .ss-works {
+      background: var(--dark-bg);
+      padding-bottom: var(--s-2xl);
+    }
+
+    .ss-works__head {
+      max-width: var(--max);
+      margin-inline: auto;
+      padding-inline: var(--gut);
+      margin-bottom: clamp(32px, 4vw, 56px);
+    }
+
+    .ss-works__label {
+      font-family: var(--sans);
+      font-weight: 200;
+      font-size: 9px;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: rgba(183, 174, 163, 0.35);
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .ss-works__h {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: var(--t-h2);
+      color: var(--dark-text);
+      line-height: 1.05;
+    }
+
+    .ss-works__h em {
+      font-style: italic;
+      color: rgba(214, 196, 170, 0.55);
+    }
+
+    /* Masonry-style grid */
+    .ss-grid {
+      max-width: var(--max);
+      margin-inline: auto;
+      padding-inline: var(--gut);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+    }
+
+    .ss-item {
+      position: relative;
+      overflow: hidden;
+      cursor: none;
+    }
+
+    .ss-item:nth-child(1) { grid-row: span 2; }
+    .ss-item:nth-child(4) { grid-column: span 2; }
+    .ss-item:nth-child(7) { grid-row: span 2; }
+
+    .ss-swatch {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 280px;
+      transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .ss-item:hover .ss-swatch {
+      transform: scale(1.04);
+    }
+
+    /* Hover overlay */
+    .ss-over {
+      position: absolute;
+      inset: 0;
+      background: rgba(10, 9, 8, 0);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 24px;
+      transition: background 0.4s var(--ease);
+    }
+
+    .ss-item:hover .ss-over {
+      background: rgba(10, 9, 8, 0.55);
+    }
+
+    .ss-item__name {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(18px, 2vw, 26px);
+      color: rgba(236, 230, 221, 0);
+      transform: translateY(10px);
+      transition: color 0.4s var(--ease), transform 0.4s var(--ease);
+      line-height: 1.2;
+    }
+
+    .ss-item__desc {
+      font-family: var(--sans);
+      font-weight: 200;
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(183, 174, 163, 0);
+      transform: translateY(8px);
+      transition: color 0.4s var(--ease) 0.05s, transform 0.4s var(--ease) 0.05s;
+      margin-top: 6px;
+    }
+
+    .ss-item:hover .ss-item__name {
+      color: rgba(236, 230, 221, 0.95);
+      transform: translateY(0);
+    }
+
+    .ss-item:hover .ss-item__desc {
+      color: rgba(183, 174, 163, 0.7);
+      transform: translateY(0);
+    }
+
+    /* Commission badge */
+    .ss-item__badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-family: var(--sans);
+      font-weight: 200;
+      font-size: 8px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(183, 174, 163, 0);
+      border: 0.5px solid rgba(183, 174, 163, 0);
+      padding: 4px 10px;
+      border-radius: 20px;
+      transition: all 0.4s var(--ease);
+    }
+
+    .ss-item:hover .ss-item__badge {
+      color: rgba(183, 174, 163, 0.6);
+      border-color: rgba(183, 174, 163, 0.2);
+    }
+
+    @media (max-width: 900px) {
+      .ss-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .ss-item:nth-child(1),
+      .ss-item:nth-child(7) { grid-row: span 1; }
+      .ss-item:nth-child(4) { grid-column: span 1; }
+    }
+
+    @media (max-width: 560px) {
+      .ss-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── How it's made ── */
+    .ss-process {
+      background: #0a0908;
+      padding-block: var(--s-2xl);
+      border-top: 1px solid rgba(183, 174, 163, 0.06);
+    }
+
+    .ss-process__wrap {
+      max-width: var(--max);
+      margin-inline: auto;
+      padding-inline: var(--gut);
+    }
+
+    .ss-process__h {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: var(--t-h2);
+      color: var(--dark-text);
+      margin-bottom: var(--s-xl);
+      max-width: 600px;
+    }
+
+    .ss-process__h em { font-style: italic; color: rgba(214,196,170,0.55); }
+
+    .ss-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: clamp(24px, 3vw, 40px);
+    }
+
+    .ss-step {
+      border-top: 1px solid rgba(183, 174, 163, 0.12);
+      padding-top: var(--s-md);
+    }
+
+    .ss-step__n {
+      font-family: var(--serif);
+      font-weight: 200;
+      font-size: clamp(40px, 4vw, 56px);
+      color: rgba(183, 174, 163, 0.12);
+      line-height: 1;
+      margin-bottom: var(--s-sm);
+    }
+
+    .ss-step__title {
+      font-family: var(--sans);
+      font-weight: 300;
+      font-size: var(--t-sm);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(214, 196, 170, 0.7);
+      margin-bottom: 10px;
+    }
+
+    .ss-step__desc {
+      font-family: var(--sans);
+      font-weight: 200;
+      font-size: var(--t-sm);
+      color: rgba(183, 174, 163, 0.45);
+      line-height: 1.75;
+    }
+
+    @media (max-width: 900px) {
+      .ss-steps { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 500px) {
+      .ss-steps { grid-template-columns: 1fr; }
+    }
+
+    /* ── Commission CTA ── */
+    .ss-cta {
+      background: var(--dark-bg);
+      padding-block: var(--s-2xl);
+      border-top: 1px solid rgba(183, 174, 163, 0.06);
+    }
+
+    .ss-cta__inner {
+      max-width: var(--max);
+      margin-inline: auto;
+      padding-inline: var(--gut);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: clamp(40px, 6vw, 80px);
+      align-items: center;
+    }
+
+    .ss-cta__h {
+      font-family: var(--serif);
+      font-weight: 200;
+      font-size: var(--t-h2);
+      color: var(--dark-text);
+      line-height: 1.05;
+    }
+
+    .ss-cta__h em { font-style: italic; color: rgba(214,196,170,0.55); }
+
+    .ss-cta__p {
+      font-family: var(--sans);
+      font-weight: 300;
+      font-size: var(--t-base);
+      color: rgba(183, 174, 163, 0.55);
+      line-height: 1.8;
+      max-width: 480px;
+      margin-top: var(--s-md);
+    }
+
+    .ss-cta__note {
+      font-family: var(--sans);
+      font-weight: 200;
+      font-size: 9px;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: rgba(183, 174, 163, 0.25);
+      margin-top: var(--s-md);
+    }
+
+    .ss-cta__actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: var(--s-md);
+    }
+
+    @media (max-width: 900px) {
+      .ss-cta__inner {
+        grid-template-columns: 1fr;
+      }
+      .ss-cta__actions { align-items: flex-start; }
+    }
+
+    /* Nav on dark page */
+    .nav.on-dark .nav__wordmark { color: var(--dark-text); }
+    .nav.on-light { background: rgba(15, 14, 12, 0.96); border-bottom-color: rgba(183,174,163,0.08); }
+    .nav.on-light .nav__wordmark { color: var(--dark-text); }
+    .nav.on-light .nav__item { color: rgba(183, 174, 163, 0.65); }
+    .nav.on-light .nav__item:hover { color: var(--dark-text); }
+    .nav.on-light .nav__item--cta { border-color: rgba(183,174,163,0.3); color: var(--dark-text); }
+    .nav.on-light .nav__item--cta:hover { background: rgba(246,243,238,0.08); }
+
+    /* Back link */
+    .ss-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--sans);
+      font-weight: 200;
+      font-size: 9px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: rgba(183, 174, 163, 0.35);
+      margin-bottom: clamp(40px, 5vw, 64px);
+      transition: color 0.25s, gap 0.4s var(--ease);
+    }
+
+    .ss-back:hover { color: rgba(183, 174, 163, 0.7); gap: 12px; }
+  </style>
+</head>
+<body>
+
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <div class="cursor" id="cursor" aria-hidden="true">
+    <div class="cursor__ring"></div>
+    <div class="cursor__dot"></div>
+  </div>
+
+  <!-- LOADER -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader__body">
+      <span class="loader__mark">DP</span>
+      <div class="loader__line"><div class="loader__fill"></div></div>
+      <span class="loader__sub">Signature Series</span>
+    </div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <nav class="nav on-dark" id="nav" aria-label="Primary">
+    <a href="index.html" class="nav__wordmark" aria-label="Deco Preda home">
+      DECO<span class="nav__wordmark-thin">PREDA</span>
+    </a>
+    <button class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="navPanel">
+      <span></span><span></span>
+    </button>
+    <div class="nav__panel" id="navPanel" aria-hidden="true">
+      <a href="index.html#who-we-are"   class="nav__item" data-cursor="link">Who We Are</a>
+      <a href="index.html#systems"      class="nav__item" data-cursor="link">Systems</a>
+      <a href="index.html#projects"     class="nav__item" data-cursor="link">Projects</a>
+      <a href="index.html#craft"        class="nav__item" data-cursor="link">Craft</a>
+      <a href="signature-series.html"   class="nav__item" style="color:rgba(214,196,170,0.8)" data-cursor="link">Signature Series</a>
+      <a href="index.html#contact"      class="nav__item nav__item--cta" data-cursor="link">Contact</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ══ HERO ══ -->
+    <section class="ss-hero" aria-label="Signature Series">
+      <div class="ss-hero__bg"></div>
+      <div class="ss-hero__grain"></div>
+      <div class="ss-hero__ray"></div>
+
+      <div class="ss-hero__content">
+        <a href="index.html" class="ss-back">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M8 2L4 6L8 10" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Back to studio
+        </a>
+
+        <span class="ss-hero__eyebrow reveal-hero">Deco Preda · 05 · Premium Tier</span>
+
+        <h1 class="ss-hero__title reveal-hero">
+          Signature<br>
+          <em>Series</em>
+        </h1>
+
+        <p class="ss-hero__sub reveal-hero">
+          Hybrid compositions at the intersection of material science and design intent. Surfaces that cannot be specified from a catalogue — only commissioned.
+        </p>
+
+        <a href="#commission" class="btn-ghost reveal-hero" data-cursor="link" data-magnetic>
+          <span class="btn-ghost__label">Begin a Conversation</span>
+          <span class="btn-ghost__icon" aria-hidden="true">↓</span>
+        </a>
+
+        <p class="ss-hero__note reveal-hero">Available on commission only — no standard pricing</p>
+      </div>
+
+      <div class="ss-hero__scroll" aria-hidden="true">
+        <div class="ss-hero__scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- ══ INTRODUCTION ══ -->
+    <section class="ss-intro" aria-label="About Signature Series">
+      <div class="ss-intro__grid">
+
+        <div>
+          <h2 class="ss-intro__h reveal">
+            Where the<br>
+            systems end,<br>
+            <em>the work begins.</em>
+          </h2>
+        </div>
+
+        <div>
+          <p class="ss-intro__p reveal">
+            The four surface systems we offer — Microcement, Stone Carpet, Performance Resin and Design Resin — each have defined specifications, tested protocols and predictable outcomes. Signature Series exists beyond those boundaries.
+          </p>
+          <p class="ss-intro__p reveal">
+            These are compositions created at the intersection of multiple systems. Microcement as a base, sealed with a transparent resin topcoat that introduces depth without gloss. Performance resin grounds and mineral aggregate floats within it. Acrylic composites that combine the elasticity of polymer with the warmth of mineral pigment. No two commissions share a formula.
+          </p>
+          <p class="ss-intro__p reveal">
+            Signature Series is specified in direct collaboration with the client and their architect — from initial material research through prototype sampling to final application. The surface delivered is not selected from a range. It is developed for a single space.
+          </p>
+
+          <div class="ss-intro__rule reveal"></div>
+
+          <p class="ss-intro__p reveal" style="color:rgba(214,196,170,0.45); font-size: var(--t-sm); letter-spacing: 0.05em;">
+            Texture range available within Signature Series:
+          </p>
+          <div class="ss-textures reveal">
+            <span class="ss-texture-tag">Smooth</span>
+            <span class="ss-texture-tag">Textured</span>
+            <span class="ss-texture-tag">Structured</span>
+            <span class="ss-texture-tag">Rough</span>
+            <span class="ss-texture-tag">Satin</span>
+            <span class="ss-texture-tag">Matte</span>
+            <span class="ss-texture-tag">High-gloss</span>
+            <span class="ss-texture-tag">Transparent</span>
+            <span class="ss-texture-tag">Opaque</span>
+            <span class="ss-texture-tag">Glitter</span>
+            <span class="ss-texture-tag">Metallic</span>
+            <span class="ss-texture-tag">Iridescent</span>
+            <span class="ss-texture-tag">Matte + Gloss Combined</span>
+            <span class="ss-texture-tag">Mineral Composite</span>
+            <span class="ss-texture-tag">Acrylic Composite</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══ COMPOSITIONS GRID ══ -->
+    <section class="ss-works" aria-label="Signature Series compositions">
+
+      <div class="ss-works__head">
+        <span class="ss-works__label reveal">Selected Commissions</span>
+        <h2 class="ss-works__h reveal">
+          Each surface<br><em>a single edition.</em>
+        </h2>
+      </div>
+
+      <div class="ss-grid">
+
+        <!-- 1 — tall left -->
+        <div class="ss-item reveal">
+          <div class="ss-swatch" style="background:linear-gradient(158deg,#cdc4b5 0%,#9e9285 35%,#1a1714 70%,#2e2520 100%);min-height:580px">
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,9,8,0.3),transparent 50%);"></div>
+          </div>
+          <div class="ss-over">
+            <span class="ss-item__badge">Commission Only</span>
+            <span class="ss-item__name">Mineral Dusk</span>
+            <span class="ss-item__desc">Microcement · Resin Topcoat · London Residence</span>
+          </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="ss-item reveal">
+          <div class="ss-swatch" style="background:radial-gradient(ellipse at 30% 60%,#3a2e1a 0%,#1a1410 50%,#2e2416 100%);min-height:280px">
+            <div style="position:absolute;inset:0;background:linear-gradient(45deg,transparent 40%,rgba(214,196,170,0.15) 55%,transparent 65%);"></div>
+          </div>
+          <div class="ss-over">
+            <span class="ss-item__badge">Commission Only</span>
+            <span class="ss-item__name">Dark Amber</span>
+            <span class="ss-item__desc">Acrylic Composite · Metallic Pigment · Dublin Hotel</span>
+          </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="ss-item reveal">
+          <div class="ss-swatch" style="background:linear-gradient(135deg,#e2dcd2 0%,#cdc4ba 40%,#1a1714 60%,#e2dcd2 100%);min-height:280px">
+          </div>
+          <div class="ss-over">
+            <span class="ss-item__badge">Commission Only</span>
+            <span class="ss-item__name">Threshold</span>
+            <span class="ss-item__desc">Microcement + Design Resin Hybrid · Edinburgh Spa</span>
+          </div>
+        </div>
+
+        <!-- 4 — wide -->
+        <div class="ss-item reveal">
+          <div class="ss-swatch" style="background:linear-gradient(90deg,#a89e90 0%,#1a1714 30%,#8a7e72 60%,#2e2520 100%);min-height:280px">
+            <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(214,196,170,0.08),transparent 60%);"></div>
+          </div>
+          <div class="ss-over">
+            <span class="ss-item__badge">Commission Only</span>
+            <span class="ss-item__name">Tectonic</span>
+            <span class="ss-item__desc">Stone Carpet · Resin Base · Mineral Composite · London Office</span>
+          </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="ss-item reveal">
+          <div class="ss-swatch" style="background:linear-gradient(158deg,#f0ece4 0%,#e4ddd3 50%,#d4ccc0 100%);min-height:280px">
+          </div>
+          <div class="ss-over">
+            <span class="ss-item__badge">Commission Only</span>
+            <span class="ss-item__name">Pure Light</span>
+            <span class="ss-item__desc">Microcement · Transparent Gloss Seal · Surrey Residence</span>
+          </div>
+        </div>
+
+        <!-- 6 -->
+        <div class="ss-item reveal">
+          <div class="ss-swatch" style="background:linear-gradient(135deg,#0a0908 0%,#1a1410 40%,#2a2018 100%);min-height:280px">
+            <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(214,196,170,0.2),transparent 60%);"></div>
+            <div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(214,196,170,0.03) 8px,rgba(214,196,170,0.03) 9px);"></div>
+          </div>
+          <div class="ss-over">
+            <span class="ss-item__badge">Commission Only</span>
+            <span class="ss-item__name">Nocturne</span>
+            <span class="ss-item__desc">Acrylic Composite · Iridescent Layer · Dublin Restaurant</span>
+          </div>
+        </div>
+
+        <!-- 7 — tall right -->
+        <div class="ss-item reveal">
+          <div class="ss-swatch" style="background:linear-gradient(200deg,#b8b0a0 0%,#8a8078 30%,#504840 60%,#2a2520 100%);min-height:560px">
+          </div>
+          <div class="ss-over">
+            <span class="ss-item__badge">Commission Only</span>
+            <span class="ss-item__name">Sediment</span>
+            <span class="ss-item__desc">Mineral Composite · Multi-layer · London Penthouse</span>
+          </div>
+        </div>
+
+        <!-- 8 -->
+        <div class="ss-item reveal">
+          <div class="ss-swatch" style="background:radial-gradient(ellipse at 40% 40%,#c8a06040,#1a1510 60%,#0f0e0c 100%);min-height:280px">
+            <div style="position:absolute;inset:0;background:linear-gradient(135deg,transparent 30%,rgba(214,196,100,0.12) 50%,transparent 70%);"></div>
+          </div>
+          <div class="ss-over">
+            <span class="ss-item__badge">Commission Only</span>
+            <span class="ss-item__name">Aureate</span>
+            <span class="ss-item__desc">Design Resin · Gold Pigment · Glitter Layer · Kent Residence</span>
+          </div>
+        </div>
+
+        <!-- 9 -->
+        <div class="ss-item reveal">
+          <div class="ss-swatch" style="background:linear-gradient(112deg,#ddd6ca 0%,#1a1714 40%,#cdc4b5 100%);min-height:280px">
+          </div>
+          <div class="ss-over">
+            <span class="ss-item__badge">Commission Only</span>
+            <span class="ss-item__name">Duet</span>
+            <span class="ss-item__desc">Matte Microcement + Gloss Resin · Single Seamless Surface · Belfast Hotel</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══ HOW IT'S MADE ══ -->
+    <section class="ss-process" aria-label="Signature Series process">
+      <div class="ss-process__wrap">
+
+        <h2 class="ss-process__h reveal">
+          From brief<br>to surface.<br>
+          <em>The process.</em>
+        </h2>
+
+        <div class="ss-steps">
+          <div class="ss-step reveal">
+            <div class="ss-step__n">01</div>
+            <div class="ss-step__title">Material Research</div>
+            <div class="ss-step__desc">We review the project brief, spatial requirements and aesthetic intent. System combinations are identified and material samples are sourced from our European suppliers.</div>
+          </div>
+          <div class="ss-step reveal">
+            <div class="ss-step__n">02</div>
+            <div class="ss-step__title">Prototype Sampling</div>
+            <div class="ss-step__desc">A minimum of three physical samples are prepared — each exploring a different system combination, texture or finish. Samples are reviewed on-site or delivered for approval.</div>
+          </div>
+          <div class="ss-step reveal">
+            <div class="ss-step__n">03</div>
+            <div class="ss-step__title">Specification & Testing</div>
+            <div class="ss-step__desc">The approved composition is tested for adhesion, durability and compatibility across all layers. Application protocol is documented before any site work begins.</div>
+          </div>
+          <div class="ss-step reveal">
+            <div class="ss-step__n">04</div>
+            <div class="ss-step__title">Application & Handover</div>
+            <div class="ss-step__desc">Applied by our specialist team to EN-standard protocols. Full technical documentation, care instructions and a system-specific warranty are provided at handover.</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══ COMMISSION CTA ══ -->
+    <section class="ss-cta" id="commission" aria-label="Begin a commission">
+      <div class="ss-cta__inner">
+
+        <div>
+          <h2 class="ss-cta__h reveal">
+            A surface that<br>
+            exists nowhere else.<br>
+            <em>Yours to commission.</em>
+          </h2>
+          <p class="ss-cta__p reveal">
+            Signature Series commissions begin with a conversation — no catalogue, no pricing sheet. We discuss your project, your space and your intent, then propose a material direction. Lead time is typically 4–8 weeks from specification approval to application.
+          </p>
+          <p class="ss-cta__note reveal">
+            London · Dublin · European projects considered
+          </p>
+        </div>
+
+        <div class="ss-cta__actions reveal">
+          <a href="index.html#contact" class="btn-ghost" data-cursor="link" data-magnetic>
+            <span class="btn-ghost__label">Begin a Conversation</span>
+            <span class="btn-ghost__icon" aria-hidden="true">→</span>
+          </a>
+          <a href="index.html#systems" class="btn-line" data-cursor="link" style="color:rgba(183,174,163,0.45)">
+            <span class="btn-line__label" style="color:rgba(183,174,163,0.45)">Explore Standard Systems</span>
+            <span class="btn-line__line" style="background:rgba(183,174,163,0.2)" aria-hidden="true"></span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="foot" role="contentinfo" style="background:#070706;border-top:1px solid rgba(183,174,163,0.06)">
+    <div class="wrap">
+      <div class="foot__inner">
+        <div class="foot__brand">
+          <p class="foot__wordmark">DECO PREDA</p>
+          <p class="foot__descriptor">Architectural Surface Contractor</p>
+        </div>
+        <nav class="foot__nav" aria-label="Footer navigation">
+          <a href="index.html#who-we-are">Who We Are</a>
+          <a href="index.html#systems">Systems</a>
+          <a href="index.html#projects">Projects</a>
+          <a href="index.html#craft">Craft</a>
+          <a href="signature-series.html">Signature Series</a>
+          <a href="index.html#contact">Contact</a>
+        </nav>
+        <p class="foot__copy">&copy; <span id="yr"></span> Deco Preda Ltd. London &amp; Dublin.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
