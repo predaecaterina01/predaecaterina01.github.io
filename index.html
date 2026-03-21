@@ -215,9 +215,57 @@
       <div class="matter__panels">
 
         <article class="panel reveal" aria-label="Microcement">
-          <div class="panel__surface panel__surface--cement" aria-hidden="true">
-            <div class="panel__grain"></div>
+
+          <!-- ── Surface carousel ── -->
+          <div class="panel__surface panel__surface--cement" role="region" aria-label="Microcement gallery" data-carousel="microcement">
+
+            <!-- Slides -->
+            <div class="pcs__track">
+              <div class="pcs__slide pcs__slide--active" style="background:linear-gradient(158deg,#cdc4b5 0%,#b5aa9a 60%,#c4bba8 100%)">
+                <div class="pcs__grain"></div>
+                <span class="pcs__tag">Bathroom · Ivory</span>
+              </div>
+              <div class="pcs__slide" style="background:linear-gradient(158deg,#6e6860 0%,#54504a 60%,#636059 100%)">
+                <div class="pcs__grain"></div>
+                <span class="pcs__tag">Hotel · Slate</span>
+              </div>
+              <div class="pcs__slide" style="background:linear-gradient(158deg,#d6cfc5 0%,#c0b8ae 60%,#cec6bc 100%)">
+                <div class="pcs__grain"></div>
+                <span class="pcs__tag">Office · Sand</span>
+              </div>
+              <div class="pcs__slide" style="background:linear-gradient(158deg,#a8a09a 0%,#8c857f 60%,#9e9790 100%)">
+                <div class="pcs__grain"></div>
+                <span class="pcs__tag">Living · Charcoal</span>
+              </div>
+              <div class="pcs__slide" style="background:linear-gradient(158deg,#b8b0a8 0%,#9e9890 60%,#b0a8a0 100%)">
+                <div class="pcs__grain"></div>
+                <span class="pcs__tag">Spa · Greige</span>
+              </div>
+              <div class="pcs__slide" style="background:linear-gradient(158deg,#e2dcd2 0%,#cdc4ba 60%,#dbd3c9 100%)">
+                <div class="pcs__grain"></div>
+                <span class="pcs__tag">Kitchen · Pearl</span>
+              </div>
+            </div>
+
+            <!-- Navigation arrows -->
+            <button class="pcs__arrow pcs__arrow--prev" aria-label="Previous image" type="button">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="pcs__arrow pcs__arrow--next" aria-label="Next image" type="button">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+
+            <!-- Bottom bar: dots + view more -->
+            <div class="pcs__foot">
+              <div class="pcs__dots" aria-hidden="true"></div>
+              <a href="gallery-microcement.html" class="pcs__more" data-cursor="link">
+                <span>View gallery</span>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+
           </div>
+
           <div class="panel__body">
             <span class="panel__idx" aria-hidden="true">I</span>
             <h3 class="panel__name">Microcement</h3>
@@ -273,25 +321,70 @@
               </p>
             </div>
           </div>
+
         </article>
 
         <article class="panel reveal" aria-label="Resin floors">
-          <div class="panel__surface panel__surface--resin" aria-hidden="true">
-            <div class="panel__grain"></div>
+
+          <!-- ── Surface carousel ── -->
+          <div class="panel__surface panel__surface--resin" role="region" aria-label="Resin gallery" data-carousel="resin">
+
+            <div class="pcs__track">
+              <div class="pcs__slide pcs__slide--active" style="background:linear-gradient(158deg,#e2dcd2 0%,#cdc4ba 60%,#dbd3c8 100%)">
+                <div class="pcs__grain"></div>
+                <span class="pcs__tag">Showroom · Ivory</span>
+              </div>
+              <div class="pcs__slide" style="background:linear-gradient(158deg,#3a3a3a 0%,#222222 60%,#333333 100%)">
+                <div class="pcs__grain"></div>
+                <span class="pcs__tag">Car Park · Anthracite</span>
+              </div>
+              <div class="pcs__slide" style="background:linear-gradient(158deg,#8a8a8a 0%,#666666 60%,#808080 100%)">
+                <div class="pcs__grain"></div>
+                <span class="pcs__tag">Warehouse · Mid Grey</span>
+              </div>
+              <div class="pcs__slide" style="background:linear-gradient(158deg,#c8c0b8 0%,#b0aaa4 60%,#c0b8b0 100%)">
+                <div class="pcs__grain"></div>
+                <span class="pcs__tag">Office · Satin</span>
+              </div>
+              <div class="pcs__slide" style="background:linear-gradient(158deg,#b8c4c8 0%,#9aacb2 60%,#b0bcc0 100%)">
+                <div class="pcs__grain"></div>
+                <span class="pcs__tag">Hospital · Slate Blue</span>
+              </div>
+              <div class="pcs__slide" style="background:linear-gradient(158deg,#d6cfc5 0%,#c0b8ae 60%,#cec6bc 100%)">
+                <div class="pcs__grain"></div>
+                <span class="pcs__tag">Logistics · Light Grey</span>
+              </div>
+            </div>
+
+            <button class="pcs__arrow pcs__arrow--prev" aria-label="Previous image" type="button">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="pcs__arrow pcs__arrow--next" aria-label="Next image" type="button">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+
+            <div class="pcs__foot">
+              <div class="pcs__dots" aria-hidden="true"></div>
+              <a href="gallery-resin.html" class="pcs__more" data-cursor="link">
+                <span>View gallery</span>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+
           </div>
+
           <div class="panel__body">
             <span class="panel__idx" aria-hidden="true">II</span>
-            <h3 class="panel__name">Resin</h3>
+            <h3 class="panel__name">Resin Systems</h3>
             <p class="panel__desc">
-              Epoxy and polyurethane systems with depth, luminosity, and a reflective presence that stone cannot replicate. Floor as mirror. Mirror as sky.
+              Epoxy, MMA, polyester and polyurethane systems — engineered for performance, designed for permanence. From residential satin finishes to industrial floors exceeding 10,000 m².
             </p>
             <ul class="panel__props" aria-label="Properties">
-              <li>Self-levelling</li>
-              <li>Gloss, satin or matte</li>
-              <li>Chemical resistant</li>
+              <li>Epoxy · MMA · Polyester · PU</li>
+              <li>Chemical &amp; impact resistant</li>
+              <li>Gloss, satin or matte finish</li>
             </ul>
 
-            <!-- Estimate trigger -->
             <button class="panel__estimate-btn" data-material="resin" data-cursor="link"
               aria-expanded="false" aria-controls="calc-resin"
               type="button">
@@ -300,7 +393,6 @@
             </button>
           </div>
 
-          <!-- Inline calculator drawer -->
           <div class="panel__calc" id="calc-resin" aria-hidden="true" data-material="resin">
             <div class="pcalc">
               <p class="pcalc__head">
@@ -334,13 +426,59 @@
               </p>
             </div>
           </div>
+
         </article>
 
         <article class="panel reveal" aria-label="Stone carpet">
-          <div class="panel__surface panel__surface--stone" aria-hidden="true">
-            <div class="panel__grain"></div>
-            <div class="panel__aggregate"></div>
+
+          <!-- ── Surface carousel ── -->
+          <div class="panel__surface panel__surface--stone" role="region" aria-label="Stone Carpet gallery" data-carousel="stone">
+
+            <div class="pcs__track">
+              <div class="pcs__slide pcs__slide--active" style="background:radial-gradient(ellipse 120% 100% at 40% 60%,#c8c0b0 0%,#a89e90 60%,#bdb3a5 100%)">
+                <div class="pcs__grain"></div>
+                <div class="pcs__aggregate"></div>
+                <span class="pcs__tag">Terrace · Sand</span>
+              </div>
+              <div class="pcs__slide" style="background:radial-gradient(ellipse 120% 100% at 40% 60%,#d8d0c4 0%,#c4bcb0 60%,#d0c8bc 100%)">
+                <div class="pcs__grain"></div>
+                <div class="pcs__aggregate"></div>
+                <span class="pcs__tag">Pool Surround · Pearl</span>
+              </div>
+              <div class="pcs__slide" style="background:radial-gradient(ellipse 120% 100% at 40% 60%,#a8a098 0%,#908880 60%,#a09890 100%)">
+                <div class="pcs__grain"></div>
+                <div class="pcs__aggregate"></div>
+                <span class="pcs__tag">Ramp · Taupe</span>
+              </div>
+              <div class="pcs__slide" style="background:radial-gradient(ellipse 120% 100% at 40% 60%,#e0d8cc 0%,#ccc4b8 60%,#d8d0c4 100%)">
+                <div class="pcs__grain"></div>
+                <div class="pcs__aggregate"></div>
+                <span class="pcs__tag">Garden Path · Ivory</span>
+              </div>
+              <div class="pcs__slide" style="background:radial-gradient(ellipse 120% 100% at 40% 60%,#909088 0%,#787870 60%,#888880 100%)">
+                <div class="pcs__grain"></div>
+                <div class="pcs__aggregate"></div>
+                <span class="pcs__tag">Parking · Grey</span>
+              </div>
+            </div>
+
+            <button class="pcs__arrow pcs__arrow--prev" aria-label="Previous image" type="button">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="pcs__arrow pcs__arrow--next" aria-label="Next image" type="button">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+
+            <div class="pcs__foot">
+              <div class="pcs__dots" aria-hidden="true"></div>
+              <a href="gallery-stone.html" class="pcs__more" data-cursor="link">
+                <span>View gallery</span>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+
           </div>
+
           <div class="panel__body">
             <span class="panel__idx" aria-hidden="true">III</span>
             <h3 class="panel__name">Stone Carpet</h3>
@@ -353,7 +491,6 @@
               <li>Indoor &amp; outdoor use</li>
             </ul>
 
-            <!-- Estimate trigger -->
             <button class="panel__estimate-btn" data-material="stone" data-cursor="link"
               aria-expanded="false" aria-controls="calc-stone"
               type="button">
@@ -362,7 +499,6 @@
             </button>
           </div>
 
-          <!-- Inline calculator drawer -->
           <div class="panel__calc" id="calc-stone" aria-hidden="true" data-material="stone">
             <div class="pcalc">
               <p class="pcalc__head">
@@ -396,9 +532,50 @@
               </p>
             </div>
           </div>
+
         </article>
 
       </div>
+
+      <!-- ── Gallery access band ── -->
+      <div class="gallery-band reveal" aria-label="Portfolio gallery">
+        <div class="gallery-band__inner">
+          <div class="gallery-band__left">
+            <span class="gallery-band__label">Portfolio</span>
+            <h3 class="gallery-band__h">
+              The complete work.<br>
+              <em>Every surface. Every scale.</em>
+            </h3>
+          </div>
+          <div class="gallery-band__center">
+            <a href="gallery.html" class="gallery-band__cta" data-cursor="link" data-magnetic>
+              <span class="gallery-band__cta-ring"></span>
+              <span class="gallery-band__cta-text">
+                <span class="gallery-band__cta-main">Explore Gallery</span>
+                <span class="gallery-band__cta-sub">All materials &amp; applications</span>
+              </span>
+              <svg class="gallery-band__cta-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+          <div class="gallery-band__right">
+            <div class="gallery-band__stat">
+              <span class="gallery-band__stat-n">340</span>
+              <span class="gallery-band__stat-l">Projects</span>
+            </div>
+            <div class="gallery-band__stat">
+              <span class="gallery-band__stat-n">3</span>
+              <span class="gallery-band__stat-l">Materials</span>
+            </div>
+            <div class="gallery-band__stat">
+              <span class="gallery-band__stat-n">12</span>
+              <span class="gallery-band__stat-l">Countries</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </section>
 
     <!-- ══════════════════════════════════════════
