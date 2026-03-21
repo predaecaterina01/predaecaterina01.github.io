@@ -751,3 +751,200 @@ document.querySelectorAll('.panel__estimate-btn').forEach(btn => {
     sysSelect.addEventListener('change', () => handleDrawerInput(drawer));
   }
 });
+
+
+/* ══════════════════════════════════════════════════════════
+   PANEL GALLERY CAROUSELS
+   Minimal — vanilla JS, no dependencies
+   3 slides desktop · 2 tablet · 1 mobile
+   Touch/drag support included
+   ══════════════════════════════════════════════════════════ */
+
+document.querySelectorAll('.pcarousel').forEach(carousel => {
+  const id        = carousel.dataset.carousel;
+  const track     = carousel.querySelector('.pcarousel__track');
+  const slides    = Array.from(track.querySelectorAll('.pcarousel__slide'));
+  const prevBtn   = carousel.querySelector('.pcarousel__arrow--prev');
+  const nextBtn   = carousel.querySelector('.pcarousel__arrow--next');
+  const dotsWrap  = document.querySelector(`.pcarousel__dots[data-dots="${id}"]`);
+
+  if (!track || slides.length === 0) return;
+
+  let current    = 0;
+  let startX     = 0;
+  let isDragging = false;
+
+  /* ── Determine visible slides per viewport ── */
+  function perView() {
+    const w = window.innerWidth;
+    if (w <= 900)  return 1;
+    if (w <= 1200) return 2;
+    return 3;
+  }
+
+  /* ── Total number of "pages" ── */
+  function pages() {
+    return Math.max(1, slides.length - perView() + 1);
+  }
+
+  /* ── Build dots ── */
+  function buildDots() {
+    if (!dotsWrap) return;
+    dotsWrap.innerHTML = '';
+    const n = pages();
+    if (n <= 1) return;
+    for (let i = 0; i < n; i++) {
+      const dot = document.createElement('button');
+      dot.className = 'pcarousel__dot' + (i === current ? ' active' : '');
+      dot.setAttribute('aria-label', `Slide ${i + 1}`);
+      dot.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(dot);
+    }
+  }
+
+  /* ── Update dots active state ── */
+  function updateDots() {
+    if (!dotsWrap) return;
+    dotsWrap.querySelectorAll('.pcarousel__dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  /* ── Move track ── */
+  function goTo(index) {
+    const max = pages() - 1;
+    current = Math.max(0, Math.min(index, max));
+    const pct  = (100 / perView()) * current;
+    track.style.transform = `translateX(-${pct}%)`;
+    prevBtn && (prevBtn.disabled = current === 0);
+    nextBtn && (nextBtn.disabled = current >= max);
+    updateDots();
+  }
+
+  /* ── Arrow clicks ── */
+  prevBtn && prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn && nextBtn.addEventListener('click', () => goTo(current + 1));
+
+  /* ── Touch / drag support ── */
+  const wrap = carousel.querySelector('.pcarousel__track-wrap');
+  if (wrap) {
+    wrap.addEventListener('pointerdown', e => {
+      startX     = e.clientX;
+      isDragging = true;
+      wrap.setPointerCapture(e.pointerId);
+    });
+
+    wrap.addEventListener('pointerup', e => {
+      if (!isDragging) return;
+      isDragging = false;
+      const diff = startX - e.clientX;
+      if (Math.abs(diff) > 40) {
+        diff > 0 ? goTo(current + 1) : goTo(current - 1);
+      }
+    });
+
+    wrap.addEventListener('pointercancel', () => { isDragging = false; });
+  }
+
+  /* ── Keyboard navigation when focused ── */
+  carousel.setAttribute('tabindex', '0');
+  carousel.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); goTo(current - 1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current + 1); }
+  });
+
+  /* ── Resize — recalculate ── */
+  let _resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(_resizeTimer);
+    _resizeTimer = setTimeout(() => {
+      buildDots();
+      goTo(Math.min(current, pages() - 1));
+    }, 200);
+  });
+
+  /* ── Init ── */
+  buildDots();
+  goTo(0);
+});
+
+
+/* ══════════════════════════════════════════════════════════
+   PANEL SURFACE CAROUSELS
+   Integrated into .panel__surface — opacity crossfade
+   Auto-advances every 4s, pauses on hover
+   ══════════════════════════════════════════════════════════ */
+
+(function initSurfaceCarousels() {
+
+  document.querySelectorAll('.panel__surface[data-carousel]').forEach(surface => {
+
+    const slides   = Array.from(surface.querySelectorAll('.pcs__slide'));
+    const dotsWrap = surface.querySelector('.pcs__dots');
+    const btnPrev  = surface.querySelector('.pcs__arrow--prev');
+    const btnNext  = surface.querySelector('.pcs__arrow--next');
+
+    if (!slides.length) return;
+
+    let current  = 0;
+    let timer    = null;
+    const DELAY  = 4000;
+
+    /* ── Build dots ── */
+    const dots = slides.map((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'pcs__dot' + (i === 0 ? ' pcs__dot--active' : '');
+      d.setAttribute('aria-label', `Slide ${i + 1}`);
+      d.setAttribute('type', 'button');
+      d.addEventListener('click', () => goTo(i));
+      dotsWrap && dotsWrap.appendChild(d);
+      return d;
+    });
+
+    /* ── Go to slide ── */
+    function goTo(idx) {
+      slides[current].classList.remove('pcs__slide--active');
+      dots[current] && dots[current].classList.remove('pcs__dot--active');
+
+      current = (idx + slides.length) % slides.length;
+
+      slides[current].classList.add('pcs__slide--active');
+      dots[current] && dots[current].classList.add('pcs__dot--active');
+    }
+
+    /* ── Auto-advance ── */
+    function startAuto() {
+      timer = setInterval(() => goTo(current + 1), DELAY);
+    }
+
+    function stopAuto() {
+      clearInterval(timer);
+    }
+
+    /* ── Arrow buttons ── */
+    btnPrev && btnPrev.addEventListener('click', () => { stopAuto(); goTo(current - 1); startAuto(); });
+    btnNext && btnNext.addEventListener('click', () => { stopAuto(); goTo(current + 1); startAuto(); });
+
+    /* ── Touch / swipe support ── */
+    let touchStartX = 0;
+    surface.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].clientX;
+    }, { passive: true });
+    surface.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 40) {
+        stopAuto();
+        goTo(dx < 0 ? current + 1 : current - 1);
+        startAuto();
+      }
+    }, { passive: true });
+
+    /* ── Pause on hover ── */
+    surface.addEventListener('mouseenter', stopAuto);
+    surface.addEventListener('mouseleave', startAuto);
+
+    /* ── Start ── */
+    startAuto();
+  });
+
+})();
