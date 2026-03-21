@@ -259,9 +259,14 @@ button {
   border-bottom: 1px solid transparent;
 }
 
-/* Over dark hero — fully transparent */
+/* Over dark hero — fully transparent with subtle bottom shadow */
 .nav.on-dark {
-  background: transparent;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 9, 8, 0.55) 0%,
+    rgba(10, 9, 8, 0.18) 70%,
+    transparent 100%
+  );
 }
 
 /* Scrolled over light sections */
@@ -303,7 +308,7 @@ button {
   font-size: var(--t-xs);
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--dark-muted);
+  color: rgba(214, 204, 192, 0.85);
   position: relative;
   transition: color var(--dur-fast);
 }
@@ -325,9 +330,10 @@ button {
 
 /* CTA item */
 .nav__item--cta {
-  border: 1px solid var(--dark-rule);
+  border: 1px solid rgba(214, 204, 192, 0.5);
   padding: 8px 22px;
-  color: var(--dark-text);
+  color: rgba(236, 230, 221, 0.95);
+  background: rgba(246, 243, 238, 0.08);
   transition: background var(--dur-mid) var(--ease),
               border-color var(--dur-mid),
               color var(--dur-mid);
@@ -336,9 +342,9 @@ button {
 .nav__item--cta::after { display:none; }
 
 .nav__item--cta:hover {
-  background: var(--taupe-d);
-  border-color: var(--taupe-d);
-  color: var(--ivory);
+  background: var(--ivory);
+  border-color: var(--ivory);
+  color: var(--ink);
 }
 
 .nav.on-light .nav__item--cta {
@@ -416,7 +422,7 @@ button {
   display: none;
 }
 
-/* Overlay — strong left for text, minimal top, soft bottom */
+/* Overlay — seamless nav blend top, strong left for text, soft bottom */
 .intro__scene::after {
   content: '';
   position: absolute;
@@ -432,12 +438,13 @@ button {
     ),
     linear-gradient(
       to bottom,
-      transparent 0%,
-      transparent 70%,
-      rgba(10, 9, 8, 0.55) 100%
+      rgba(10, 9, 8, 0.65) 0%,
+      rgba(10, 9, 8, 0.30) 10%,
+      transparent 22%,
+      transparent 72%,
+      rgba(10, 9, 8, 0.45) 100%
     );
   pointer-events: none;
-}
 }
 
 /* Hide left vertical rule — conflicts with image */
@@ -520,7 +527,7 @@ button {
   max-width: var(--max);
   margin-inline: auto;
   width: 100%;
-  padding-bottom: var(--s-2xl);
+  padding-bottom: clamp(48px, 6vw, 80px);
 }
 
 .intro__overline {
@@ -614,16 +621,14 @@ button {
    9. TRANSITION BAND — dark → light
 ────────────────────────────────────────── */
 .transition-band {
-  height: clamp(120px, 18vw, 240px);
+  height: 72px;
   background: linear-gradient(
     to bottom,
     var(--dark-bg)   0%,
-    #1a1714         20%,
-    #2e2920         40%,
-    #5c5045         60%,
-    #9e9285         75%,
-    var(--ivory-3)  90%,
-    var(--ivory-2)  100%
+    #1e1b17         25%,
+    #3d3328         55%,
+    #8a7e72         78%,
+    #ECE6DD         100%
   );
   pointer-events: none;
 }
