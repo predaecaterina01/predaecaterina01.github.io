@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Deco Preda — Specialist architectural surface contractor. Microcement, performance resin, design resin, stone carpet and hybrid surface systems. London · Dublin." />
+  <meta name="description" content="Deco Preda — Specialist architectural surface contractor. Microcement, performance resin, design resin, stone carpet and hybrid surface systems. Dublin · Ireland." />
   <title>Deco Preda — Architectural Surface Contractor</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -59,26 +59,18 @@
       </div>
       <div class="intro__content">
         <p class="intro__overline reveal-hero">
-          <span>London</span><span class="sep" aria-hidden="true">—</span><span>Dublin</span>
+          Based in Dublin · Serving Ireland &amp; beyond
         </p>
         <h1 class="intro__title">
           <span class="intro__title-row reveal-hero">Where light</span>
           <span class="intro__title-row intro__title-row--italic reveal-hero">meets surface.</span>
         </h1>
-        <p class="intro__body reveal-hero">
-          An architectural surface contractor.<br>
-          Precision applied at every scale.
-        </p>
-        <p class="intro__domains reveal-hero">
-          Residential &nbsp;·&nbsp; Commercial &nbsp;·&nbsp; Industrial
-        </p>
         <div class="intro__actions reveal-hero">
           <a href="#systems" class="btn-ghost" data-cursor="link" data-magnetic>
             <span class="btn-ghost__label">Discover the Work</span>
             <span class="btn-ghost__icon" aria-hidden="true">↓</span>
           </a>
         </div>
-        <p class="intro__trust reveal-hero">Industrial capacity exceeding 10,000 m²</p>
       </div>
       <div class="intro__scroll" aria-hidden="true">
         <div class="intro__scroll-line"></div>
@@ -87,6 +79,7 @@
 
     <div class="transition-band" aria-hidden="true"></div>
 
+    <!-- ══ II. WHO WE ARE ══ -->
     <!-- ══ II. WHO WE ARE ══ -->
     <section class="who" id="who-we-are" aria-label="Who We Are">
       <div class="wrap">
@@ -97,81 +90,98 @@
           <span class="section-label">Who We Are</span>
         </header>
 
-        <div class="who__grid">
-          <div class="who__statement reveal">
+        <div class="who__accordion">
+
+          <!-- Stânga — titlu sticky -->
+          <div class="who__accord-header reveal">
             <h2 class="who__h">
-              A surface is not<br>
-              decoration.<br>
+              A surface is not decoration.<br>
               <em>It is specification.</em>
             </h2>
           </div>
-          <div class="who__aside">
-            <p class="who__p reveal">
-              Deco Preda is a specialist architectural surface contractor operating across the United Kingdom and Ireland. We deliver engineered surface systems — from precision mineral applications in private residences to high-performance resin flooring across logistics infrastructure at industrial scale.
-            </p>
-            <p class="who__p reveal">
-              Our work spans two distinct verticals. In residential, commercial and hospitality environments, we apply microcement, decorative resin, stone carpet and hybrid surface compositions that combine technical performance with uncompromising aesthetic intent. In infrastructure and logistics, our high-performance resin systems are specified for extreme compressive loads, chemical resistance and continuous heavy-traffic use — from 50m² private commissions to facilities exceeding 10,000m².
-            </p>
-            <p class="who__p reveal">
-              Every project — regardless of scale — is governed by identical standards: certified European material systems, EN-protocol application procedures, full technical documentation and post-installation support.
-            </p>
 
-            <div class="who__values reveal">
-              <div class="who__val">
-                <span class="who__val-title">Execution Quality</span>
-                <span class="who__val-desc">EN-standard application protocols. Multi-coat systems. Full substrate preparation documentation at every stage.</span>
-              </div>
-              <div class="who__val">
-                <span class="who__val-title">Material Integrity</span>
-                <span class="who__val-desc">Certified European mineral and resin systems — selected for long-term performance, durability and regulatory compliance.</span>
-              </div>
-              <div class="who__val">
-                <span class="who__val-title">Industrial Scale</span>
-                <span class="who__val-desc">Capacity, logistics and technical management from 50m² residential commissions to 10,000m²+ infrastructure projects.</span>
-              </div>
-              <div class="who__val">
-                <span class="who__val-title">Design Versatility</span>
-                <span class="who__val-desc">Custom resin patterns, hybrid compositions, bespoke mineral tones and graphic wayfinding systems — no two projects identical.</span>
+          <!-- Dreapta — teaser + conținut expandabil -->
+          <div class="who__accord-right">
+
+            <div class="who__teaser" id="whoTeaser">
+              <p class="who__teaser-text">
+                An architectural surface contractor operating across Ireland and Europe.
+                Precision engineered surface systems — from private residences to
+                industrial infrastructure exceeding 10,000 m²
+                <span class="who__teaser-ellipsis">&thinsp;·&thinsp;·&thinsp;·</span>
+                <button class="who__trigger-inline" id="whoToggle"
+                  aria-expanded="false"
+                  aria-controls="whoAside"
+                  aria-label="Read more"
+                  type="button">↓</button>
+              </p>
+            </div>
+
+            <div class="who__aside" id="whoAside" aria-hidden="true">
+              <div class="who__aside-grid">
+
+                <div class="who__col">
+                  <p class="who__p reveal">
+                    An architectural surface contractor operating across Ireland and Europe.
+                    Precision engineered surface systems — from private residences to
+                    industrial infrastructure exceeding 10,000 m².
+                  </p>
+                  <p class="who__p reveal">
+                    Deco Preda delivers engineered surface systems — from precision mineral
+                    applications in private residences to high-performance resin flooring
+                    across logistics infrastructure at industrial scale.
+                  </p>
+                  <p class="who__p reveal">
+                    Every project — regardless of scale — is governed by identical standards:
+                    certified European material systems, EN-protocol application procedures,
+                    full technical documentation and post-installation support.
+                  </p>
+                  <div class="who__locations reveal">
+                    <div class="who__loc">
+                      <span class="who__loc-label">Dublin</span>
+                      <span class="who__loc-desc">Serving Ireland &amp; Europe<button class="who__trigger-close" id="whoClose" aria-label="Close section" type="button"></button></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="who__col">
+                  <div class="who__values reveal">
+                    <div class="who__val">
+                      <span class="who__val-title">Execution Quality</span>
+                      <span class="who__val-desc">EN-standard application protocols. Multi-coat systems. Full substrate preparation documentation at every stage.</span>
+                    </div>
+                    <div class="who__val">
+                      <span class="who__val-title">Material Integrity</span>
+                      <span class="who__val-desc">Certified European mineral and resin systems — selected for long-term performance, durability and regulatory compliance.</span>
+                    </div>
+                    <div class="who__val">
+                      <span class="who__val-title">Industrial Scale</span>
+                      <span class="who__val-desc">Capacity, logistics and technical management from 50m² residential commissions to 10,000m²+ infrastructure projects.</span>
+                    </div>
+                    <div class="who__val">
+                      <span class="who__val-title">Design Versatility</span>
+                      <span class="who__val-desc">Custom resin patterns, hybrid compositions, bespoke mineral tones and graphic wayfinding systems — no two projects identical.</span>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
 
-            <div class="who__locations reveal">
-              <div class="who__loc">
-                <span class="who__loc-label">London</span>
-                <span class="who__loc-desc">Primary operations &amp; UK projects</span>
-              </div>
-              <div class="who__loc">
-                <span class="who__loc-label">Dublin</span>
-                <span class="who__loc-desc">Ireland &amp; European operations</span>
-              </div>
-            </div>
-          </div>
-        </div>
+          </div><!-- /who__accord-right -->
+
+        </div><!-- /who__accordion -->
 
         <div class="divider reveal" aria-hidden="true"></div>
 
-        <div class="stats reveal">
-          <div class="stat">
-            <span class="stat__n" data-count="340">0</span>
-            <p class="stat__l">Projects</p>
-          </div>
-          <div class="stat__sep" aria-hidden="true"></div>
-          <div class="stat">
-            <span class="stat__n" data-count="87">0</span>
-            <p class="stat__l">Architects Served</p>
-          </div>
-          <div class="stat__sep" aria-hidden="true"></div>
-          <div class="stat">
-            <span class="stat__n" data-count="12">0</span>
-            <p class="stat__l">Countries</p>
-          </div>
-          <div class="stat__sep" aria-hidden="true"></div>
-          <div class="stat">
-            <span class="stat__n" data-count="10">0</span>
-            <span class="stat__denom">k+</span>
-            <p class="stat__l">m² Industrial</p>
-          </div>
-        </div>
+        <div class="brand-statement reveal">
+  <span class="brand-statement__rule" aria-hidden="true"></span>
+  <blockquote class="brand-statement__q">
+    Engineered to perform. Specified to last.
+    <em>Quality and aesthetics — held in balance.</em>
+  </blockquote>
+  <span class="brand-statement__rule" aria-hidden="true"></span>
+</div>
 
       </div>
     </section>
@@ -217,7 +227,7 @@
           <div class="panel__body">
             <span class="panel__idx" aria-hidden="true">I</span>
             <h3 class="panel__name">Microcement</h3>
-            <p class="panel__desc">Membrană minerală continuă pentru suprafețe monolitice, fără rosturi.</p>
+            <p class="panel__desc">Continuous mineral membrane for seamless monolithic surfaces.</p>
             <ul class="panel__props">
               <li>Seamless — zero joints, zero grout</li>
               <li>Waterproof &amp; durable</li>
@@ -285,7 +295,7 @@
           <div class="panel__body">
             <span class="panel__idx" aria-hidden="true">II</span>
             <h3 class="panel__name">Stone Carpet</h3>
-            <p class="panel__desc">Agregat de cuarț sau marmură în rășină, pentru pardoseli drenante și texturate.</p>
+            <p class="panel__desc">Quartz or marble aggregate in resin for draining, textured floors.</p>
             <ul class="panel__props">
               <li>Slip-resistant &amp; naturally draining</li>
               <li>UV-stable for exterior use</li>
@@ -355,7 +365,7 @@
           <div class="panel__body">
             <span class="panel__idx" aria-hidden="true">III</span>
             <h3 class="panel__name">Performance Resin</h3>
-            <p class="panel__desc">Sisteme epoxidice de înaltă rezistență pentru medii industriale și logistice.</p>
+            <p class="panel__desc">High-resistance epoxy systems for industrial and logistics environments.</p>
             <ul class="panel__props">
               <li>Epoxy · MMA · Polyester · PU systems</li>
               <li>Chemical-resistant, heavy-load rated</li>
@@ -423,7 +433,7 @@
           <div class="panel__body">
             <span class="panel__idx" aria-hidden="true">IV</span>
             <h3 class="panel__name">Design Resin</h3>
-            <p class="panel__desc">Compoziții artistice unice cu efecte metalice și pigmenți premium.</p>
+            <p class="panel__desc">Bespoke artistic compositions with metallic effects and premium pigments.</p>
             <ul class="panel__props">
               <li>Bespoke pattern &amp; colour compositions</li>
               <li>Metallic pigments, glitter, translucent layers</li>
@@ -468,32 +478,6 @@
         </article>
 
       </div>
-
-      <!-- Gallery access band -->
-      <div class="gallery-band reveal">
-        <div class="gallery-band__inner">
-          <div class="gallery-band__left">
-            <span class="gallery-band__label">Portfolio</span>
-            <h3 class="gallery-band__h">The complete work.<br><em>Every system. Every scale.</em></h3>
-          </div>
-          <div class="gallery-band__center">
-            <a href="gallery.html" class="gallery-band__cta" data-cursor="link" data-magnetic>
-              <span class="gallery-band__cta-ring"></span>
-              <span class="gallery-band__cta-text">
-                <span class="gallery-band__cta-main">Explore Gallery</span>
-                <span class="gallery-band__cta-sub">All systems &amp; applications</span>
-              </span>
-              <svg class="gallery-band__cta-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </div>
-          <div class="gallery-band__right">
-            <div class="gallery-band__stat"><span class="gallery-band__stat-n">4</span><span class="gallery-band__stat-l">Systems</span></div>
-            <div class="gallery-band__stat"><span class="gallery-band__stat-n">340</span><span class="gallery-band__stat-l">Projects</span></div>
-            <div class="gallery-band__stat"><span class="gallery-band__stat-n">12</span><span class="gallery-band__stat-l">Countries</span></div>
-          </div>
-        </div>
-      </div>
-
     </section>
 
     <!-- ══ IV. PROJECTS ══ -->
@@ -614,11 +598,11 @@
               Every project begins<br>
               <em>with a single<br>conversation.</em>
             </h2>
-            <p class="commission__body reveal">We respond within 24 hours. UK, Ireland and European projects considered. Architects, developers, main contractors and private clients welcome.</p>
+            <p class="commission__body reveal">We respond within 24 hours. Ireland and European projects considered. Architects, developers, main contractors and private clients welcome.</p>
             <address class="commission__contact reveal">
-              <div class="commission__contact-row"><span>Studio</span><a href="/cdn-cgi/l/email-protection#03707776676a6c436766606c73716667622d606c6e"><span class="__cf_email__" data-cfemail="bccfc8c9d8d5d3fcd8d9dfd3ccced9d8dd92dfd3d1">[email&#160;protected]</span></a></div>
+              <div class="commission__contact-row"><span>Studio</span><a href="mailto:studio@decopreda.com">studio@decopreda.com</a></div>
               <div class="commission__contact-row"><span>Phone</span><a href="tel:+441234567890">+44 1234 567 890</a></div>
-              <div class="commission__contact-row"><span>Locations</span><span>London — Dublin</span></div>
+              <div class="commission__contact-row"><span>Location</span><span>Dublin · Ireland &amp; Europe</span></div>
             </address>
           </div>
           <form class="form reveal" id="commissionForm" action="https://formspree.io/f/mkoqvqbw" method="POST" novalidate aria-label="Project inquiry">
@@ -668,11 +652,37 @@
           <a href="signature-series.html">Signature Series</a>
           <a href="#contact">Contact</a>
         </nav>
-        <p class="foot__copy">&copy; <span id="yr"></span> Deco Preda Ltd. London &amp; Dublin.</p>
+        <p class="foot__copy">&copy; <span id="yr"></span> Deco Preda Ltd. Dublin · Ireland &amp; Europe.</p>
       </div>
     </div>
   </footer>
 
   <script src="script.js"></script>
+  <script>
+  (function() {
+    const btnOpen  = document.getElementById('whoToggle');
+    const btnClose = document.getElementById('whoClose');
+    const aside    = document.getElementById('whoAside');
+    const teaser   = document.getElementById('whoTeaser');
+    if (!btnOpen || !aside) return;
+
+    function openSection() {
+      aside.classList.add('open');
+      aside.setAttribute('aria-hidden', 'false');
+      btnOpen.setAttribute('aria-expanded', 'true');
+      if (teaser) teaser.classList.add('who__teaser--hidden');
+    }
+
+    function closeSection() {
+      aside.classList.remove('open');
+      aside.setAttribute('aria-hidden', 'true');
+      btnOpen.setAttribute('aria-expanded', 'false');
+      if (teaser) teaser.classList.remove('who__teaser--hidden');
+    }
+
+    btnOpen.addEventListener('click', openSection);
+    if (btnClose) btnClose.addEventListener('click', closeSection);
+  })();
+  </script>
 </body>
 </html>
