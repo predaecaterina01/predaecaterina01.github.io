@@ -557,14 +557,15 @@ updateNav();
 
 /* ──────────────────────────────────────────────────────────
    TARIFF TABLE
-   Base rate: 40 RON/m² standard | 35 RON/m² bulk (>150 m²)
+   Base rate: 40 RON/m²
+   Bulk discount: −15% for surface > 150 m²
    System multipliers apply on top of material multipliers.
 ────────────────────────────────────────────────────────── */
 const PANEL_CALC = {
 
-  RATE_STANDARD:  40,
-  RATE_BULK:      35,
-  BULK_THRESHOLD: 150,
+  RATE:           40,     // RON/m² — single base rate
+  BULK_THRESHOLD: 150,    // m² above which bulk discount applies
+  BULK_DISCOUNT:  0.15,   // 15% off total when bulk
 
   // Per-material labour complexity multipliers
   MATERIAL: {
@@ -575,9 +576,9 @@ const PANEL_CALC = {
 
   // System tier multipliers (coat quality / prep depth)
   SYSTEM: {
-    basic:   0.85,  // single coat, minimal surface prep
-    medium:  1.00,  // standard — two coats, standard prep
-    premium: 1.35,  // three coats, full surface preparation
+    basic:   0.85,
+    medium:  1.00,
+    premium: 1.35,
   },
 
   // Human-readable tier labels
@@ -618,42 +619,61 @@ function rollUp(el, target, duration = 700) {
 }
 
 /**
- * Compute estimate for a given material + sqm + system tier.
- * @returns {{ base, low, high, rate, isBulk }}
+ * Compute estimate — sliding scale bulk discount.
+ * Avoids the 149m² > 151m² paradox by interpolating
+ * the discount gradually between 100m² and 200m².
+ * Below 100m²: no discount.
+ * 100–200m²: discount scales from 0% to 15% linearly.
+ * Above 200m²: full 15% discount applies.
+ * @returns {{ gross, base, saving, discountPct, isBulk }}
  */
 function computeEstimate(material, sqm, system) {
-  const isBulk = sqm > PANEL_CALC.BULK_THRESHOLD;
-  const rate   = isBulk ? PANEL_CALC.RATE_BULK : PANEL_CALC.RATE_STANDARD;
-  const mMult  = PANEL_CALC.MATERIAL[material] ?? 1;
-  const sMult  = PANEL_CALC.SYSTEM[system]     ?? 1;
-  const base   = Math.round(sqm * rate * mMult * sMult);
-  const low    = Math.round(base * 0.85);
-  const high   = Math.round(base * 1.40);
-  return { base, low, high, rate, isBulk };
+  const mMult = PANEL_CALC.MATERIAL[material] ?? 1;
+  const sMult = PANEL_CALC.SYSTEM[system]     ?? 1;
+  const gross = Math.round(sqm * PANEL_CALC.RATE * mMult * sMult);
+
+  // Sliding scale: 0% at 100m², 15% at 200m²+
+  let discountPct = 0;
+  if (sqm >= 200) {
+    discountPct = PANEL_CALC.BULK_DISCOUNT; // 0.15
+  } else if (sqm > 100) {
+    discountPct = PANEL_CALC.BULK_DISCOUNT * ((sqm - 100) / 100);
+  }
+
+  const saving  = Math.round(gross * discountPct);
+  const base    = gross - saving;
+  const isBulk  = discountPct > 0;
+  const low     = Math.round(base * 0.90);
+  const high    = Math.round(base * 1.35);
+  return { gross, base, saving, discountPct, isBulk, low, high };
 }
 
 /**
- * Render result into a drawer's result container.
- * @param {HTMLElement} resultEl
- * @param {number} sqm
- * @param {string} material
- * @param {string} system
+ * Render live result — no button needed, triggered by input events.
  */
 function renderPanelResult(resultEl, sqm, material, system) {
-  const { base, low, high, rate, isBulk } = computeEstimate(material, sqm, system);
+  const { gross, base, saving, discountPct, isBulk, low, high } = computeEstimate(material, sqm, system);
   const sysLabel = PANEL_CALC.SYSTEM_LABEL[system] || system;
+  const uid      = resultEl.id || material;
+  const pctLabel = Math.round(discountPct * 100);
 
-  resultEl.innerHTML =
-    '<span class="pcalc__amount" id="pcalc-amt-' + material + '">0 RON</span>' +
-    '<span class="pcalc__amount-unit">' + sqm + ' m² · ' + sysLabel + '</span>' +
-    '<p class="pcalc__range">Range: ' + fmtRON(low) + ' – ' + fmtRON(high) + '</p>' +
-    '<p class="pcalc__rate">' +
-      rate + ' RON/m²' +
-      (isBulk ? ' (bulk rate > ' + PANEL_CALC.BULK_THRESHOLD + ' m²)' : ' (standard rate)') +
-    '</p>';
+  let html = '<span class="pcalc__price" data-uid="' + uid + '">0 RON</span>'
+           + '<span class="pcalc__amount-unit">' + sqm + ' m² · ' + sysLabel + '</span>';
 
-  const amtEl = document.getElementById('pcalc-amt-' + material);
-  if (amtEl) rollUp(amtEl, base);
+  if (isBulk) {
+    html += '<span class="pcalc__bulk-badge">'
+          + '−' + pctLabel + '% volume discount · saving ' + fmtRON(saving)
+          + '</span>';
+  }
+
+  html += '<p class="pcalc__range">Indicative range: ' + fmtRON(low) + ' – ' + fmtRON(high) + '</p>'
+        + '<p class="pcalc__rate">' + PANEL_CALC.RATE + ' RON/m² base'
+        + (isBulk ? ' · volume rate applied' : '') + '</p>';
+
+  resultEl.innerHTML = html;
+
+  const priceEl = resultEl.querySelector('.pcalc__price');
+  if (priceEl) rollUp(priceEl, base);
 }
 
 /* ──────────────────────────────────────────────────────────
@@ -707,6 +727,42 @@ function toggleDrawer(btn, drawer) {
    LIVE CALCULATION — triggered by input events in any drawer
 ────────────────────────────────────────────────────────── */
 
+/* ──────────────────────────────────────────────────────────
+   RESET HELPERS
+────────────────────────────────────────────────────────── */
+
+/** Reset smoothly — fade out result, wait 900ms, show dash */
+function resetDrawer(drawer) {
+  const mpInput  = drawer.querySelector('.pcalc__input');
+  const resultEl = drawer.querySelector('.pcalc__result');
+
+  if (resultEl && resultEl.querySelector('.pcalc__price')) {
+    // Fade out current price
+    resultEl.style.transition = 'opacity 0.35s ease';
+    resultEl.style.opacity    = '0';
+
+    setTimeout(() => {
+      if (mpInput) { mpInput.value = '00'; mpInput.blur(); }
+      resultEl.innerHTML     = '<span class="pcalc__neutral">—</span>';
+      resultEl.style.opacity = '0';
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          resultEl.style.transition = 'opacity 0.4s ease';
+          resultEl.style.opacity    = '1';
+        });
+      });
+    }, 900);
+  } else {
+    // No price shown — reset immediately without flash
+    if (mpInput) { mpInput.value = '00'; mpInput.blur(); }
+    if (resultEl) resultEl.innerHTML = '<span class="pcalc__neutral">—</span>';
+  }
+}
+
+/* ──────────────────────────────────────────────────────────
+   LIVE CALCULATION
+────────────────────────────────────────────────────────── */
+
 function handleDrawerInput(drawer) {
   const material  = drawer.dataset.material;
   const mpInput   = drawer.querySelector('.pcalc__input');
@@ -714,11 +770,12 @@ function handleDrawerInput(drawer) {
   const resultEl  = drawer.querySelector('.pcalc__result');
   if (!mpInput || !sysSelect || !resultEl) return;
 
-  const sqm = parseFloat(mpInput.value);
+  const raw = mpInput.value.trim();
+  const sqm = parseFloat(raw);
 
-  // Clear result if invalid
-  if (isNaN(sqm) || sqm <= 0) {
-    resultEl.innerHTML = '';
+  // Ignore empty, zero, '00' or invalid values
+  if (!raw || raw === '00' || isNaN(sqm) || sqm <= 0) {
+    resultEl.innerHTML = '<span class="pcalc__neutral">—</span>';
     return;
   }
 
@@ -726,7 +783,7 @@ function handleDrawerInput(drawer) {
 }
 
 /* ──────────────────────────────────────────────────────────
-   INIT — bind all drawer triggers and inputs
+   INIT — bind drawer toggles, live inputs, auto-reset
 ────────────────────────────────────────────────────────── */
 
 document.querySelectorAll('.panel__estimate-btn').forEach(btn => {
@@ -734,23 +791,58 @@ document.querySelectorAll('.panel__estimate-btn').forEach(btn => {
   const drawer   = document.getElementById(drawerId);
   if (!drawer) return;
 
-  // Toggle on button click
+  // Toggle drawer open/close
   btn.addEventListener('click', () => toggleDrawer(btn, drawer));
 
-  // Live calc on sqm input
-  const mpInput = drawer.querySelector('.pcalc__input');
+  const mpInput  = drawer.querySelector('.pcalc__input');
+  const sysSelect = drawer.querySelector('.pcalc__select');
+
   if (mpInput) {
+    // Live calculation on every keystroke
     mpInput.addEventListener('input', () => handleDrawerInput(drawer));
+
+    // Enter key triggers calc + blur
     mpInput.addEventListener('keydown', e => {
-      if (e.key === 'Enter') handleDrawerInput(drawer);
+      if (e.key === 'Enter') {
+        handleDrawerInput(drawer);
+        mpInput.blur();
+      }
+    });
+
+    // Smart focus — clear '00' placeholder on click so user can type immediately
+    mpInput.addEventListener('focus', () => {
+      if (mpInput.value === '00' || mpInput.value === '0' || mpInput.value === '') {
+        mpInput.value = '';
+      }
+    });
+
+    // On blur with empty field — restore neutral state
+    mpInput.addEventListener('blur', () => {
+      if (!mpInput.value.trim()) {
+        const resultEl = drawer.querySelector('.pcalc__result');
+        if (resultEl) resultEl.innerHTML = '<span class="pcalc__neutral">—</span>';
+      }
     });
   }
 
-  // Live calc on system change
-  const sysSelect = drawer.querySelector('.pcalc__select');
   if (sysSelect) {
     sysSelect.addEventListener('change', () => handleDrawerInput(drawer));
   }
+});
+
+/* Auto-reset when mouse leaves the panel — debounced */
+document.querySelectorAll('.panel').forEach(panel => {
+  let _leaveTimer = null;
+
+  panel.addEventListener('mouseleave', () => {
+    const drawer = panel.querySelector('.panel__calc');
+    if (!drawer) return;
+    _leaveTimer = setTimeout(() => resetDrawer(drawer), 120);
+  });
+
+  panel.addEventListener('mouseenter', () => {
+    clearTimeout(_leaveTimer);
+  });
 });
 
 
@@ -879,17 +971,16 @@ document.querySelectorAll('.pcarousel').forEach(carousel => {
 (function initSurfaceCarousels() {
 
   document.querySelectorAll('.panel__surface[data-carousel]').forEach(surface => {
-
-    const slides   = Array.from(surface.querySelectorAll('.pcs__slide'));
+    const slides  = Array.from(surface.querySelectorAll('.pcs__slide'));
     const dotsWrap = surface.querySelector('.pcs__dots');
     const btnPrev  = surface.querySelector('.pcs__arrow--prev');
     const btnNext  = surface.querySelector('.pcs__arrow--next');
 
     if (!slides.length) return;
 
-    let current  = 0;
-    let timer    = null;
-    const DELAY  = 4000;
+    let current = 0;
+    let timer   = null;
+    const DELAY = 4000;
 
     /* ── Build dots ── */
     const dots = slides.map((_, i) => {
@@ -897,7 +988,7 @@ document.querySelectorAll('.pcarousel').forEach(carousel => {
       d.className = 'pcs__dot' + (i === 0 ? ' pcs__dot--active' : '');
       d.setAttribute('aria-label', `Slide ${i + 1}`);
       d.setAttribute('type', 'button');
-      d.addEventListener('click', () => goTo(i));
+      d.addEventListener('click', () => { stopAuto(); goTo(i); startAuto(); });
       dotsWrap && dotsWrap.appendChild(d);
       return d;
     });
@@ -906,21 +997,14 @@ document.querySelectorAll('.pcarousel').forEach(carousel => {
     function goTo(idx) {
       slides[current].classList.remove('pcs__slide--active');
       dots[current] && dots[current].classList.remove('pcs__dot--active');
-
       current = (idx + slides.length) % slides.length;
-
       slides[current].classList.add('pcs__slide--active');
       dots[current] && dots[current].classList.add('pcs__dot--active');
     }
 
     /* ── Auto-advance ── */
-    function startAuto() {
-      timer = setInterval(() => goTo(current + 1), DELAY);
-    }
-
-    function stopAuto() {
-      clearInterval(timer);
-    }
+    function startAuto() { timer = setInterval(() => goTo(current + 1), DELAY); }
+    function stopAuto()  { clearInterval(timer); }
 
     /* ── Arrow buttons ── */
     btnPrev && btnPrev.addEventListener('click', () => { stopAuto(); goTo(current - 1); startAuto(); });
@@ -947,23 +1031,20 @@ document.querySelectorAll('.pcarousel').forEach(carousel => {
     /* ── Reload handler — triggered by JSON manifest loader ── */
     surface.addEventListener('carousel:reload', () => {
       stopAuto();
-      // Re-collect slides after DOM update
       const newSlides = Array.from(surface.querySelectorAll('.pcs__slide'));
       if (!newSlides.length) return;
-      newSlides.forEach((s, i) => {
-        s.classList.toggle('pcs__slide--active', i === 0);
-      });
-      // Rebuild dots
-      dotsWrap && (dotsWrap.innerHTML = '');
-      newSlides.forEach((_, i) => {
-        const d = document.createElement('button');
-        d.className = 'pcs__dot' + (i === 0 ? ' pcs__dot--active' : '');
-        d.setAttribute('aria-label', `Slide ${i + 1}`);
-        d.setAttribute('type', 'button');
-        d.addEventListener('click', () => goTo(i));
-        dotsWrap && dotsWrap.appendChild(d);
-        dots.push(d);
-      });
+      newSlides.forEach((s, i) => s.classList.toggle('pcs__slide--active', i === 0));
+      if (dotsWrap) {
+        dotsWrap.innerHTML = '';
+        newSlides.forEach((_, i) => {
+          const d = document.createElement('button');
+          d.className = 'pcs__dot' + (i === 0 ? ' pcs__dot--active' : '');
+          d.setAttribute('aria-label', `Slide ${i + 1}`);
+          d.setAttribute('type', 'button');
+          d.addEventListener('click', () => { stopAuto(); goTo(i); startAuto(); });
+          dotsWrap.appendChild(d);
+        });
+      }
       current = 0;
       startAuto();
     });
