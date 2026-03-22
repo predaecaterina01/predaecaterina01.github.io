@@ -1,1 +1,57 @@
 
+{
+  "microcement": [
+    { "file": "images/microcement-01.webp", "label": "Bathroom · Ivory", "location": "London", "domain": "residential" },
+    { "file": "images/microcement-02.webp", "label": "Hotel Corridor · Slate", "location": "Dublin", "domain": "hospitality" },
+    { "file": "images/microcement-03.webp", "label": "Living Space · Sand", "location": "London", "domain": "residential" },
+    { "file": "images/microcement-04.webp", "label": "Spa · Greige", "location": "Edinburgh", "domain": "wellness" },
+    { "file": "images/microcement-05.webp", "label": "Kitchen · Pearl", "location": "London", "domain": "residential" },
+    { "file": "images/microcement-06.webp", "label": "Office Reception · Charcoal", "location": "Dublin", "domain": "commercial" }
+  ],
+  "stone": [
+    { "file": "images/stone-01.webp", "label": "Pool Terrace · Sand", "location": "Kent", "domain": "residential" },
+    { "file": "images/stone-02.webp", "label": "Pool Surround · Pearl", "location": "Surrey", "domain": "residential" },
+    { "file": "images/stone-03.webp", "label": "Parking Ramp · Grey", "location": "Dublin", "domain": "industrial" },
+    { "file": "images/stone-04.webp", "label": "Garden Pathway · Ivory", "location": "London", "domain": "residential" },
+    { "file": "images/stone-05.webp", "label": "Public Entrance · Taupe", "location": "Manchester", "domain": "commercial" }
+  ],
+  "resin-performance": [
+    { "file": "images/resin-perf-01.webp", "label": "Distribution Centre · Light Grey", "location": "Birmingham", "domain": "industrial" },
+    { "file": "images/resin-perf-02.webp", "label": "Public Car Park · Anthracite", "location": "Dublin", "domain": "industrial" },
+    { "file": "images/resin-perf-03.webp", "label": "Logistics Hub · Mid Grey", "location": "Manchester", "domain": "industrial" },
+    { "file": "images/resin-perf-04.webp", "label": "Manufacturing Floor · Sage", "location": "Leeds", "domain": "industrial" },
+    { "file": "images/resin-perf-05.webp", "label": "Hospital Corridor · White", "location": "London", "domain": "industrial" },
+    { "file": "images/resin-perf-06.webp", "label": "Warehouse · Slate Blue", "location": "Bristol", "domain": "industrial" }
+  ],
+  "resin-design": [
+    { "file": "images/resin-design-01.webp", "label": "Showroom · Ivory Gloss", "location": "London", "domain": "commercial" },
+    { "file": "images/resin-design-02.webp", "label": "Retail Identity Floor · Black & Gold", "location": "Dublin", "domain": "commercial" },
+    { "file": "images/resin-design-03.webp", "label": "Restaurant · Terrazzo Effect", "location": "London", "domain": "hospitality" },
+    { "file": "images/resin-design-04.webp", "label": "Residential Decorative · Marble", "location": "Surrey", "domain": "residential" },
+    { "file": "images/resin-design-05.webp", "label": "Wayfinding System · Colour Zones", "location": "Manchester", "domain": "industrial" }
+  ],
+  "hybrid": [
+    { "file": "images/hybrid-01.webp", "label": "Matte + Gloss Composition", "location": "London", "domain": "residential" },
+    { "file": "images/hybrid-02.webp", "label": "Mineral + Resin Topcoat", "location": "Dublin", "domain": "residential" },
+    { "file": "images/hybrid-03.webp", "label": "Acrylic Composite · Bespoke", "location": "London", "domain": "commercial" },
+    { "file": "images/hybrid-04.webp", "label": "Textured Transparency", "location": "Edinburgh", "domain": "residential" }
+  ],
+  "projects": {
+    "architectural": [
+      { "file": "images/proj-arch-01.webp", "name": "Notting Hill Residence", "system": "Microcement", "location": "London" },
+      { "file": "images/proj-arch-02.webp", "name": "Wellness Retreat", "system": "Microcement + Stone Carpet", "location": "Dublin" },
+      { "file": "images/proj-arch-03.webp", "name": "Boutique Hotel", "system": "Design Resin", "location": "Edinburgh" },
+      { "file": "images/proj-arch-04.webp", "name": "Private Spa", "system": "Hybrid Surfaces", "location": "Surrey" },
+      { "file": "images/proj-arch-05.webp", "name": "Penthouse Kitchen", "system": "Microcement", "location": "London" },
+      { "file": "images/proj-arch-06.webp", "name": "Restaurant Interior", "system": "Design Resin", "location": "Dublin" }
+    ],
+    "infrastructure": [
+      { "file": "images/proj-infra-01.webp", "name": "Logistics Centre 4,200 m²", "system": "Performance Resin · Epoxy", "location": "Birmingham" },
+      { "file": "images/proj-infra-02.webp", "name": "Public Car Park 6,800 m²", "system": "Performance Resin · MMA", "location": "Dublin" },
+      { "file": "images/proj-infra-03.webp", "name": "Manufacturing Facility 3,100 m²", "system": "Performance Resin · PU", "location": "Leeds" },
+      { "file": "images/proj-infra-04.webp", "name": "Distribution Hub 5,500 m²", "system": "Performance Resin · Polyester", "location": "Manchester" },
+      { "file": "images/proj-infra-05.webp", "name": "Hospital Wing 1,200 m²", "system": "Performance Resin · Epoxy", "location": "London" },
+      { "file": "images/proj-infra-06.webp", "name": "Parking Structure 8,000 m²", "system": "Stone Carpet + Performance Resin", "location": "Bristol" }
+    ]
+  }
+}
