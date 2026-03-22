@@ -442,7 +442,7 @@ function showFormError(msg) {
 function setSubmitState(btn, lbl, loading) {
   if (!btn || !lbl) return;
   btn.disabled        = loading;
-  lbl.textContent     = loading ? 'Sending\u2026' : 'Submit Commission';
+  lbl.textContent = loading ? 'Sending\u2026' : 'Submit Enquiry';
 }
 
 if (commissionForm) {
