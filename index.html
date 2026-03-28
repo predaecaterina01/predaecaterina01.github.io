@@ -12,7 +12,7 @@
 </head>
 <body>
 
-  <div class="progress" id="progress" aria-hidden="true"></div>
+  <div class="progress" id="progress" haria-hidden="true"></div>
   <div class="cursor" id="cursor" aria-hidden="true">
     <div class="cursor__ring"></div>
     <div class="cursor__dot"></div>
@@ -58,17 +58,25 @@
         <div class="intro__rule-v intro__rule-v--right" aria-hidden="true"></div>
       </div>
       <div class="intro__content">
-        <p class="intro__overline reveal-hero">
-          Based in Dublin · Serving Ireland &amp; beyond
-        </p>
         <h1 class="intro__title">
-          <span class="intro__title-row reveal-hero">Where light</span>
-          <span class="intro__title-row intro__title-row--italic reveal-hero">meets surface.</span>
+          <span class="intro__title-row reveal-hero">Architectural</span>
+          <span class="intro__title-row intro__title-row--italic reveal-hero">surface contractor.</span>
         </h1>
+        <p class="intro__tagline reveal-hero">
+          Microcement &nbsp;·&nbsp; Resin &nbsp;·&nbsp; Stone Carpet
+        </p>
+        <p class="intro__desc reveal-hero">
+          Seamless mineral and resin systems — applied by specialist teams
+          across residential, commercial and industrial projects.
+        </p>
         <div class="intro__actions reveal-hero">
-          <a href="#systems" class="btn-ghost" data-cursor="link" data-magnetic>
-            <span class="btn-ghost__label">Discover the Work</span>
-            <span class="btn-ghost__icon" aria-hidden="true">↓</span>
+          <a href="#systems" class="btn-sector btn-sector--ind" id="btnIndustrial" data-cursor="link">
+            <span class="btn-sector__label">Industrial &amp; Logistics</span>
+            <span class="btn-sector__arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="#systems" class="btn-sector btn-sector--arch" id="btnArchitectural" data-cursor="link">
+            <span class="btn-sector__label">Architectural &amp; Living</span>
+            <span class="btn-sector__arrow" aria-hidden="true">→</span>
           </a>
         </div>
       </div>
@@ -79,7 +87,6 @@
 
     <div class="transition-band" aria-hidden="true"></div>
 
-    <!-- ══ II. WHO WE ARE ══ -->
     <!-- ══ II. WHO WE ARE ══ -->
     <section class="who" id="who-we-are" aria-label="Who We Are">
       <div class="wrap">
@@ -92,7 +99,6 @@
 
         <div class="who__accordion">
 
-          <!-- Stânga — titlu sticky -->
           <div class="who__accord-header reveal">
             <h2 class="who__h">
               A surface is not decoration.<br>
@@ -100,7 +106,6 @@
             </h2>
           </div>
 
-          <!-- Dreapta — teaser + conținut expandabil -->
           <div class="who__accord-right">
 
             <div class="who__teaser" id="whoTeaser">
@@ -175,13 +180,13 @@
         <div class="divider reveal" aria-hidden="true"></div>
 
         <div class="brand-statement reveal">
-  <span class="brand-statement__rule" aria-hidden="true"></span>
-  <blockquote class="brand-statement__q">
-    Engineered to perform. Specified to last.
-    <em>Quality and aesthetics — held in balance.</em>
-  </blockquote>
-  <span class="brand-statement__rule" aria-hidden="true"></span>
-</div>
+          <span class="brand-statement__rule" aria-hidden="true"></span>
+          <blockquote class="brand-statement__q">
+            Engineered to perform. Specified to last.
+            <em>Quality and aesthetics — held in balance.</em>
+          </blockquote>
+          <span class="brand-statement__rule" aria-hidden="true"></span>
+        </div>
 
       </div>
     </section>
@@ -194,15 +199,15 @@
           <span class="section-rule" aria-hidden="true"></span>
           <span class="section-label">Systems</span>
         </header>
-        <h2 class="systems__h reveal">
-          Four engineered systems.<br><em>Infinite application.</em>
+        <h2 class="systems__h reveal" id="systemsHeading">
+          Four engineered systems.<br><em id="systemsSubline">Infinite application.</em>
         </h2>
       </div>
 
       <div class="systems__panels">
 
         <!-- SYSTEM I — Microcement -->
-        <article class="panel reveal" aria-label="Microcement">
+        <article class="panel reveal" aria-label="Microcement" data-domain="architectural">
           <div class="panel__surface" role="region" aria-label="Microcement gallery" data-carousel="microcement">
             <div class="pcs__track">
               <div class="pcs__slide pcs__slide--active" style="background:linear-gradient(158deg,#cdc4b5 0%,#b5aa9a 60%,#c4bba8 100%)"><div class="pcs__grain"></div></div>
@@ -271,7 +276,7 @@
         </article>
 
         <!-- SYSTEM II — Stone Carpet -->
-        <article class="panel reveal" aria-label="Stone Carpet">
+        <article class="panel reveal" aria-label="Stone Carpet" data-domain="both">
           <div class="panel__surface" role="region" aria-label="Stone Carpet gallery" data-carousel="stone">
             <div class="pcs__track">
               <div class="pcs__slide pcs__slide--active" style="background:radial-gradient(ellipse 120% 100% at 40% 60%,#c8c0b0 0%,#a89e90 60%,#bdb3a5 100%)"><div class="pcs__grain"></div><div class="pcs__aggregate"></div></div>
@@ -302,7 +307,6 @@
               <li>Quartz &amp; marble aggregate options</li>
             </ul>
             <div class="panel__domain">
-              <span class="panel__domain-tag">Architectural &amp; Living</span>
               <span class="panel__domain-tag panel__domain-tag--infra">Infrastructure &amp; Logistics</span>
             </div>
             <button class="panel__estimate-btn" data-material="stone" aria-expanded="false" aria-controls="calc-stone" type="button">
@@ -340,7 +344,7 @@
         </article>
 
         <!-- SYSTEM III — Performance Resin -->
-        <article class="panel reveal" aria-label="Performance Resin">
+        <article class="panel reveal" aria-label="Performance Resin" data-domain="both">
           <div class="panel__surface" role="region" aria-label="Performance Resin gallery" data-carousel="resin-performance">
             <div class="pcs__track">
               <div class="pcs__slide pcs__slide--active" style="background:linear-gradient(158deg,#8a8a8a 0%,#666666 60%,#808080 100%)"><div class="pcs__grain"></div></div>
@@ -409,7 +413,7 @@
         </article>
 
         <!-- SYSTEM IV — Design Resin -->
-        <article class="panel reveal" aria-label="Design Resin">
+        <article class="panel reveal" aria-label="Design Resin" data-domain="architectural">
           <div class="panel__surface" role="region" aria-label="Design Resin gallery" data-carousel="resin-design">
             <div class="pcs__track">
               <div class="pcs__slide pcs__slide--active" style="background:linear-gradient(158deg,#e2dcd2 0%,#cdc4ba 60%,#dbd3c9 100%)"><div class="pcs__grain"></div></div>
@@ -441,43 +445,41 @@
             </ul>
             <div class="panel__domain">
               <span class="panel__domain-tag">Architectural &amp; Living</span>
-              <span class="panel__domain-tag panel__domain-tag--infra">Infrastructure &amp; Logistics</span>
             </div>
-            <button class="panel__estimate-btn" data-material="resin" aria-expanded="false" aria-controls="calc-resin-design" type="button">
+            <button class="panel__estimate-btn" data-material="resin-design" aria-expanded="false" aria-controls="calc-resin-design" type="button">
               <span class="panel__estimate-label">Estimate cost</span>
               <span class="panel__estimate-icon" aria-hidden="true">+</span>
             </button>
           </div>
-          <div class="panel__calc" id="calc-resin-design" aria-hidden="true" data-material="resin">
+          <div class="panel__calc" id="calc-resin-design" aria-hidden="true" data-material="resin-design">
             <div class="pcalc">
-              <p class="pcalc__head">Design Resin — <em>cost estimate</em></p>
-              <div class="pcalc__inputs">
-                <div class="pcalc__field">
-                  <label class="pcalc__label" for="pmp-resin-design">Surface area</label>
-                  <div class="pcalc__input-wrap">
-                    <input class="pcalc__input" id="pmp-resin-design" type="number" placeholder="ex: 80" min="1" max="9999" inputmode="numeric" />
-                    <span class="pcalc__unit">m²</span>
-                  </div>
-                </div>
-                <div class="pcalc__field">
-                  <label class="pcalc__label" for="psys-resin-design">System</label>
-                  <div class="pcalc__select-wrap">
-                    <select class="pcalc__select" id="psys-resin-design">
-                      <option value="basic">Basic coat</option>
-                      <option value="medium" selected>Medium</option>
-                      <option value="premium">Premium</option>
-                    </select>
-                    <span class="pcalc__caret" aria-hidden="true">↓</span>
-                  </div>
-                </div>
-              </div>
-              <div class="pcalc__result" id="pres-resin-design" aria-live="polite"><span class="pcalc__neutral">—</span></div>
-              <p class="pcalc__disclaimer">Design Resin pricing varies by pattern complexity. This estimate provides indicative labour costs only.</p>
+              <p class="pcalc__head">Design Resin — <em>bespoke pricing</em></p>
+              <p class="pcalc__bespoke">
+                Pricing is determined by pattern complexity, material selection and surface area.
+                Every Design Resin commission is unique — no standard rate applies.
+              </p>
+              <a href="#contact" class="pcalc__bespoke-cta" data-cursor="link">
+                Request a bespoke estimate →
+              </a>
             </div>
           </div>
         </article>
 
       </div>
+
+      <!-- More Systems Accordion -->
+      <div class="systems__more" id="systemsMore">
+        <button class="systems__more-btn" id="systemsMoreBtn"
+                aria-expanded="false"
+                aria-controls="systemsMorePanel"
+                type="button">
+          <span class="systems__more-label" id="systemsMoreLabel">Explore Other Systems</span>
+          <span class="systems__more-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="systems__more-panel" id="systemsMorePanel" aria-hidden="true" role="region">
+        </div>
+      </div>
+
     </section>
 
     <!-- ══ IV. PROJECTS ══ -->
@@ -515,7 +517,7 @@
             <span class="project-row__num">02</span>
             <h3 class="project-row__title">Infrastructure &amp; Logistics</h3>
             <p class="project-row__body">Warehouses, distribution centres, manufacturing facilities, public car parks and hospitals. Performance resin systems specified for extreme compressive loads, chemical resistance and continuous heavy-traffic environments — at project scales exceeding 10,000m².</p>
-            <p class="project-row__systems">Performance Resin · Stone Carpet · Design Resin (wayfinding)</p>
+            <p class="project-row__systems">Performance Resin · Epoxy · MMA · Polyurethane Systems</p>
             <a href="gallery.html?domain=infrastructure" class="link-arrow" data-cursor="link">View Infrastructure Projects</a>
           </div>
         </div>
