@@ -7,34 +7,13 @@
 
 'use strict';
 
-
-/* ──────────────────────────────────────────────────────────
-   UTILS
-────────────────────────────────────────────────────────── */
-
-/** Safe querySelector */
 const $ = (sel, root = document) => root.querySelector(sel);
-
-/** Safe querySelectorAll → Array */
 const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
-
-/** Linear interpolation */
 const lerp = (a, b, t) => a + (b - a) * t;
-
-/** Clamp number */
 const clamp = (val, min, max) => Math.min(Math.max(val, min), max);
 
-
-/* ──────────────────────────────────────────────────────────
-   1. LOADER
-   Triple-layered dismissal — never leaves user on black
-────────────────────────────────────────────────────────── */
+/* ── 1. LOADER ── */
 const loaderEl = $('#loader');
-
-/**
- * Dismiss loader once, then trigger hero reveals.
- * IIFE returns a guarded function so it fires exactly once.
- */
 const dismissLoader = (() => {
   let done = false;
   return function dismiss() {
@@ -42,315 +21,130 @@ const dismissLoader = (() => {
     done = true;
     loaderEl.classList.add('out');
     document.body.style.overflow = '';
-    // Body transitions to light after loader leaves
     setTimeout(() => document.body.classList.add('light-body'), 800);
-    // Reveal hero elements with stagger
     revealHero();
   };
 })();
 
-// Lock scroll during load
 document.body.style.overflow = 'hidden';
-
-// Primary: dismiss after CSS animation (~1.3s fill) + buffer
 const _primaryTimer = setTimeout(dismissLoader, 1800);
-
-// Fast path: if load event fires before primary timer
-window.addEventListener('load', () => {
-  clearTimeout(_primaryTimer);
-  setTimeout(dismissLoader, 400);
-});
-
-// Hard fallback: always clear after 3.5s
+window.addEventListener('load', () => { clearTimeout(_primaryTimer); setTimeout(dismissLoader, 400); });
 setTimeout(dismissLoader, 3500);
 
-
-/* ──────────────────────────────────────────────────────────
-   2. HERO STAGGERED REVEAL
-   Called once loader exits
-────────────────────────────────────────────────────────── */
+/* ── 2. HERO REVEAL ── */
 function revealHero() {
-  const els = $$('.reveal-hero');
-  els.forEach((el, i) => {
+  $$('.reveal-hero').forEach((el, i) => {
     setTimeout(() => el.classList.add('in'), 100 + i * 160);
   });
 }
 
-
-/* ──────────────────────────────────────────────────────────
-   3. SCROLL PROGRESS BAR
-────────────────────────────────────────────────────────── */
+/* ── 3. SCROLL PROGRESS ── */
 const progressEl = $('#progress');
-
 function updateProgress() {
   if (!progressEl) return;
   const scrolled = window.scrollY;
-  const total    = document.documentElement.scrollHeight - window.innerHeight;
-  const pct      = total > 0 ? (scrolled / total) * 100 : 0;
-  progressEl.style.width = pct.toFixed(2) + '%';
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  progressEl.style.width = (total > 0 ? (scrolled / total) * 100 : 0).toFixed(2) + '%';
 }
 
-
-/* ──────────────────────────────────────────────────────────
-   4. NAVIGATION STATE
-   Dark-transparent over hero → light-solid on scroll
-────────────────────────────────────────────────────────── */
-const navEl    = $('#nav');
-const introEl  = $('#intro');
-
-/**
- * Determine whether the viewport midpoint is still inside
- * the dark intro section.
- */
+/* ── 4. NAV STATE ── */
+const navEl = $('#nav');
+const introEl = $('#intro');
 function updateNav() {
   if (!navEl) return;
-
-  const threshold = introEl
-    ? introEl.getBoundingClientRect().bottom - window.innerHeight * 0.25
-    : 0;
-
-  if (threshold > 0) {
-    navEl.classList.add('on-dark');
-    navEl.classList.remove('on-light');
-  } else {
-    navEl.classList.remove('on-dark');
-    navEl.classList.add('on-light');
-  }
+  const threshold = introEl ? introEl.getBoundingClientRect().bottom - window.innerHeight * 0.25 : 0;
+  if (threshold > 0) { navEl.classList.add('on-dark'); navEl.classList.remove('on-light'); }
+  else { navEl.classList.remove('on-dark'); navEl.classList.add('on-light'); }
 }
-
-// Initialise nav class immediately (before scroll fires)
 navEl && navEl.classList.add('on-dark');
 
-
-/* ──────────────────────────────────────────────────────────
-   5. HERO PARALLAX — breathing surface
-   The CSS animation handles the scale; here we add
-   a very subtle vertical shift on the scene only.
-────────────────────────────────────────────────────────── */
+/* ── 5. PARALLAX ── */
 const introScene = $('#introScene');
-
 function updateParallax() {
   if (!introScene) return;
   const sy = window.scrollY;
-  const maxShift = window.innerHeight * 0.15;
   if (sy <= window.innerHeight) {
-    const shift = clamp(sy * 0.12, 0, maxShift);
-    introScene.style.transform = `translateY(${shift.toFixed(2)}px)`;
+    introScene.style.transform = `translateY(${clamp(sy * 0.12, 0, window.innerHeight * 0.15).toFixed(2)}px)`;
   }
 }
 
-
-/* ──────────────────────────────────────────────────────────
-   6. THROTTLED SCROLL HANDLER — single rAF
-────────────────────────────────────────────────────────── */
+/* ── 6. SCROLL HANDLER ── */
 let _scrollRAF = null;
-
 function onScroll() {
   if (_scrollRAF) return;
-  _scrollRAF = requestAnimationFrame(() => {
-    updateProgress();
-    updateNav();
-    updateParallax();
-    _scrollRAF = null;
-  });
+  _scrollRAF = requestAnimationFrame(() => { updateProgress(); updateNav(); updateParallax(); _scrollRAF = null; });
 }
-
 window.addEventListener('scroll', onScroll, { passive: true });
 
-
-/* ──────────────────────────────────────────────────────────
-   7. INTERSECTION OBSERVER — section reveals
-   All .reveal elements outside .intro animate in on scroll
-────────────────────────────────────────────────────────── */
+/* ── 7. REVEAL OBSERVER ── */
 const revealEls = $$('.reveal').filter(el => !el.closest('.intro'));
-
-const revealObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in');
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.1, rootMargin: '0px 0px -44px 0px' }
-);
-
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) { entry.target.classList.add('in'); revealObserver.unobserve(entry.target); }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -44px 0px' });
 revealEls.forEach(el => revealObserver.observe(el));
 
-
-/* ──────────────────────────────────────────────────────────
-   8. ANIMATED COUNTERS
-────────────────────────────────────────────────────────── */
-
-/**
- * Ease-out-expo curve — architectural deceleration
- * @param {number} t 0–1
- */
-function easeOutExpo(t) {
-  return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
-}
-
-/**
- * Animate element from 0 to data-count value
- * @param {HTMLElement} el
- */
+/* ── 8. COUNTERS ── */
+function easeOutExpo(t) { return t === 1 ? 1 : 1 - Math.pow(2, -10 * t); }
 function animateCounter(el) {
-  const target   = parseInt(el.dataset.count, 10);
-  const duration = 2200; // ms
-  const start    = performance.now();
-
+  const target = parseInt(el.dataset.count, 10);
+  const duration = 2200;
+  const start = performance.now();
   function step(now) {
     const progress = clamp((now - start) / duration, 0, 1);
     el.textContent = Math.round(easeOutExpo(progress) * target);
-    if (progress < 1) requestAnimationFrame(step);
-    else el.textContent = target;
+    if (progress < 1) requestAnimationFrame(step); else el.textContent = target;
   }
-
   requestAnimationFrame(step);
 }
-
-const counterObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        animateCounter(entry.target);
-        counterObserver.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.4 }
-);
-
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) { animateCounter(entry.target); counterObserver.unobserve(entry.target); } });
+}, { threshold: 0.4 });
 $$('[data-count]').forEach(el => counterObserver.observe(el));
 
-
-/* ──────────────────────────────────────────────────────────
-   9. CUSTOM CURSOR
-   Two-part cursor: precise dot + lagging ring
-────────────────────────────────────────────────────────── */
-const cursorEl   = $('#cursor');
+/* ── 9. CURSOR ── */
+const cursorEl = $('#cursor');
 const cursorRing = cursorEl && $('.cursor__ring', cursorEl);
-const cursorDot  = cursorEl && $('.cursor__dot',  cursorEl);
-
-let cursorX = 0, cursorY = 0;
-let ringX   = 0, ringY   = 0;
-let _cursorRAF = null;
-let cursorVisible = false;
+const cursorDot = cursorEl && $('.cursor__dot', cursorEl);
+let cursorX = 0, cursorY = 0, ringX = 0, ringY = 0, _cursorRAF = null, cursorVisible = false;
 
 function updateCursor() {
-  // Dot: instant
-  if (cursorDot) {
-    cursorDot.style.left = cursorX + 'px';
-    cursorDot.style.top  = cursorY + 'px';
-  }
-
-  // Ring: lerp for soft lag
-  ringX = lerp(ringX, cursorX, 0.1);
-  ringY = lerp(ringY, cursorY, 0.1);
-
-  if (cursorRing) {
-    cursorRing.style.left = ringX.toFixed(2) + 'px';
-    cursorRing.style.top  = ringY.toFixed(2) + 'px';
-  }
-
+  if (cursorDot) { cursorDot.style.left = cursorX + 'px'; cursorDot.style.top = cursorY + 'px'; }
+  ringX = lerp(ringX, cursorX, 0.1); ringY = lerp(ringY, cursorY, 0.1);
+  if (cursorRing) { cursorRing.style.left = ringX.toFixed(2) + 'px'; cursorRing.style.top = ringY.toFixed(2) + 'px'; }
   _cursorRAF = requestAnimationFrame(updateCursor);
 }
 
 document.addEventListener('mousemove', (e) => {
-  cursorX = e.clientX;
-  cursorY = e.clientY;
-
-  if (!cursorVisible && cursorEl) {
-    cursorEl.style.opacity = '1';
-    cursorVisible = true;
-    if (!_cursorRAF) updateCursor();
-  }
+  cursorX = e.clientX; cursorY = e.clientY;
+  if (!cursorVisible && cursorEl) { cursorEl.style.opacity = '1'; cursorVisible = true; if (!_cursorRAF) updateCursor(); }
 });
+document.addEventListener('mouseover', (e) => { if (e.target.closest('[data-cursor="link"]') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON') cursorEl && cursorEl.classList.add('hovering'); });
+document.addEventListener('mouseout', (e) => { if (e.target.closest('[data-cursor="link"]') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON') cursorEl && cursorEl.classList.remove('hovering'); });
+document.addEventListener('mouseleave', () => { if (cursorEl) cursorEl.style.opacity = '0'; });
+document.addEventListener('mouseenter', () => { if (cursorEl) cursorEl.style.opacity = '1'; });
+if ('ontouchstart' in window && cursorEl) { cursorEl.style.display = 'none'; document.body.style.cursor = ''; }
 
-// Hover state — elements with data-cursor="link"
-document.addEventListener('mouseover', (e) => {
-  if (e.target.closest('[data-cursor="link"]') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON') {
-    cursorEl && cursorEl.classList.add('hovering');
-  }
-});
-
-document.addEventListener('mouseout', (e) => {
-  if (e.target.closest('[data-cursor="link"]') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON') {
-    cursorEl && cursorEl.classList.remove('hovering');
-  }
-});
-
-// Hide cursor when leaving window
-document.addEventListener('mouseleave', () => {
-  if (cursorEl) cursorEl.style.opacity = '0';
-});
-
-document.addEventListener('mouseenter', () => {
-  if (cursorEl) cursorEl.style.opacity = '1';
-});
-
-// Don't show custom cursor on touch devices
-if ('ontouchstart' in window && cursorEl) {
-  cursorEl.style.display = 'none';
-  document.body.style.cursor = '';
-}
-
-
-/* ──────────────────────────────────────────────────────────
-   10. MAGNETIC BUTTONS
-   Gentle pull on elements with [data-magnetic]
-────────────────────────────────────────────────────────── */
+/* ── 10. MAGNETIC BUTTONS ── */
 $$('[data-magnetic]').forEach(btn => {
-  let rAF    = null;
-  let cx = 0, cy = 0;
-  let tx = 0, ty = 0;
-  let active = false;
-  const STRENGTH = 0.22;
-  const THRESHOLD = 0.04;
-
+  let rAF = null, cx = 0, cy = 0, tx = 0, ty = 0, active = false;
+  const STRENGTH = 0.22, THRESHOLD = 0.04;
   function tick() {
-    cx = lerp(cx, tx, 0.09);
-    cy = lerp(cy, ty, 0.09);
+    cx = lerp(cx, tx, 0.09); cy = lerp(cy, ty, 0.09);
     btn.style.transform = `translate(${cx.toFixed(2)}px, ${cy.toFixed(2)}px)`;
-
     const settled = !active && Math.abs(cx - tx) < THRESHOLD && Math.abs(cy - ty) < THRESHOLD;
-    if (settled) {
-      btn.style.transform = '';
-      cx = 0; cy = 0;
-      rAF = null;
-    } else {
-      rAF = requestAnimationFrame(tick);
-    }
+    if (settled) { btn.style.transform = ''; cx = 0; cy = 0; rAF = null; } else rAF = requestAnimationFrame(tick);
   }
-
-  btn.addEventListener('mouseenter', () => {
-    active = true;
-    if (!rAF) rAF = requestAnimationFrame(tick);
-  });
-
-  btn.addEventListener('mousemove', (e) => {
-    const r  = btn.getBoundingClientRect();
-    tx = (e.clientX - (r.left + r.width  / 2)) * STRENGTH;
-    ty = (e.clientY - (r.top  + r.height / 2)) * STRENGTH;
-  });
-
-  btn.addEventListener('mouseleave', () => {
-    active = false;
-    tx = 0; ty = 0;
-    if (!rAF) rAF = requestAnimationFrame(tick);
-  });
+  btn.addEventListener('mouseenter', () => { active = true; if (!rAF) rAF = requestAnimationFrame(tick); });
+  btn.addEventListener('mousemove', (e) => { const r = btn.getBoundingClientRect(); tx = (e.clientX - (r.left + r.width / 2)) * STRENGTH; ty = (e.clientY - (r.top + r.height / 2)) * STRENGTH; });
+  btn.addEventListener('mouseleave', () => { active = false; tx = 0; ty = 0; if (!rAF) rAF = requestAnimationFrame(tick); });
 });
 
-
-/* ──────────────────────────────────────────────────────────
-   11. MOBILE NAV
-────────────────────────────────────────────────────────── */
-const burgerBtn  = $('#navBurger');
+/* ── 11. MOBILE NAV ── */
+const burgerBtn = $('#navBurger');
 const navPanelEl = $('#navPanel');
-
 if (burgerBtn && navPanelEl) {
-
   burgerBtn.addEventListener('click', () => {
     const open = navPanelEl.classList.toggle('open');
     burgerBtn.setAttribute('aria-expanded', String(open));
@@ -358,8 +152,6 @@ if (burgerBtn && navPanelEl) {
     navPanelEl.setAttribute('aria-hidden', String(!open));
     document.body.style.overflow = open ? 'hidden' : '';
   });
-
-  // Close on link click
   $$('a', navPanelEl).forEach(a => {
     a.addEventListener('click', () => {
       navPanelEl.classList.remove('open');
@@ -369,8 +161,6 @@ if (burgerBtn && navPanelEl) {
       document.body.style.overflow = '';
     });
   });
-
-  // Escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && navPanelEl.classList.contains('open')) {
       navPanelEl.classList.remove('open');
@@ -382,608 +172,178 @@ if (burgerBtn && navPanelEl) {
   });
 }
 
-
-/* ──────────────────────────────────────────────────────────
-   12. COMMISSION FORM — Formspree
-   ─────────────────────────────────────────────────────────
-   Endpoint: https://formspree.io/f/mkoqvqbw
-   No SDK, no API key — plain fetch() POST.
-   Emails arrive at the address set in your Formspree
-   dashboard → Forms → mkoqvqbw → Settings → Email.
-   ─────────────────────────────────────────────────────────
-   Formspree magic fields (work automatically):
-     _replyto  → sets Reply-To to the client email
-     _subject  → sets email subject line
-────────────────────────────────────────────────────────── */
-
+/* ── 12. FORM ── */
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mkoqvqbw';
-
 const commissionForm = $('#commissionForm');
-const formOkEl       = $('#formOk');
-const formErrEl      = $('#formErr');
-
-/** Basic email format test */
+const formOkEl = $('#formOk');
+const formErrEl = $('#formErr');
 const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((v || '').trim());
 
-/**
- * Toggle .f--error on the parent .f wrapper
- * @param {HTMLElement|null} input
- * @param {boolean} hasError
- */
-function setError(input, hasError) {
-  const wrap = input && input.closest('.f');
-  if (!wrap) return;
-  wrap.classList.toggle('f--error', hasError);
-}
-
-/** Show success banner, auto-hide after 9s */
-function showSuccess(msg) {
-  if (!formOkEl) return;
-  formOkEl.textContent = msg;
-  formOkEl.classList.add('show');
-  setTimeout(() => {
-    formOkEl.textContent = '';
-    formOkEl.classList.remove('show');
-  }, 9000);
-}
-
-/** Show error banner, auto-hide after 10s */
-function showFormError(msg) {
-  if (!formErrEl) return;
-  formErrEl.textContent = msg;
-  formErrEl.classList.add('show');
-  setTimeout(() => {
-    formErrEl.textContent = '';
-    formErrEl.classList.remove('show');
-  }, 10000);
-}
-
-/** Toggle submit button loading / ready state */
-function setSubmitState(btn, lbl, loading) {
-  if (!btn || !lbl) return;
-  btn.disabled        = loading;
-  lbl.textContent = loading ? 'Sending\u2026' : 'Submit Enquiry';
-}
+function setError(input, hasError) { const wrap = input && input.closest('.f'); if (wrap) wrap.classList.toggle('f--error', hasError); }
+function showSuccess(msg) { if (!formOkEl) return; formOkEl.textContent = msg; formOkEl.classList.add('show'); setTimeout(() => { formOkEl.textContent = ''; formOkEl.classList.remove('show'); }, 9000); }
+function showFormError(msg) { if (!formErrEl) return; formErrEl.textContent = msg; formErrEl.classList.add('show'); setTimeout(() => { formErrEl.textContent = ''; formErrEl.classList.remove('show'); }, 10000); }
+function setSubmitState(btn, lbl, loading) { if (!btn || !lbl) return; btn.disabled = loading; lbl.textContent = loading ? 'Sending\u2026' : 'Submit Enquiry'; }
 
 if (commissionForm) {
   commissionForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-
-    // ── Field references ──────────────────────────────────
-    const nameInput   = $('#f-name',   commissionForm);
-    const emailInput  = $('#f-email',  commissionForm);
-    const studioInput = $('#f-studio', commissionForm);
-    const typeSelect  = $('#f-type',   commissionForm);
-    const briefArea   = $('#f-brief',  commissionForm);
-    const submitBtn   = $('button[type="submit"]', commissionForm);
-    const submitLbl   = submitBtn && $('.btn-submit__label', submitBtn);
-
-    // ── Reset previous error states ───────────────────────
+    const nameInput = $('#f-name', commissionForm), emailInput = $('#f-email', commissionForm);
+    const studioInput = $('#f-studio', commissionForm), typeSelect = $('#f-type', commissionForm);
+    const briefArea = $('#f-brief', commissionForm);
+    const submitBtn = $('button[type="submit"]', commissionForm);
+    const submitLbl = submitBtn && $('.btn-submit__label', submitBtn);
     [nameInput, emailInput, typeSelect, briefArea].forEach(f => setError(f, false));
     if (formErrEl) { formErrEl.textContent = ''; formErrEl.classList.remove('show'); }
-
-    // ── Client-side validation ────────────────────────────
     let valid = true;
-    if (!nameInput?.value.trim())    { setError(nameInput,  true); valid = false; }
+    if (!nameInput?.value.trim()) { setError(nameInput, true); valid = false; }
     if (!isEmail(emailInput?.value)) { setError(emailInput, true); valid = false; }
-    if (!typeSelect?.value)          { setError(typeSelect, true); valid = false; }
-    if (!briefArea?.value.trim())    { setError(briefArea,  true); valid = false; }
+    if (!typeSelect?.value) { setError(typeSelect, true); valid = false; }
+    if (!briefArea?.value.trim()) { setError(briefArea, true); valid = false; }
     if (!valid) return;
-
-    // ── Loading state ─────────────────────────────────────
     setSubmitState(submitBtn, submitLbl, true);
-
-    // ── Human-readable project type ───────────────────────
-    const PROJECT_LABELS = {
-      private:     'Private Residence',
-      commercial:  'Commercial',
-      hospitality: 'Hospitality',
-      developer:   'Property Developer',
-      other:       'Other',
-    };
-
-    // ── Payload ───────────────────────────────────────────
-    // Field names become column headers in Formspree dashboard
-    // and appear in the email body.
     const payload = {
-      name:         nameInput.value.trim(),
-      email:        emailInput.value.trim(),
-      studio:       studioInput?.value.trim() || '—',
-      project_type: PROJECT_LABELS[typeSelect.value] || typeSelect.value,
-      message:      briefArea.value.trim(),
-      _replyto:     emailInput.value.trim(),
-      _subject:     'New Commission — Deco Preda',
+      name: nameInput.value.trim(), email: emailInput.value.trim(),
+      studio: studioInput?.value.trim() || '—',
+      project_type: typeSelect.value, message: briefArea.value.trim(),
+      _replyto: emailInput.value.trim(), _subject: 'New Commission — Deco Preda',
     };
-
-    // ── Send to Formspree ─────────────────────────────────
     try {
-      const res  = await fetch(FORMSPREE_ENDPOINT, {
-        method:  'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept':       'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
-
+      const res = await fetch(FORMSPREE_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) });
       const data = await res.json();
-
-      if (res.ok) {
-        // ── Success ───────────────────────────────────────
-        commissionForm.reset();
-        setSubmitState(submitBtn, submitLbl, false);
-        showSuccess(
-          'Your commission request has been received. ' +
-          'The studio will respond within 24 hours.'
-        );
-
-      } else {
-        // ── Formspree returned a validation error ─────────
-        const errMsg = data?.errors?.map(e => e.message).join(', ')
-                       || 'Submission failed. Please try again.';
-        throw new Error(errMsg);
-      }
-
-    } catch (err) {
-      console.error('[Deco Preda] Formspree error:', err);
-      setSubmitState(submitBtn, submitLbl, false);
-      showFormError(
-        'Could not send message at this moment. ' +
-        'Please write directly to studio@decopreda.com'
-      );
-    }
+      if (res.ok) { commissionForm.reset(); setSubmitState(submitBtn, submitLbl, false); showSuccess('Your commission request has been received. The studio will respond within 24 hours.'); }
+      else { throw new Error(data?.errors?.map(e => e.message).join(', ') || 'Submission failed.'); }
+    } catch (err) { console.error('[Deco Preda] Formspree error:', err); setSubmitState(submitBtn, submitLbl, false); showFormError('Could not send message. Please write to studio@decopreda.com'); }
   });
 }
 
-
-/* ──────────────────────────────────────────────────────────
-   13. FOOTER YEAR
-────────────────────────────────────────────────────────── */
+/* ── 13. FOOTER YEAR ── */
 const yrEl = $('#yr');
 if (yrEl) yrEl.textContent = new Date().getFullYear();
 
-
-/* ──────────────────────────────────────────────────────────
-   14. INIT — run synchronously on parse
-   (script is placed at end of <body>)
-────────────────────────────────────────────────────────── */
+/* ── 14. INIT ── */
 updateProgress();
 updateNav();
 
-/* ══════════════════════════════════════════════════════════
-   PANEL INLINE CALCULATORS
-   Per-material estimate drawers — Microcement / Resin / Stone
-   ══════════════════════════════════════════════════════════ */
-
-/* ──────────────────────────────────────────────────────────
-   TARIFF TABLE
-   Base rate: 40 RON/m²
-   Bulk discount: −15% for surface > 150 m²
-   System multipliers apply on top of material multipliers.
-────────────────────────────────────────────────────────── */
+/* ══ CALCULATORS ══ */
 const PANEL_CALC = {
-
-  RATE:           40,     // RON/m² — single base rate
-  BULK_THRESHOLD: 150,    // m² above which bulk discount applies
-  BULK_DISCOUNT:  0.15,   // 15% off total when bulk
-
-  // Per-material labour complexity multipliers
-  MATERIAL: {
-    microcement: 1.00,
-    resin:       1.10,
-    stone:       0.95,
-  },
-
-  // System tier multipliers (coat quality / prep depth)
-  SYSTEM: {
-    basic:   0.85,
-    medium:  1.00,
-    premium: 1.35,
-  },
-
-  // Human-readable tier labels
-  SYSTEM_LABEL: {
-    basic:   'Basic coat',
-    medium:  'Medium',
-    premium: 'Premium',
-  },
+  RATE: 40, BULK_THRESHOLD: 150, BULK_DISCOUNT: 0.15,
+  MATERIAL: { microcement: 1.00, resin: 1.10, stone: 0.95, 'resin-design': 1.20 },
+  SYSTEM: { basic: 0.85, medium: 1.00, premium: 1.35 },
+  SYSTEM_LABEL: { basic: 'Basic coat', medium: 'Medium', premium: 'Premium' },
 };
 
-/** Format number as "XX.XXX RON" using Romanian locale */
-function fmtRON(n) {
-  return n.toLocaleString('ro-RO', { maximumFractionDigits: 0 }) + ' RON';
-}
+function fmtRON(n) { return n.toLocaleString('ro-RO', { maximumFractionDigits: 0 }) + ' RON'; }
+function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
 
-/** Ease-out cubic */
-function easeOutCubic(t) {
-  return 1 - Math.pow(1 - t, 3);
-}
-
-/**
- * Animate a number rolling up inside an element.
- * Inserts "X RON" text using fmtRON.
- * @param {HTMLElement} el
- * @param {number} target
- * @param {number} [duration=700]
- */
 function rollUp(el, target, duration = 700) {
   const start = performance.now();
   function step(now) {
-    const t      = Math.min((now - start) / duration, 1);
-    const eased  = easeOutCubic(t);
-    el.textContent = fmtRON(Math.round(eased * target));
-    if (t < 1) requestAnimationFrame(step);
-    else el.textContent = fmtRON(target);
+    const t = Math.min((now - start) / duration, 1);
+    el.textContent = fmtRON(Math.round(easeOutCubic(t) * target));
+    if (t < 1) requestAnimationFrame(step); else el.textContent = fmtRON(target);
   }
   requestAnimationFrame(step);
 }
 
-/**
- * Compute estimate — sliding scale bulk discount.
- * Avoids the 149m² > 151m² paradox by interpolating
- * the discount gradually between 100m² and 200m².
- * Below 100m²: no discount.
- * 100–200m²: discount scales from 0% to 15% linearly.
- * Above 200m²: full 15% discount applies.
- * @returns {{ gross, base, saving, discountPct, isBulk }}
- */
 function computeEstimate(material, sqm, system) {
   const mMult = PANEL_CALC.MATERIAL[material] ?? 1;
-  const sMult = PANEL_CALC.SYSTEM[system]     ?? 1;
+  const sMult = PANEL_CALC.SYSTEM[system] ?? 1;
   const gross = Math.round(sqm * PANEL_CALC.RATE * mMult * sMult);
-
-  // Sliding scale: 0% at 100m², 15% at 200m²+
   let discountPct = 0;
-  if (sqm >= 200) {
-    discountPct = PANEL_CALC.BULK_DISCOUNT; // 0.15
-  } else if (sqm > 100) {
-    discountPct = PANEL_CALC.BULK_DISCOUNT * ((sqm - 100) / 100);
-  }
-
-  const saving  = Math.round(gross * discountPct);
-  const base    = gross - saving;
-  const isBulk  = discountPct > 0;
-  const low     = Math.round(base * 0.90);
-  const high    = Math.round(base * 1.35);
-  return { gross, base, saving, discountPct, isBulk, low, high };
+  if (sqm >= 200) discountPct = PANEL_CALC.BULK_DISCOUNT;
+  else if (sqm > 100) discountPct = PANEL_CALC.BULK_DISCOUNT * ((sqm - 100) / 100);
+  const saving = Math.round(gross * discountPct);
+  const base = gross - saving;
+  return { gross, base, saving, discountPct, isBulk: discountPct > 0, low: Math.round(base * 0.90), high: Math.round(base * 1.35) };
 }
 
-/**
- * Render live result — no button needed, triggered by input events.
- */
 function renderPanelResult(resultEl, sqm, material, system) {
-  const { gross, base, saving, discountPct, isBulk, low, high } = computeEstimate(material, sqm, system);
+  const { base, saving, discountPct, isBulk, low, high } = computeEstimate(material, sqm, system);
   const sysLabel = PANEL_CALC.SYSTEM_LABEL[system] || system;
-  const uid      = resultEl.id || material;
   const pctLabel = Math.round(discountPct * 100);
-
-  let html = '<span class="pcalc__price" data-uid="' + uid + '">0 RON</span>'
-           + '<span class="pcalc__amount-unit">' + sqm + ' m² · ' + sysLabel + '</span>';
-
-  if (isBulk) {
-    html += '<span class="pcalc__bulk-badge">'
-          + '−' + pctLabel + '% volume discount · saving ' + fmtRON(saving)
-          + '</span>';
-  }
-
-  html += '<p class="pcalc__range">Indicative range: ' + fmtRON(low) + ' – ' + fmtRON(high) + '</p>'
-        + '<p class="pcalc__rate">' + PANEL_CALC.RATE + ' RON/m² base'
-        + (isBulk ? ' · volume rate applied' : '') + '</p>';
-
+  let html = `<span class="pcalc__price">0 RON</span><span class="pcalc__amount-unit">${sqm} m² · ${sysLabel}</span>`;
+  if (isBulk) html += `<span class="pcalc__bulk-badge">−${pctLabel}% volume discount · saving ${fmtRON(saving)}</span>`;
+  html += `<p class="pcalc__range">Indicative range: ${fmtRON(low)} – ${fmtRON(high)}</p><p class="pcalc__rate">${PANEL_CALC.RATE} RON/m² base${isBulk ? ' · volume rate applied' : ''}</p>`;
   resultEl.innerHTML = html;
-
   const priceEl = resultEl.querySelector('.pcalc__price');
   if (priceEl) rollUp(priceEl, base);
 }
 
-/* ──────────────────────────────────────────────────────────
-   DRAWER TOGGLE
-────────────────────────────────────────────────────────── */
-
-/**
- * Open or close a single calculator drawer.
- * Closes all other open drawers first (accordion behaviour).
- * @param {HTMLButtonElement} btn
- * @param {HTMLElement} drawer
- */
 function toggleDrawer(btn, drawer) {
   const isOpen = drawer.classList.contains('open');
-
-  // Close every other open drawer
   document.querySelectorAll('.panel__calc.open').forEach(d => {
-    if (d !== drawer) {
-      d.classList.remove('open');
-      d.setAttribute('aria-hidden', 'true');
-      const b = document.querySelector('[aria-controls="' + d.id + '"]');
-      if (b) b.setAttribute('aria-expanded', 'false');
-    }
+    if (d !== drawer) { d.classList.remove('open'); d.setAttribute('aria-hidden', 'true'); const b = document.querySelector('[aria-controls="' + d.id + '"]'); if (b) b.setAttribute('aria-expanded', 'false'); }
   });
-
-  // Toggle current
-  if (isOpen) {
-    drawer.classList.remove('open');
-    drawer.setAttribute('aria-hidden', 'true');
-    btn.setAttribute('aria-expanded', 'false');
-  } else {
-    drawer.classList.add('open');
-    drawer.setAttribute('aria-hidden', 'false');
-    btn.setAttribute('aria-expanded', 'true');
-
-    // Auto-calculate if sqm already filled
+  if (isOpen) { drawer.classList.remove('open'); drawer.setAttribute('aria-hidden', 'true'); btn.setAttribute('aria-expanded', 'false'); }
+  else {
+    drawer.classList.add('open'); drawer.setAttribute('aria-hidden', 'false'); btn.setAttribute('aria-expanded', 'true');
     const material = drawer.dataset.material;
-    const mpInput  = drawer.querySelector('.pcalc__input');
+    const mpInput = drawer.querySelector('.pcalc__input');
     const sysSelect = drawer.querySelector('.pcalc__select');
-    if (mpInput && parseFloat(mpInput.value) > 0) {
-      const resultEl = drawer.querySelector('.pcalc__result');
-      if (resultEl) renderPanelResult(resultEl, parseFloat(mpInput.value), material, sysSelect.value);
-    } else if (mpInput) {
-      // Smooth focus after drawer opens
-      setTimeout(() => mpInput.focus(), 350);
-    }
+    if (mpInput && parseFloat(mpInput.value) > 0) { const resultEl = drawer.querySelector('.pcalc__result'); if (resultEl) renderPanelResult(resultEl, parseFloat(mpInput.value), material, sysSelect?.value); }
+    else if (mpInput) setTimeout(() => mpInput.focus(), 350);
   }
 }
 
-/* ──────────────────────────────────────────────────────────
-   LIVE CALCULATION — triggered by input events in any drawer
-────────────────────────────────────────────────────────── */
-
-/* ──────────────────────────────────────────────────────────
-   RESET HELPERS
-────────────────────────────────────────────────────────── */
-
-/** Reset smoothly — fade out result, wait 900ms, show dash */
 function resetDrawer(drawer) {
-  const mpInput  = drawer.querySelector('.pcalc__input');
+  const mpInput = drawer.querySelector('.pcalc__input');
   const resultEl = drawer.querySelector('.pcalc__result');
-
   if (resultEl && resultEl.querySelector('.pcalc__price')) {
-    // Fade out current price
-    resultEl.style.transition = 'opacity 0.35s ease';
-    resultEl.style.opacity    = '0';
-
+    resultEl.style.transition = 'opacity 0.35s ease'; resultEl.style.opacity = '0';
     setTimeout(() => {
       if (mpInput) { mpInput.value = '00'; mpInput.blur(); }
-      resultEl.innerHTML     = '<span class="pcalc__neutral">—</span>';
-      resultEl.style.opacity = '0';
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          resultEl.style.transition = 'opacity 0.4s ease';
-          resultEl.style.opacity    = '1';
-        });
-      });
+      resultEl.innerHTML = '<span class="pcalc__neutral">—</span>'; resultEl.style.opacity = '0';
+      requestAnimationFrame(() => requestAnimationFrame(() => { resultEl.style.transition = 'opacity 0.4s ease'; resultEl.style.opacity = '1'; }));
     }, 900);
-  } else {
-    // No price shown — reset immediately without flash
-    if (mpInput) { mpInput.value = '00'; mpInput.blur(); }
-    if (resultEl) resultEl.innerHTML = '<span class="pcalc__neutral">—</span>';
-  }
+  } else { if (mpInput) { mpInput.value = '00'; mpInput.blur(); } if (resultEl) resultEl.innerHTML = '<span class="pcalc__neutral">—</span>'; }
 }
 
-/* ──────────────────────────────────────────────────────────
-   LIVE CALCULATION
-────────────────────────────────────────────────────────── */
-
 function handleDrawerInput(drawer) {
-  const material  = drawer.dataset.material;
-  const mpInput   = drawer.querySelector('.pcalc__input');
+  const material = drawer.dataset.material;
+  const mpInput = drawer.querySelector('.pcalc__input');
   const sysSelect = drawer.querySelector('.pcalc__select');
-  const resultEl  = drawer.querySelector('.pcalc__result');
+  const resultEl = drawer.querySelector('.pcalc__result');
   if (!mpInput || !sysSelect || !resultEl) return;
-
-  const raw = mpInput.value.trim();
-  const sqm = parseFloat(raw);
-
-  // Ignore empty, zero, '00' or invalid values
-  if (!raw || raw === '00' || isNaN(sqm) || sqm <= 0) {
-    resultEl.innerHTML = '<span class="pcalc__neutral">—</span>';
-    return;
-  }
-
+  const sqm = parseFloat(mpInput.value.trim());
+  if (!mpInput.value.trim() || mpInput.value === '00' || isNaN(sqm) || sqm <= 0) { resultEl.innerHTML = '<span class="pcalc__neutral">—</span>'; return; }
   renderPanelResult(resultEl, sqm, material, sysSelect.value);
 }
 
-/* ──────────────────────────────────────────────────────────
-   INIT — bind drawer toggles, live inputs, auto-reset
-────────────────────────────────────────────────────────── */
-
 document.querySelectorAll('.panel__estimate-btn').forEach(btn => {
   const drawerId = btn.getAttribute('aria-controls');
-  const drawer   = document.getElementById(drawerId);
+  const drawer = document.getElementById(drawerId);
   if (!drawer) return;
-
-  // Toggle drawer open/close
   btn.addEventListener('click', () => toggleDrawer(btn, drawer));
-
-  const mpInput  = drawer.querySelector('.pcalc__input');
+  const mpInput = drawer.querySelector('.pcalc__input');
   const sysSelect = drawer.querySelector('.pcalc__select');
-
   if (mpInput) {
-    // Live calculation on every keystroke
     mpInput.addEventListener('input', () => handleDrawerInput(drawer));
-
-    // Enter key triggers calc + blur
-    mpInput.addEventListener('keydown', e => {
-      if (e.key === 'Enter') {
-        handleDrawerInput(drawer);
-        mpInput.blur();
-      }
-    });
-
-    // Smart focus — clear '00' placeholder on click so user can type immediately
-    mpInput.addEventListener('focus', () => {
-      if (mpInput.value === '00' || mpInput.value === '0' || mpInput.value === '') {
-        mpInput.value = '';
-      }
-    });
-
-    // On blur with empty field — restore neutral state
-    mpInput.addEventListener('blur', () => {
-      if (!mpInput.value.trim()) {
-        const resultEl = drawer.querySelector('.pcalc__result');
-        if (resultEl) resultEl.innerHTML = '<span class="pcalc__neutral">—</span>';
-      }
-    });
+    mpInput.addEventListener('keydown', e => { if (e.key === 'Enter') { handleDrawerInput(drawer); mpInput.blur(); } });
+    mpInput.addEventListener('focus', () => { if (!mpInput.value.trim() || mpInput.value === '00' || mpInput.value === '0') mpInput.value = ''; });
+    mpInput.addEventListener('blur', () => { if (!mpInput.value.trim()) { const r = drawer.querySelector('.pcalc__result'); if (r) r.innerHTML = '<span class="pcalc__neutral">—</span>'; } });
   }
-
-  if (sysSelect) {
-    sysSelect.addEventListener('change', () => handleDrawerInput(drawer));
-  }
+  if (sysSelect) sysSelect.addEventListener('change', () => handleDrawerInput(drawer));
 });
 
-/* Auto-reset when mouse leaves the panel — debounced */
 document.querySelectorAll('.panel').forEach(panel => {
   let _leaveTimer = null;
-
-  panel.addEventListener('mouseleave', () => {
-    const drawer = panel.querySelector('.panel__calc');
-    if (!drawer) return;
-    _leaveTimer = setTimeout(() => resetDrawer(drawer), 120);
-  });
-
-  panel.addEventListener('mouseenter', () => {
-    clearTimeout(_leaveTimer);
-  });
+  panel.addEventListener('mouseleave', () => { const drawer = panel.querySelector('.panel__calc'); if (!drawer) return; _leaveTimer = setTimeout(() => resetDrawer(drawer), 120); });
+  panel.addEventListener('mouseenter', () => clearTimeout(_leaveTimer));
 });
 
-
-/* ══════════════════════════════════════════════════════════
-   PANEL GALLERY CAROUSELS
-   Minimal — vanilla JS, no dependencies
-   3 slides desktop · 2 tablet · 1 mobile
-   Touch/drag support included
-   ══════════════════════════════════════════════════════════ */
-
-document.querySelectorAll('.pcarousel').forEach(carousel => {
-  const id        = carousel.dataset.carousel;
-  const track     = carousel.querySelector('.pcarousel__track');
-  const slides    = Array.from(track.querySelectorAll('.pcarousel__slide'));
-  const prevBtn   = carousel.querySelector('.pcarousel__arrow--prev');
-  const nextBtn   = carousel.querySelector('.pcarousel__arrow--next');
-  const dotsWrap  = document.querySelector(`.pcarousel__dots[data-dots="${id}"]`);
-
-  if (!track || slides.length === 0) return;
-
-  let current    = 0;
-  let startX     = 0;
-  let isDragging = false;
-
-  /* ── Determine visible slides per viewport ── */
-  function perView() {
-    const w = window.innerWidth;
-    if (w <= 900)  return 1;
-    if (w <= 1200) return 2;
-    return 3;
-  }
-
-  /* ── Total number of "pages" ── */
-  function pages() {
-    return Math.max(1, slides.length - perView() + 1);
-  }
-
-  /* ── Build dots ── */
-  function buildDots() {
-    if (!dotsWrap) return;
-    dotsWrap.innerHTML = '';
-    const n = pages();
-    if (n <= 1) return;
-    for (let i = 0; i < n; i++) {
-      const dot = document.createElement('button');
-      dot.className = 'pcarousel__dot' + (i === current ? ' active' : '');
-      dot.setAttribute('aria-label', `Slide ${i + 1}`);
-      dot.addEventListener('click', () => goTo(i));
-      dotsWrap.appendChild(dot);
-    }
-  }
-
-  /* ── Update dots active state ── */
-  function updateDots() {
-    if (!dotsWrap) return;
-    dotsWrap.querySelectorAll('.pcarousel__dot').forEach((d, i) => {
-      d.classList.toggle('active', i === current);
-    });
-  }
-
-  /* ── Move track ── */
-  function goTo(index) {
-    const max = pages() - 1;
-    current = Math.max(0, Math.min(index, max));
-    const pct  = (100 / perView()) * current;
-    track.style.transform = `translateX(-${pct}%)`;
-    prevBtn && (prevBtn.disabled = current === 0);
-    nextBtn && (nextBtn.disabled = current >= max);
-    updateDots();
-  }
-
-  /* ── Arrow clicks ── */
-  prevBtn && prevBtn.addEventListener('click', () => goTo(current - 1));
-  nextBtn && nextBtn.addEventListener('click', () => goTo(current + 1));
-
-  /* ── Touch / drag support ── */
-  const wrap = carousel.querySelector('.pcarousel__track-wrap');
-  if (wrap) {
-    wrap.addEventListener('pointerdown', e => {
-      startX     = e.clientX;
-      isDragging = true;
-      wrap.setPointerCapture(e.pointerId);
-    });
-
-    wrap.addEventListener('pointerup', e => {
-      if (!isDragging) return;
-      isDragging = false;
-      const diff = startX - e.clientX;
-      if (Math.abs(diff) > 40) {
-        diff > 0 ? goTo(current + 1) : goTo(current - 1);
-      }
-    });
-
-    wrap.addEventListener('pointercancel', () => { isDragging = false; });
-  }
-
-  /* ── Keyboard navigation when focused ── */
-  carousel.setAttribute('tabindex', '0');
-  carousel.addEventListener('keydown', e => {
-    if (e.key === 'ArrowLeft')  { e.preventDefault(); goTo(current - 1); }
-    if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current + 1); }
-  });
-
-  /* ── Resize — recalculate ── */
-  let _resizeTimer;
-  window.addEventListener('resize', () => {
-    clearTimeout(_resizeTimer);
-    _resizeTimer = setTimeout(() => {
-      buildDots();
-      goTo(Math.min(current, pages() - 1));
-    }, 200);
-  });
-
-  /* ── Init ── */
-  buildDots();
-  goTo(0);
-});
-
-
-/* ══════════════════════════════════════════════════════════
-   PANEL SURFACE CAROUSELS
-   Integrated into .panel__surface — opacity crossfade
-   Auto-advances every 4s, pauses on hover
-   ══════════════════════════════════════════════════════════ */
-
+/* ══ SURFACE CAROUSELS ══ */
 (function initSurfaceCarousels() {
-
   document.querySelectorAll('.panel__surface[data-carousel]').forEach(surface => {
-    const slides  = Array.from(surface.querySelectorAll('.pcs__slide'));
+    const slides = Array.from(surface.querySelectorAll('.pcs__slide'));
     const dotsWrap = surface.querySelector('.pcs__dots');
-    const btnPrev  = surface.querySelector('.pcs__arrow--prev');
-    const btnNext  = surface.querySelector('.pcs__arrow--next');
-
+    const btnPrev = surface.querySelector('.pcs__arrow--prev');
+    const btnNext = surface.querySelector('.pcs__arrow--next');
     if (!slides.length) return;
-
-    let current = 0;
-    let timer   = null;
+    let current = 0, timer = null;
     const DELAY = 4000;
 
-    /* ── Build dots ── */
-    const dots = slides.map((_, i) => {
+    if (dotsWrap) dotsWrap.innerHTML = '';
+    slides.map((_, i) => {
       const d = document.createElement('button');
       d.className = 'pcs__dot' + (i === 0 ? ' pcs__dot--active' : '');
       d.setAttribute('aria-label', `Slide ${i + 1}`);
@@ -993,42 +353,24 @@ document.querySelectorAll('.pcarousel').forEach(carousel => {
       return d;
     });
 
-    /* ── Go to slide ── */
     function goTo(idx) {
       slides[current].classList.remove('pcs__slide--active');
-      dots[current] && dots[current].classList.remove('pcs__dot--active');
       current = (idx + slides.length) % slides.length;
       slides[current].classList.add('pcs__slide--active');
-      dots[current] && dots[current].classList.add('pcs__dot--active');
+      if (dotsWrap) dotsWrap.querySelectorAll('.pcs__dot').forEach((d, i) => d.classList.toggle('pcs__dot--active', i === current));
     }
-
-    /* ── Auto-advance ── */
     function startAuto() { timer = setInterval(() => goTo(current + 1), DELAY); }
-    function stopAuto()  { clearInterval(timer); }
+    function stopAuto() { clearInterval(timer); }
 
-    /* ── Arrow buttons ── */
     btnPrev && btnPrev.addEventListener('click', () => { stopAuto(); goTo(current - 1); startAuto(); });
     btnNext && btnNext.addEventListener('click', () => { stopAuto(); goTo(current + 1); startAuto(); });
 
-    /* ── Touch / swipe support ── */
     let touchStartX = 0;
-    surface.addEventListener('touchstart', e => {
-      touchStartX = e.changedTouches[0].clientX;
-    }, { passive: true });
-    surface.addEventListener('touchend', e => {
-      const dx = e.changedTouches[0].clientX - touchStartX;
-      if (Math.abs(dx) > 40) {
-        stopAuto();
-        goTo(dx < 0 ? current + 1 : current - 1);
-        startAuto();
-      }
-    }, { passive: true });
-
-    /* ── Pause on hover ── */
+    surface.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
+    surface.addEventListener('touchend', e => { const dx = e.changedTouches[0].clientX - touchStartX; if (Math.abs(dx) > 40) { stopAuto(); goTo(dx < 0 ? current + 1 : current - 1); startAuto(); } }, { passive: true });
     surface.addEventListener('mouseenter', stopAuto);
     surface.addEventListener('mouseleave', startAuto);
 
-    /* ── Reload handler — triggered by JSON manifest loader ── */
     surface.addEventListener('carousel:reload', () => {
       stopAuto();
       const newSlides = Array.from(surface.querySelectorAll('.pcs__slide'));
@@ -1045,69 +387,244 @@ document.querySelectorAll('.pcarousel').forEach(carousel => {
           dotsWrap.appendChild(d);
         });
       }
-      current = 0;
-      startAuto();
+      current = 0; startAuto();
     });
-
-    /* ── Start ── */
     startAuto();
   });
-
 })();
 
-
-/* ══════════════════════════════════════════════════════════
-   JSON MANIFEST IMAGE LOADER
-   Loads images.json and replaces fallback gradient slides
-   with real WebP images when they exist
-   ══════════════════════════════════════════════════════════ */
-
+/* ══ IMAGE MANIFEST LOADER ══ */
 (async function loadImagesFromManifest() {
   try {
     const res = await fetch('images.json');
-    if (!res.ok) return; // No manifest — fallback gradients remain
-
+    if (!res.ok) return;
     const manifest = await res.json();
-
-    // For each carousel on the page
     document.querySelectorAll('.panel__surface[data-carousel]').forEach(surface => {
-      const key   = surface.dataset.carousel;
-      const imgs  = manifest[key];
+      const imgs = manifest[surface.dataset.carousel];
       if (!imgs || !imgs.length) return;
-
       const track = surface.querySelector('.pcs__track');
       if (!track) return;
-
-      // Remove fallback slides
-      track.querySelectorAll('.pcs__slide--fallback').forEach(s => s.remove());
-
-      // Build real slides
+      track.querySelectorAll('.pcs__slide').forEach(s => s.remove());
       imgs.forEach((item, i) => {
         const slide = document.createElement('div');
         slide.className = 'pcs__slide' + (i === 0 ? ' pcs__slide--active' : '');
-
         const img = document.createElement('img');
-        img.src     = item.file;
-        img.alt     = item.label;
-        img.loading = 'lazy';
+        img.src = item.file; img.alt = item.label; img.loading = 'lazy';
         img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
-
         const tag = document.createElement('span');
-        tag.className   = 'pcs__tag';
-        tag.textContent = item.label;
-
-        slide.appendChild(img);
-        slide.appendChild(tag);
-        track.appendChild(slide);
+        tag.className = 'pcs__tag'; tag.textContent = item.label;
+        slide.appendChild(img); slide.appendChild(tag); track.appendChild(slide);
       });
-
-      // Re-init this carousel (restart dots and auto-advance)
-      // The initSurfaceCarousels already ran — trigger a custom event
       surface.dispatchEvent(new CustomEvent('carousel:reload'));
     });
+  } catch (e) { console.info('[Deco Preda] images.json not found — using fallback gradients.'); }
+})();
 
-  } catch (e) {
-    // Manifest missing or malformed — fallback gradients remain visible
-    console.info('[Deco Preda] images.json not found — using fallback gradients.');
+/* ══ SYSTEMS FILTER — Seal version ══ */
+(function initSystemsFilter() {
+  const panels     = Array.from(document.querySelectorAll('.panel[data-domain]'));
+  const moreWrap   = document.getElementById('systemsMore');
+  const heading    = document.getElementById('systemsSubline');
+  const btnInd     = document.getElementById('btnIndustrial');
+  const btnArch    = document.getElementById('btnArchitectural');
+  const panelsGrid = document.querySelector('.systems__panels');
+
+  if (!panels.length) return;
+
+  const COPY = {
+    industrial: {
+      subline:        '2 systems specified for your environment.',
+      sealText:       'View Architectural\n& Living Systems',
+      mobileMoreText: '+ 2 more systems',
+    },
+    architectural: {
+      subline:        'Infinite application.',
+      sealText:       'View Industrial\n& Logistics Systems',
+      mobileMoreText: '+ 2 more systems',
+    },
+  };
+
+  // Elementele create dinamic
+  let sealEl       = null;
+  let dividerEl    = null;
+  let mobileMoreEl = null;
+
+  function cleanup() {
+    if (sealEl)       { sealEl.remove();       sealEl = null; }
+    if (dividerEl)    { dividerEl.remove();    dividerEl = null; }
+    if (mobileMoreEl) { mobileMoreEl.remove(); mobileMoreEl = null; }
   }
+
+  function revealVeiled() {
+    // Dezvoalez toate panelurile
+    panels.forEach(panel => {
+      panel.classList.remove('is-veiled');
+      panel.classList.add('is-revealed');
+    });
+
+    // Ascund sigiliul si elementele auxiliare
+    if (sealEl)       sealEl.classList.add('is-hidden');
+    if (dividerEl)    dividerEl.classList.add('is-hidden');
+    if (mobileMoreEl) mobileMoreEl.classList.add('is-hidden');
+
+    // Reset grid
+    if (panelsGrid) panelsGrid.classList.remove('filtered-2', 'filtered-3');
+  }
+
+  function filterByDomain(domain) {
+    // Curata elementele anterioare
+    cleanup();
+
+    // Reset toate panelurile
+    panels.forEach(panel => {
+      panel.classList.remove('is-hidden', 'is-veiled', 'is-revealed');
+      panel.style.display = '';
+    });
+
+    // Update heading
+    if (heading) heading.innerHTML = COPY[domain].subline;
+
+    // Ascunde More accordion
+    if (moreWrap) moreWrap.style.display = 'none';
+
+    // Clasifica panelurile
+    const secondary = [];
+    let firstSecondary = null;
+
+    panels.forEach(panel => {
+      const pd = panel.dataset.domain;
+      const isPrimary = pd === 'both' || pd === domain;
+      if (!isPrimary) {
+        panel.classList.add('is-veiled');
+        secondary.push(panel);
+        if (!firstSecondary) firstSecondary = panel;
+      }
+    });
+    // Reordonează DOM: primare primele, voalate ultimele
+panels.forEach(panel => {
+  if (!panel.classList.contains('is-veiled')) {
+    panelsGrid.insertBefore(panel, panelsGrid.firstChild);
+  }
+});
+panels.forEach(panel => {
+  if (panel.classList.contains('is-veiled')) {
+    panelsGrid.appendChild(panel);
+  }
+});
+
+    if (!secondary.length || !panelsGrid) return;
+
+    // ── Divider simplu inainte de zona voalata ──
+    dividerEl = document.createElement('div');
+    dividerEl.className = 'systems__veil-divider';
+    firstSecondary = panelsGrid.querySelector('.panel.is-veiled');
+
+    // ── Calculeaza pozitia si dimensiunea zonei voalate ──
+    // Sigiliul se pozitioneaza absolut peste panelurile voalate
+    // Folosim un wrapper relativ in jurul intregului grid
+
+    // ── Sigiliu desktop ──
+    sealEl = document.createElement('div');
+    sealEl.className = 'systems__seal';
+
+    const copy     = COPY[domain];
+    const lines    = copy.sealText.split('\n');
+
+   sealEl.innerHTML = `
+  <button class="systems__seal-btn" type="button">
+    <span>${copy.sealText.replace('\n', ' ')}</span>
+    <span class="systems__seal-icon" aria-hidden="true">→</span>
+  </button>
+`;
+
+    // Inseram sigiliul DUPA primul panou voalat
+    // si il pozitionam cu JS dupa render
+    document.querySelector('.systems').appendChild(sealEl);
+
+    sealEl.querySelector('.systems__seal-btn')
+      .addEventListener('click', revealVeiled);
+
+    // Pozitionare dinamica dupa render
+    requestAnimationFrame(() => {
+      positionSeal();
+    });
+
+    // ── Buton mobil ──
+    mobileMoreEl = document.createElement('div');
+    mobileMoreEl.className = 'systems__mobile-more';
+    mobileMoreEl.innerHTML = `
+      <button class="systems__mobile-more-btn" type="button">
+        <span>${copy.mobileMoreText}</span>
+        <span aria-hidden="true">↓</span>
+      </button>
+    `;
+    panelsGrid.insertBefore(mobileMoreEl, firstSecondary);
+
+    mobileMoreEl.querySelector('.systems__mobile-more-btn')
+      .addEventListener('click', () => {
+        // Pe mobile — arata panelurile ascunse
+        secondary.forEach(p => {
+          p.style.display = '';
+          p.classList.remove('is-veiled');
+          p.classList.add('is-revealed');
+        });
+        mobileMoreEl.classList.add('is-hidden');
+        dividerEl && dividerEl.classList.add('is-hidden');
+      });
+  }
+
+  function positionSeal() {
+    if (!sealEl) return;
+
+    const veiledPanels = panels.filter(p => p.classList.contains('is-veiled'));
+    if (!veiledPanels.length) return;
+
+    const gridRect  = panelsGrid.getBoundingClientRect();
+    const first     = veiledPanels[0].getBoundingClientRect();
+    const last      = veiledPanels[veiledPanels.length - 1].getBoundingClientRect();
+
+    // Zona voalata relativa la .systems section
+    const sysEl     = document.querySelector('.systems');
+    const sysRect   = sysEl.getBoundingClientRect();
+
+    const zoneLeft   = first.left  - sysRect.left;
+    const zoneTop    = first.top   - sysRect.top  + window.scrollY;
+    const zoneWidth  = last.right  - first.left;
+    const zoneHeight = last.bottom - first.top;
+
+    sealEl.style.position = 'absolute';
+    sealEl.style.left     = (zoneLeft + zoneWidth  / 2) + 'px';
+    sealEl.style.top = (zoneTop + zoneHeight * 0.65) + 'px';
+    sealEl.style.transform = 'translate(-50%, -50%)';
+    sealEl.style.zIndex   = '10';
+  }
+
+  // Re-pozitionare la resize
+  window.addEventListener('resize', () => {
+    if (sealEl && !sealEl.classList.contains('is-hidden')) {
+      requestAnimationFrame(positionSeal);
+    }
+  });
+
+  // Scroll — re-pozitionare nu e necesara (position e relativa la .systems)
+
+  if (btnInd) {
+    btnInd.addEventListener('click', (e) => {
+      e.preventDefault();
+      filterByDomain('industrial');
+      document.getElementById('systems').scrollIntoView({ behavior: 'smooth' });
+      // Re-pozitioneaza dupa scroll
+      setTimeout(positionSeal, 600);
+    });
+  }
+
+  if (btnArch) {
+    btnArch.addEventListener('click', (e) => {
+      e.preventDefault();
+      filterByDomain('architectural');
+      document.getElementById('systems').scrollIntoView({ behavior: 'smooth' });
+      setTimeout(positionSeal, 600);
+    });
+  }
+
 })();
